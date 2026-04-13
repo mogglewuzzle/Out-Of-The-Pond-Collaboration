@@ -9,5 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Level 00 - Village.unity
     guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects:
-    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    com.unity.input.settings: {fileID: 11400000, guid: b1a1b0516ba21d649ba83eb4d20bc666, type: 2}
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2c0a613ac8df67244af6c707f73b1ad3, type: 3}
   m_UseUCBPForAssetBundles: 0

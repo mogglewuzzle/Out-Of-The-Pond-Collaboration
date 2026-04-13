@@ -21,10 +21,10 @@ public class TongueScript : MonoBehaviour
         inputActions = new InputSystem_Actions();
 
         // Press E → start Swing
-        inputActions.Player.Attack.performed += ctx => StartSwing();
+        inputActions.Player.Interact.performed += ctx => StartSwing();
 
         // Release E → stop Swing
-        inputActions.Player.Attack.canceled += ctx => StopSwing();
+        inputActions.Player.Interact.canceled += ctx => StopSwing();
     }
 
     void OnEnable()
