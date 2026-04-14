@@ -51,6 +51,26 @@ public class PlayerThirdPersonController : MonoBehaviour
     [Tooltip("Invert the vertical aim axis.")]
     [SerializeField] private bool invertPitch = false;
 
+    [Header("Free Look Pitch (Look Up/Down — Not Aiming)")]
+    [Tooltip("Enable vertical look when not aiming.")]
+    [SerializeField] private bool enableFreeLookPitch = true;
+    [Tooltip("Empty child GameObject for the normal camera to follow (like aimPivot but for the normal VCam).")]
+    [SerializeField] private Transform freeLookPivot;
+    [Tooltip("Vertical look speed in degrees per second at full stick deflection.")]
+    [SerializeField] private float freeLookPitchSpeed = 120f;
+    [Tooltip("Up/down pitch speed multiplier during free look. 1 = same as Free Look Pitch Speed, 0.1 = very slow.")]
+    [SerializeField, Range(0.1f, 1f)] private float freeLookPitchMultiplier = 1f;
+    [Tooltip("How far up the player can look during free look.")]
+    [SerializeField, Range(0f, 90f)] private float freeLookPitchMax = 60f;
+    [Tooltip("How far down the player can look during free look.")]
+    [SerializeField, Range(0f, 90f)] private float freeLookPitchMin = 40f;
+    [Tooltip("Invert the vertical free look axis.")]
+    [SerializeField] private bool invertFreeLookPitch = false;
+    [Tooltip("When enabled, the camera recenters vertically when the stick is released.")]
+    [SerializeField] private bool freeLookPitchRecenter = false;
+    [Tooltip("How fast the pitch springs back to centre (degrees per second).")]
+    [SerializeField] private float freeLookRecenterSpeed = 90f;
+
     [Header("UI")]
     [Tooltip("Assign your crosshair Panel here in the Inspector.")]
     [SerializeField] private GameObject crosshairPanel;
@@ -61,7 +81,9 @@ public class PlayerThirdPersonController : MonoBehaviour
     private bool jumpRequested;
     private float currentYaw;
     private float currentPitch;
+    private float currentFreeLookPitch;
     private bool isAiming;
+    public bool IsAiming => isAiming;
 
     private InputSystem_Actions inputActions;
 
@@ -100,7 +122,11 @@ public class PlayerThirdPersonController : MonoBehaviour
         if (cameraTransform == null) return;
 
         UpdateRotationInput();
-        if (isAiming) UpdatePitchInput();
+
+        if (isAiming)
+            UpdatePitchInput();
+        else if (enableFreeLookPitch)
+            UpdateFreeLookPitchInput();
 
         UpdateMovement();
         ApplyRotation();
@@ -157,6 +183,34 @@ public class PlayerThirdPersonController : MonoBehaviour
         aimPivot.localRotation = Quaternion.Euler(currentPitch, 0f, 0f);
     }
 
+    private void UpdateFreeLookPitchInput()
+    {
+        if (freeLookPivot == null) return;
+
+        float rawY = Mathf.Abs(lookInput.y);
+        if (rawY < stickDeadzone)
+        {
+            // No stick input — optionally spring back to centre
+            if (freeLookPitchRecenter && currentFreeLookPitch != 0f)
+            {
+                currentFreeLookPitch = Mathf.MoveTowards(
+                    currentFreeLookPitch, 0f,
+                    freeLookRecenterSpeed * Time.fixedDeltaTime);
+                freeLookPivot.localRotation = Quaternion.Euler(currentFreeLookPitch, 0f, 0f);
+            }
+            return;
+        }
+
+        float remappedY   = Mathf.Clamp01((rawY - stickDeadzone) / (1f - stickDeadzone));
+        float curvedInput = Mathf.Sign(lookInput.y) * Mathf.Pow(remappedY, stickCurve);
+        float direction   = invertFreeLookPitch ? 1f : -1f;
+
+        currentFreeLookPitch += curvedInput * freeLookPitchSpeed * freeLookPitchMultiplier * direction * Time.fixedDeltaTime;
+        currentFreeLookPitch  = Mathf.Clamp(currentFreeLookPitch, -freeLookPitchMax, freeLookPitchMin);
+
+        freeLookPivot.localRotation = Quaternion.Euler(currentFreeLookPitch, 0f, 0f);
+    }
+
     private void ApplyRotation()
     {
         rb.MoveRotation(Quaternion.Euler(0f, currentYaw, 0f));
@@ -178,4 +232,6 @@ public class PlayerThirdPersonController : MonoBehaviour
 
     private bool IsGrounded() =>
         Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundMask);
+        
+
 }
