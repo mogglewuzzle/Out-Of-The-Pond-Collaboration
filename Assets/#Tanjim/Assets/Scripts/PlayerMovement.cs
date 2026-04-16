@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
+    public float sprintSpeed = 9f;
     public float jumpForce = 5f;
 
     private Rigidbody rb;
@@ -11,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
 
     private InputSystem_Actions inputActions;
     private Vector2 moveInput;
+    private bool isSprinting;
 
     void Awake()
     {
@@ -22,6 +24,11 @@ public class PlayerMovement : MonoBehaviour
 
         // Jump input
         inputActions.Player.Jump.performed += ctx => Jump();
+    }
+
+    void Update()
+    {
+        isSprinting = Keyboard.current != null && Keyboard.current.leftShiftKey.isPressed;
     }
 
     void OnEnable()
@@ -42,11 +49,12 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         Vector3 currentVelocity = rb.linearVelocity;
+        float currentSpeed = isSprinting ? sprintSpeed : moveSpeed;
 
         rb.linearVelocity = new Vector3(
-            moveInput.x * moveSpeed,
+            moveInput.x * currentSpeed,
             currentVelocity.y,
-            moveInput.y * moveSpeed
+            moveInput.y * currentSpeed
         );
     }
 
