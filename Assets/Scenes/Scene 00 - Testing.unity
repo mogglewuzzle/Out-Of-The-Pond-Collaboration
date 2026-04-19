@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 64460441}
   m_Layer: 0
   m_Name: Test Sphere Grab
-  m_TagString: SwingPoint
+  m_TagString: GrabPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
