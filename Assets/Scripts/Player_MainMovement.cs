@@ -24,6 +24,7 @@ public class PlayerMovementController : MonoBehaviour
     private PlayerInputHandler input;
     private PlayerSprintController sprint;
     private PlayerJumpController jump;
+    private Player_TongueSwing swing;
 
     private Rigidbody rb;
 
@@ -38,6 +39,7 @@ public class PlayerMovementController : MonoBehaviour
         input  = GetComponent<PlayerInputHandler>();
         sprint = GetComponent<PlayerSprintController>();
         jump   = GetComponent<PlayerJumpController>();
+        swing  = GetComponent<Player_TongueSwing>();
 
         if (cameraTransform == null && Camera.main != null)
             cameraTransform = Camera.main.transform;
@@ -62,6 +64,9 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Move()
     {
+        if (swing != null && swing.IsSwinging)
+            return;
+
         Vector3 camForward = cameraTransform.forward;
         Vector3 camRight   = cameraTransform.right;
 
@@ -96,6 +101,9 @@ public class PlayerMovementController : MonoBehaviour
 
     private void HandleJump()
     {
+        if (swing != null && swing.IsSwinging)
+            return;
+
         if (jump == null)
             return;
 

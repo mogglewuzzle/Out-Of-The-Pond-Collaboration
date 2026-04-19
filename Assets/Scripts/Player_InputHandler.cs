@@ -7,8 +7,9 @@ public class PlayerInputHandler : MonoBehaviour
     public Vector2 LookInput { get; private set; }
     public bool JumpPressed { get; private set; }
     public bool AimHeld { get; private set; }
-    public bool SprintHeld { get; private set; }   
-    public bool FreeCameraHeld { get; private set; } 
+    public bool SprintHeld { get; private set; }
+    public bool FreeCameraHeld { get; private set; }
+    public bool TongueThrowHeld { get; private set; }
 
     private InputSystem_Actions input;
 
@@ -27,11 +28,14 @@ public class PlayerInputHandler : MonoBehaviour
         input.Player.Aim.performed += ctx => AimHeld = true;
         input.Player.Aim.canceled  += ctx => AimHeld = false;
 
-        input.Player.Sprint.performed += ctx => SprintHeld = true;   // NEW
-        input.Player.Sprint.canceled  += ctx => SprintHeld = false;  // NEW
+        input.Player.Sprint.performed += ctx => SprintHeld = true;
+        input.Player.Sprint.canceled  += ctx => SprintHeld = false;
 
         input.Player.FreeCam.performed += ctx => FreeCameraHeld = true;
-        input.Player.FreeCam.canceled += ctx => FreeCameraHeld = false;
+        input.Player.FreeCam.canceled  += ctx => FreeCameraHeld = false;
+
+        input.Player.TongueThrow.performed += ctx => TongueThrowHeld = true;
+        input.Player.TongueThrow.canceled  += ctx => TongueThrowHeld = false;
     }
 
     private void LateUpdate()
@@ -42,4 +46,3 @@ public class PlayerInputHandler : MonoBehaviour
     private void OnEnable()  => input.Player.Enable();
     private void OnDisable() => input.Player.Disable();
 }
-

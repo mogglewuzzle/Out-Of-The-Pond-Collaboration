@@ -31,7 +31,7 @@ Transform:
   m_Children:
   - {fileID: 654370950191693315}
   m_Father: {fileID: 5864291331722570914}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 90, z: 0}
 --- !u!1 &347372787260136451
 GameObject:
   m_ObjectHideFlags: 0
@@ -239,7 +239,7 @@ Transform:
   m_Children:
   - {fileID: 460522495820852664}
   m_Father: {fileID: 8166507529228497232}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -20.682999, y: 0.7062867, z: 71.5113}
 --- !u!1 &994507974843624841
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,7 +271,7 @@ Transform:
   m_Children:
   - {fileID: 9114559307421693858}
   m_Father: {fileID: 9195147985409368329}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -4.2539916e-14, y: -5.0888872e-14, z: 3.1805545e-15}
 --- !u!1 &1280834119751605449
 GameObject:
   m_ObjectHideFlags: 0
@@ -307,7 +307,7 @@ Transform:
   - {fileID: 3856982421136517560}
   - {fileID: 395026854613136298}
   m_Father: {fileID: 1518819705876862887}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 89.10081, y: -12.988134, z: -0.000027193213}
 --- !u!1 &2817205821882458426
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,7 +339,7 @@ Transform:
   m_Children:
   - {fileID: 4914546837218044649}
   m_Father: {fileID: 654370950191693315}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0.8994938, y: 7.462746e-10, z: 5.294462e-10}
 --- !u!1 &2862438274105554898
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,7 +476,7 @@ Transform:
   m_Children:
   - {fileID: 4971095654086394224}
   m_Father: {fileID: 654370950191693315}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 80.17741, y: 27.977777, z: 32.955204}
 --- !u!1 &3322170149960810787
 GameObject:
   m_ObjectHideFlags: 0
@@ -843,7 +843,7 @@ Transform:
   m_Children:
   - {fileID: 8166507529228497232}
   m_Father: {fileID: 654370950191693315}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -76.11292, y: 17.75492, z: -22.581715}
 --- !u!1 &4885456781116722903
 GameObject:
   m_ObjectHideFlags: 0
@@ -875,7 +875,7 @@ Transform:
   m_Children:
   - {fileID: 5743754114902447422}
   m_Father: {fileID: 4971095654086394224}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 26.925972, y: -0.36992925, z: 66.38177}
 --- !u!1 &4931196997928240601
 GameObject:
   m_ObjectHideFlags: 0
@@ -938,7 +938,7 @@ Transform:
   m_Children:
   - {fileID: 5542097960012414831}
   m_Father: {fileID: 654370950191693315}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0.88526565, y: -179.97714, z: -121.88737}
 --- !u!1 &5114258222855671767
 GameObject:
   m_ObjectHideFlags: 0
@@ -970,7 +970,7 @@ Transform:
   m_Children:
   - {fileID: 4659543507438340613}
   m_Father: {fileID: 3649046642507557079}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 68.267784, y: 95.73385, z: 22.359154}
 --- !u!1 &5756634593918717413
 GameObject:
   m_ObjectHideFlags: 0
@@ -1092,7 +1092,7 @@ Transform:
   m_Children:
   - {fileID: 430073533413418447}
   m_Father: {fileID: 395026854613136298}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0.026910894, y: -2.588246e-11, z: 0.000000003768867}
 --- !u!1 &6824361707448461095
 GameObject:
   m_ObjectHideFlags: 0
@@ -1155,7 +1155,7 @@ Transform:
   m_Children:
   - {fileID: 2125985658367183555}
   m_Father: {fileID: 3856982421136517560}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0.026890328, y: 0.000010372017, z: -79.79603}
 --- !u!1 &8070817600325327639
 GameObject:
   m_ObjectHideFlags: 0
@@ -1198,7 +1198,6 @@ GameObject:
   - component: {fileID: 5864291331722570914}
   - component: {fileID: 3954452370146940724}
   - component: {fileID: 7152283169617031059}
-  - component: {fileID: 4905338570098395697}
   - component: {fileID: 7967057991447379198}
   - component: {fileID: 8358314670236894180}
   - component: {fileID: 7204359779401750529}
@@ -1210,6 +1209,8 @@ GameObject:
   - component: {fileID: 108382538353945808}
   - component: {fileID: 8941425629739178495}
   - component: {fileID: 3217419412627563550}
+  - component: {fileID: 5535248026419742877}
+  - component: {fileID: 1524190655188326682}
   m_Layer: 0
   m_Name: Player Froggle
   m_TagString: Untagged
@@ -1283,39 +1284,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.257275, y: 8.307732, z: 1.6874579}
-  m_Center: {x: 0.07042909, y: 3.6538658, z: -0.0474723}
---- !u!114 &4905338570098395697
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8359410263486921697}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 217b7f95917520741b7ebb94d71df9c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerTongueProject
-  swingTag: SwingPoint
-  maxDistance: 7
-  freeSpring: 4.5
-  freeDamper: 7
-  freeMinDistFactor: 0
-  freeMaxDistFactor: 0.8
-  aimRaycastDistance: 50
-  aimSpring: 10
-  aimDamper: 5
-  aimMinDistFactor: 0
-  aimMaxDistFactor: 0.1
-  aimMassScale: 4.5
-  glowColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  glowIntensity: 2
-  freeLookCrosshair: {fileID: 0}
-  groundCheckDistance: 0.25
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
+  m_Size: {x: 2.257275, y: 6.8984423, z: 1.6874579}
+  m_Center: {x: 0.07042909, y: 3.52387, z: -0.0474723}
 --- !u!120 &7967057991447379198
 LineRenderer:
   serializedVersion: 3
@@ -1324,7 +1294,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8359410263486921697}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1504,10 +1474,10 @@ MonoBehaviour:
   freeLookPitchRecenter: 1
   freeLookRecenterSpeed: 45
   recenterDelay: 0.5
+  movement: {fileID: 108382538353945808}
   recenterCurvePower: 1
   stickDeadzone: 0.15
   stickCurve: 2
-  movement: {fileID: 0}
 --- !u!114 &158198008236156168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1561,11 +1531,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovementController
   moveSpeed: 5
-  feetPoint: {fileID: 0}
+  feetPoint: {fileID: 3431637087839159340}
   groundCheckDistance: 1
   groundMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  debugGroundCheck: 1
+  debugRayLength: 20
   cameraTransform: {fileID: 0}
 --- !u!114 &8941425629739178495
 MonoBehaviour:
@@ -1579,7 +1551,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74d46aaee174fd24b8f899f1576990e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerJumpController
-  jumpForce: 40
+  jumpForce: 80
   coyoteTime: 0.15
   jumpBufferTime: 0.15
 --- !u!114 &3217419412627563550
@@ -1597,6 +1569,51 @@ MonoBehaviour:
   holdToSprint: 1
   minMoveThreshold: 0.1
   sprintSpeed: 10
+--- !u!114 &5535248026419742877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8359410263486921697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab9eb29a0583f9b46bb339482336f8c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerFreeCameraController
+  followCam: {fileID: 0}
+  freeLookCam: {fileID: 0}
+--- !u!114 &1524190655188326682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8359410263486921697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 217b7f95917520741b7ebb94d71df9c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerTongueProject
+  swingTag: SwingPoint
+  maxDistance: 7
+  freeSpring: 4.5
+  freeDamper: 7
+  freeMinDistFactor: 0
+  freeMaxDistFactor: 0.8
+  aimRaycastDistance: 50
+  aimSpring: 10
+  aimDamper: 5
+  aimMinDistFactor: 0
+  aimMaxDistFactor: 0.1
+  aimMassScale: 4.5
+  glowColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  glowIntensity: 2
+  freeLookCrosshair: {fileID: 0}
+  debugRaycast: 0
+  debugHitSwingPoint: {r: 0, g: 1, b: 0, a: 1}
+  debugHitOther: {r: 1, g: 0, b: 0, a: 1}
+  debugNoHit: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &8654065101012283222
 GameObject:
   m_ObjectHideFlags: 0
@@ -1659,7 +1676,7 @@ Transform:
   m_Children:
   - {fileID: 6462326363929845874}
   m_Father: {fileID: 654370950191693315}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0.8791854, y: 179.98232, z: 138.93536}
 --- !u!1 &9197245856450630696
 GameObject:
   m_ObjectHideFlags: 0
@@ -1691,4 +1708,4 @@ Transform:
   m_Children:
   - {fileID: 3018511322020864336}
   m_Father: {fileID: 4016073271739543726}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -78.48297, y: 82.61172, z: -34.466923}
