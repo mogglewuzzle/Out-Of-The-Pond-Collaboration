@@ -2854,6 +2854,10 @@ PrefabInstance:
       propertyPath: cameraTransform
       value: 
       objectReference: {fileID: 2793314718335474321}
+    - target: {fileID: 562987007397015227, guid: 4fdf92531617eb149882326568071636, type: 3}
+      propertyPath: m_Name
+      value: Camera Points
+      objectReference: {fileID: 0}
     - target: {fileID: 807783362672105233, guid: 4fdf92531617eb149882326568071636, type: 3}
       propertyPath: aimVCam
       value: 
