@@ -231,11 +231,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &174205941 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3431637087839159340, guid: 4fdf92531617eb149882326568071636, type: 3}
-  m_PrefabInstance: {fileID: 1652312958314983396}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &231043305
 GameObject:
   m_ObjectHideFlags: 0
@@ -2883,24 +2878,8 @@ PrefabInstance:
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1524190655188326682, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: debugDraw
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1524190655188326682, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: feetPoint
-      value: 
-      objectReference: {fileID: 174205941}
-    - target: {fileID: 1524190655188326682, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: aimOffset.x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1524190655188326682, guid: 4fdf92531617eb149882326568071636, type: 3}
       propertyPath: extendSpeed
       value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 1524190655188326682, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: debugRaycast
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1524190655188326682, guid: 4fdf92531617eb149882326568071636, type: 3}
       propertyPath: lineRenderer
@@ -2911,40 +2890,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2022085861}
     - target: {fileID: 1524190655188326682, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: releaseDistance
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1524190655188326682, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: freeLookOffset.x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1524190655188326682, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: freeLookOffset.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1524190655188326682, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: debugAimDotRadius
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1524190655188326682, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: swingStartupPullForce
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1524190655188326682, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: swingGravityMultiplier
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1524190655188326682, guid: 4fdf92531617eb149882326568071636, type: 3}
       propertyPath: tongueLayerMask.m_Bits
       value: 1024
-      objectReference: {fileID: 0}
-    - target: {fileID: 1524190655188326682, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: swingHorizontalAcceleration
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 2865454165021947930, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3085156451193525150, guid: 4fdf92531617eb149882326568071636, type: 3}
       propertyPath: m_LocalScale.x
@@ -2970,10 +2917,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 1.69
       objectReference: {fileID: 0}
-    - target: {fileID: 3085156451193525150, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
+    - target: {fileID: 3491679380879408030, guid: 4fdf92531617eb149882326568071636, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -5495902117074765545, guid: 74003b918e9664442883d69c3fc27d45, type: 3}
     - target: {fileID: 5535248026419742877, guid: 4fdf92531617eb149882326568071636, type: 3}
       propertyPath: followCam
       value: 
@@ -3022,6 +2969,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6034380284572304752, guid: 4fdf92531617eb149882326568071636, type: 3}
+      propertyPath: attractCamera
+      value: 
+      objectReference: {fileID: 1492678809}
     - target: {fileID: 6526818913152759935, guid: 4fdf92531617eb149882326568071636, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3070,16 +3021,14 @@ PrefabInstance:
       propertyPath: jumpForce
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 9090004271052899456, guid: 4fdf92531617eb149882326568071636, type: 3}
+      propertyPath: swingCamera
+      value: 
+      objectReference: {fileID: 1476542064}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8359410263486921697, guid: 4fdf92531617eb149882326568071636, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4515682494504145873}
-    - targetCorrespondingSourceObject: {fileID: 8359410263486921697, guid: 4fdf92531617eb149882326568071636, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4515682494504145872}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4fdf92531617eb149882326568071636, type: 3}
 --- !u!81 &1842450900155695310
 AudioListener:
@@ -3338,56 +3287,11 @@ TerrainCollider:
   serializedVersion: 2
   m_TerrainData: {fileID: 15600000, guid: 62e3caf244ceeea4c97abd3e991639e4, type: 2}
   m_EnableTreeColliders: 1
---- !u!1 &4515682494504145854 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8359410263486921697, guid: 4fdf92531617eb149882326568071636, type: 3}
-  m_PrefabInstance: {fileID: 1652312958314983396}
-  m_PrefabAsset: {fileID: 0}
 --- !u!120 &4515682494504145856 stripped
 LineRenderer:
   m_CorrespondingSourceObject: {fileID: 7967057991447379198, guid: 4fdf92531617eb149882326568071636, type: 3}
   m_PrefabInstance: {fileID: 1652312958314983396}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4515682494504145872
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4515682494504145854}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 706d33cbbffbd984ab624d3ac77c7dd3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Player_TongueSwing
-  swingGravityMultiplier: 2
-  swingHorizontalAcceleration: 20
-  swingGroundDelay: 0.15
-  swingStartupPullForce: 12
-  swingMinGroundDistance: 1.5
-  maxSwingRopeLength: 25
-  feetPoint: {fileID: 174205941}
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  swingCamera: {fileID: 1476542064}
-  swingCameraDelay: 0.1
---- !u!114 &4515682494504145873
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4515682494504145854}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2e506a6bd33bdc4aa42c4beac736f04, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Player_TongueAttract
-  pullSpeed: 15
-  releaseDistance: 1.5
-  attractCamera: {fileID: 1492678809}
-  attractCameraDelay: 0.1
 --- !u!154 &4867871925352272226
 TerrainCollider:
   m_ObjectHideFlags: 0
