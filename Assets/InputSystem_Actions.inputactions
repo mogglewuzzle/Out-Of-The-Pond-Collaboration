@@ -25,7 +25,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Dance",
+                    "name": "TongueThrow",
                     "type": "Button",
                     "id": "6c2ab1b8-8984-453a-af3d-a3c78ae1679a",
                     "expectedControlType": "",
@@ -91,6 +91,15 @@
                     "name": "Aim",
                     "type": "Button",
                     "id": "a05431c1-3742-45ef-b9d4-168eb10d9f47",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "FreeCam",
+                    "type": "Button",
+                    "id": "6db69e0c-2dae-4d86-ad97-2d519f1f5207",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -259,7 +268,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "Dance",
+                    "action": "TongueThrow",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -270,7 +279,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Touch",
-                    "action": "Dance",
+                    "action": "TongueThrow",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -281,7 +290,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
-                    "action": "Dance",
+                    "action": "TongueThrow",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -292,7 +301,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "XR",
-                    "action": "Dance",
+                    "action": "TongueThrow",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -303,7 +312,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Dance",
+                    "action": "TongueThrow",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -491,6 +500,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "141d9788-2544-40f8-8154-5a9496ded247",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "FreeCam",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

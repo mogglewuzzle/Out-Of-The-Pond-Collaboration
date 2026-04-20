@@ -6,6 +6,8 @@ TagManager:
   tags:
   - SwingPoint
   - Interactable
+  - AttractPoint
+  - GrabPoint
   layers:
   - Default
   - TransparentFX
@@ -17,7 +19,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Tongue
   - 
   - 
   - 
