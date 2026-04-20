@@ -1,12 +1,7 @@
 using UnityEngine;
-using Unity.Cinemachine;
 
 public class PlayerAimController : MonoBehaviour
 {
-    [SerializeField] private CinemachineCamera normalVCam;
-    [SerializeField] private CinemachineCamera aimVCam;
-    [SerializeField] private GameObject crosshairPanel;
-
     private PlayerInputHandler input;
     public bool IsAiming { get; private set; }
 
@@ -24,11 +19,5 @@ public class PlayerAimController : MonoBehaviour
     private void SetAiming(bool aiming)
     {
         IsAiming = aiming;
-
-        aimVCam.gameObject.SetActive(aiming);
-        normalVCam.gameObject.SetActive(!aiming);
-
-        if (crosshairPanel != null)
-            crosshairPanel.SetActive(aiming);
     }
 }

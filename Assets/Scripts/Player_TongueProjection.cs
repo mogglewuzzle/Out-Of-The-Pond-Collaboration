@@ -14,8 +14,13 @@ public class PlayerTongueProjection : MonoBehaviour
     [SerializeField] private LayerMask collidableLayers = ~0;
     [SerializeField] private LayerMask tongueLayerMask;
 
+    [Header("Aim Offsets")]
+    [SerializeField] private Vector3 aimOffset = Vector3.zero;
+    [SerializeField] private Vector3 freeLookOffset = Vector3.zero;
+
     [Header("Tags")]
     [SerializeField] private string AttractPointTag = "AttractPoint";
+    [SerializeField] private string GrabPointTag = "GrabPoint";
     [SerializeField] private string SwingPointTag = "SwingPoint";
 
     private Vector3 tipPosition;
@@ -23,19 +28,31 @@ public class PlayerTongueProjection : MonoBehaviour
 
     private bool wasHeld;
     private PlayerInputHandler input;
+    private PlayerAimController aimController;
+    private PlayerFreeCameraController freeCameraController;
 
     private Player_TongueAttract attractModule;
+    private Player_TongueGrab grabModule;
     private Player_TongueSwing swingModule;
 
     private enum State { Idle, Extending, Retracting }
     private State state = State.Idle;
+
+    public bool IsTongueActive =>
+        state != State.Idle ||
+        (attractModule != null && attractModule.IsAttracting) ||
+        (grabModule != null && grabModule.IsGrabbing) ||
+        (swingModule != null && swingModule.IsSwinging);
 
     private Camera cam;
 
     private void Awake()
     {
         input = GetComponent<PlayerInputHandler>();
+        aimController = GetComponent<PlayerAimController>();
+        freeCameraController = GetComponent<PlayerFreeCameraController>();
         attractModule = GetComponent<Player_TongueAttract>();
+        grabModule = GetComponent<Player_TongueGrab>();
         swingModule = GetComponent<Player_TongueSwing>();
 
         cam = Camera.main;
@@ -65,7 +82,7 @@ public class PlayerTongueProjection : MonoBehaviour
 
     private void FireTongue()
     {
-        Vector3 aimTarget = cam.transform.position + cam.transform.forward * maxRange;
+        Vector3 aimTarget = ComputeAimTarget();
         fireDirection = (aimTarget - tongueOrigin.position).normalized;
 
         tipPosition = tongueOrigin.position;
@@ -73,6 +90,24 @@ public class PlayerTongueProjection : MonoBehaviour
 
         if (lineRenderer != null)
             lineRenderer.enabled = true;
+    }
+
+    private Vector3 ComputeAimTarget()
+    {
+        if (cam == null)
+            cam = Camera.main;
+
+        Vector3 baseTarget = cam.transform.position + cam.transform.forward * maxRange;
+
+        bool isFreeLookActive = freeCameraController != null && freeCameraController.IsActive;
+        bool isAiming = aimController != null && aimController.IsAiming;
+
+        Vector3 offset = (isAiming || isFreeLookActive) ? aimOffset : freeLookOffset;
+
+        return baseTarget
+             + cam.transform.right * offset.x
+             + cam.transform.up * offset.y
+             + cam.transform.forward * offset.z;
     }
 
     private void TickState()
@@ -100,6 +135,20 @@ public class PlayerTongueProjection : MonoBehaviour
             {
                 attractModule.BeginAttract(hit.point);
                 state = State.Idle;
+            }
+            else if (hit.collider.CompareTag(GrabPointTag))
+            {
+                Rigidbody targetRb = hit.rigidbody != null ? hit.rigidbody : hit.collider.attachedRigidbody;
+
+                if (targetRb != null && grabModule != null)
+                {
+                    grabModule.BeginGrab(targetRb);
+                    state = State.Idle;
+                }
+                else
+                {
+                    BeginRetract();
+                }
             }
             else if (hit.collider.CompareTag(SwingPointTag))
             {
@@ -134,16 +183,14 @@ public class PlayerTongueProjection : MonoBehaviour
     {
         state = State.Retracting;
         attractModule.StopAttract();
+        if (grabModule != null)
+            grabModule.StopGrab();
         swingModule.StopSwing();
     }
 
     private void UpdateLine()
     {
-        bool externalTongueActive =
-            (attractModule != null && attractModule.IsAttracting) ||
-            (swingModule != null && swingModule.IsSwinging);
-
-        if (lineRenderer == null || (state == State.Idle && !externalTongueActive))
+        if (lineRenderer == null || !IsTongueActive)
             return;
 
         if (!lineRenderer.enabled)
