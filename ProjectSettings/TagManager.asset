@@ -8,6 +8,7 @@ TagManager:
   - Interactable
   - AttractPoint
   - GrabPoint
+  - Hazard
   layers:
   - Default
   - TransparentFX
