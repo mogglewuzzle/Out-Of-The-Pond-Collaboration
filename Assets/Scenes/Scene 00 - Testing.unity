@@ -848,7 +848,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 290, y: 100}
+  m_AnchoredPosition: {x: 195, y: 60}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &400536708
@@ -2813,7 +2813,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 290, y: 70}
+  m_AnchoredPosition: {x: 195, y: 40}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1799483720
@@ -3481,18 +3481,6 @@ PrefabInstance:
       propertyPath: cameraTransform
       value: 
       objectReference: {fileID: 2793314718335474321}
-    - target: {fileID: 1524190655188326682, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: aimOffset.x
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1524190655188326682, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: freeLookOffset.x
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1524190655188326682, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: freeLookOffset.y
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 4878324643418289694, guid: 4fdf92531617eb149882326568071636, type: 3}
       propertyPath: aimCamera
       value: 
