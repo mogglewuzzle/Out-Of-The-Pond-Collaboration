@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/#Tanjim/Assets/Scenes/MainMenu.unity
+    guid: 25c26dbe113e10b438051f3ddd287b43
+  - enabled: 1
     path: Assets/Scenes/Scene 00 - Testing.unity
     guid: 3eb2152b017433d4ba1c4991f54e979e
   m_configObjects:
