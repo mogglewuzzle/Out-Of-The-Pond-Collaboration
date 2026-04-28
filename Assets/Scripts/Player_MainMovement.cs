@@ -5,7 +5,6 @@ public class PlayerMovementController : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float sprintAcceleration = 0.3f;
 
     [Header("Ground Check")]
     [SerializeField] private Transform feetPoint;
@@ -27,9 +26,6 @@ public class PlayerMovementController : MonoBehaviour
     private PlayerJumpController jump;
     private Player_TongueSwing swing;
 
-    // for calculating acceleration/deceleration when sprinting
-    private float currentSpeed;
-
     private Rigidbody rb;
 
     public float CurrentHorizontalSpeed { get; private set; }
@@ -44,8 +40,6 @@ public class PlayerMovementController : MonoBehaviour
         sprint = GetComponent<PlayerSprintController>();
         jump   = GetComponent<PlayerJumpController>();
         swing  = GetComponent<Player_TongueSwing>();
-
-        currentSpeed = moveSpeed;
 
         if (cameraTransform == null && Camera.main != null)
             cameraTransform = Camera.main.transform;
@@ -85,7 +79,10 @@ public class PlayerMovementController : MonoBehaviour
 
         moveInputWorld = Vector3.ClampMagnitude(moveInputWorld, 1f);
 
-        float targetSpeed = Accelerate();
+        float targetSpeed =
+            (sprint != null && sprint.IsSprinting)
+            ? sprint.SprintSpeed
+            : moveSpeed;
 
         Vector3 move = moveInputWorld * targetSpeed;
 
@@ -149,21 +146,5 @@ public class PlayerMovementController : MonoBehaviour
         );
 
         Debug.Log("Grounded: " + grounded);
-    }
-
-    private float Accelerate()
-    {
-        // gradually speeds/slows down player when holding/letting go of sprint button,
-        // smother transition in speed and animations
-        if (sprint.IsSprinting)
-        {
-            currentSpeed = Mathf.MoveTowards(currentSpeed, sprint.SprintSpeed, sprintAcceleration);    
-        }
-        else
-        {
-            currentSpeed = Mathf.MoveTowards(currentSpeed, moveSpeed, sprintAcceleration);
-        }
-
-        return currentSpeed;
     }
 }
