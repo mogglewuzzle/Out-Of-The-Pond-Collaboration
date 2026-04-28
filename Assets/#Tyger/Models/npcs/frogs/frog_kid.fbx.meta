@@ -1,24 +1,14 @@
 fileFormatVersion: 2
-guid: 6cd6a846ccd917e429f07b9115e65375
+guid: 19d9619888207044993fbb08ce5473d4
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.001
-    second: {fileID: 2100000, guid: 11482a85914c3fd4a8587d35e31bafe8, type: 2}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Ucupaint Material.001 Color
-    second: {fileID: 2800000, guid: 3a1e7026b5eb374488961f45e30742ba, type: 3}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
     materialSearch: 1
-    materialLocation: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
