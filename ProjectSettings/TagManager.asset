@@ -8,11 +8,12 @@ TagManager:
   - Interactable
   - AttractPoint
   - GrabPoint
+  - Hazard
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - 
@@ -29,8 +30,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Pickupable
+  - BeingHeld
   - 
   - 
   - 

@@ -34,78 +34,96 @@ public class PlayerCameraController : MonoBehaviour
     [SerializeField, Range(0f, 0.5f)] private float stickDeadzone = 0.15f;
     [SerializeField, Range(1f, 3f)] private float stickCurve = 2f;
 
-
     private PlayerInputHandler input;
     private PlayerAimController aim;
-    private PlayerFreeCameraController freeCamera; // NEW
+    private PlayerFreeCameraController freeCamera;
 
     private float currentPitch;
     private float currentFreeLookPitch;
+    private bool wasAiming;
 
     private float timeSinceLookInput;
     private bool isRecentering;
 
     private void Awake()
     {
-        input      = GetComponent<PlayerInputHandler>();
-        aim        = GetComponent<PlayerAimController>();
-        freeCamera = GetComponent<PlayerFreeCameraController>(); // NEW
+        input = GetComponent<PlayerInputHandler>();
+        aim = GetComponent<PlayerAimController>();
+        freeCamera = GetComponent<PlayerFreeCameraController>();
     }
 
     private void FixedUpdate()
     {
-        // NEW — pause pitch logic while free cam is active so they don't fight
-        if (freeCamera != null && freeCamera.IsActive) return;
+        HandleAimModeTransitions();
 
-        if (aim.IsAiming)
+        if (freeCamera != null && freeCamera.IsActive)
+            return;
+
+        if (aim != null && aim.IsAiming)
             UpdateAimPitch();
         else if (enableFreeLookPitch)
             UpdateFreeLookPitch();
     }
 
-    // -----------------------------
-    // AIM PITCH (ADS / Shoulder Aim)
-    // -----------------------------
+    private void HandleAimModeTransitions()
+    {
+        bool isAiming = aim != null && aim.IsAiming;
+
+        if (isAiming && !wasAiming)
+        {
+            currentPitch = currentFreeLookPitch;
+
+            if (aimPivot != null)
+                aimPivot.localRotation = Quaternion.Euler(currentPitch, 0f, 0f);
+        }
+        else if (!isAiming && wasAiming)
+        {
+            currentFreeLookPitch = currentPitch;
+
+            if (freeLookPivot != null)
+                freeLookPivot.localRotation = Quaternion.Euler(currentFreeLookPitch, 0f, 0f);
+        }
+
+        wasAiming = isAiming;
+    }
+
     private void UpdateAimPitch()
     {
-        if (aimPivot == null) return;
+        if (aimPivot == null)
+            return;
 
         float rawY = Mathf.Abs(input.LookInput.y);
-        if (rawY < stickDeadzone) return;
+        if (rawY < stickDeadzone)
+            return;
 
-        float remapped  = Mathf.Clamp01((rawY - stickDeadzone) / (1f - stickDeadzone));
-        float curved    = Mathf.Sign(input.LookInput.y) * Mathf.Pow(remapped, stickCurve);
+        float remapped = Mathf.Clamp01((rawY - stickDeadzone) / (1f - stickDeadzone));
+        float curved = Mathf.Sign(input.LookInput.y) * Mathf.Pow(remapped, stickCurve);
         float direction = invertPitch ? 1f : -1f;
 
         currentPitch += curved * pitchSpeed * aimPitchMultiplier * direction * Time.fixedDeltaTime;
-        currentPitch  = Mathf.Clamp(currentPitch, -pitchMax, pitchMin);
+        currentPitch = Mathf.Clamp(currentPitch, -pitchMax, pitchMin);
 
         aimPivot.localRotation = Quaternion.Euler(currentPitch, 0f, 0f);
     }
 
-    // -----------------------------------
-    // FREE LOOK PITCH (Not Aiming)
-    // -----------------------------------
     private void UpdateFreeLookPitch()
     {
-        if (freeLookPivot == null) return;
+        if (freeLookPivot == null)
+            return;
 
-        float rawY        = Mathf.Abs(input.LookInput.y);
+        float rawY = Mathf.Abs(input.LookInput.y);
         bool hasLookInput = rawY >= stickDeadzone;
-        bool isGrounded   = movement != null && movement.IsGroundedCached;
+        bool isGrounded = movement != null && movement.IsGroundedCached;
 
-        // Cancel recenter if player looks or is airborne
         if (hasLookInput || !isGrounded)
         {
-            isRecentering      = false;
+            isRecentering = false;
             timeSinceLookInput = 0f;
         }
         else
         {
-            // No input — count time
             timeSinceLookInput += Time.fixedDeltaTime;
 
-            // Start recentering only if grounded
             if (freeLookPitchRecenter &&
                 isGrounded &&
                 timeSinceLookInput >= recenterDelay)
@@ -114,10 +132,9 @@ public class PlayerCameraController : MonoBehaviour
             }
         }
 
-        // Handle recentering
         if (isRecentering)
         {
-            float distance      = Mathf.Abs(currentFreeLookPitch);
+            float distance = Mathf.Abs(currentFreeLookPitch);
             float directionSign = Mathf.Sign(currentFreeLookPitch);
 
             float speed = freeLookRecenterSpeed *
@@ -132,16 +149,15 @@ public class PlayerCameraController : MonoBehaviour
             return;
         }
 
-        // No look input — do nothing
-        if (!hasLookInput) return;
+        if (!hasLookInput)
+            return;
 
-        // Normal pitch input
-        float remapped  = Mathf.Clamp01((rawY - stickDeadzone) / (1f - stickDeadzone));
-        float curved    = Mathf.Sign(input.LookInput.y) * Mathf.Pow(remapped, stickCurve);
+        float remapped = Mathf.Clamp01((rawY - stickDeadzone) / (1f - stickDeadzone));
+        float curved = Mathf.Sign(input.LookInput.y) * Mathf.Pow(remapped, stickCurve);
         float direction = invertFreeLookPitch ? 1f : -1f;
 
         currentFreeLookPitch += curved * freeLookPitchSpeed * freeLookPitchMultiplier * direction * Time.fixedDeltaTime;
-        currentFreeLookPitch  = Mathf.Clamp(currentFreeLookPitch, -freeLookPitchMax, freeLookPitchMin);
+        currentFreeLookPitch = Mathf.Clamp(currentFreeLookPitch, -freeLookPitchMax, freeLookPitchMin);
 
         freeLookPivot.localRotation = Quaternion.Euler(currentFreeLookPitch, 0f, 0f);
     }

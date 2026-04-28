@@ -15,10 +15,6 @@ public class Player_TongueSwing : MonoBehaviour
     [SerializeField] private Transform feetPoint;
     [SerializeField] private LayerMask groundMask = ~0;
 
-    [Header("Camera")]
-    [SerializeField] private GameObject swingCamera;
-    [SerializeField] private float swingCameraDelay = 0f;
-
     private Rigidbody rb;
     private PlayerMovementController movement;
     private PlayerInputHandler input;
@@ -30,7 +26,6 @@ public class Player_TongueSwing : MonoBehaviour
     private Vector3 latchPoint;
     private float ropeLength;
     private Coroutine swingStartupRoutine;
-    private Coroutine cameraRoutine;
 
     public bool IsSwinging => active || startingSwing;
 
@@ -53,7 +48,6 @@ public class Player_TongueSwing : MonoBehaviour
         active = false;
         startingSwing = true;
         swingStartupRoutine = StartCoroutine(SwingStartup());
-        cameraRoutine = StartCoroutine(EnableCameraAfterDelay());
     }
 
     public void StopSwing()
@@ -64,15 +58,8 @@ public class Player_TongueSwing : MonoBehaviour
             swingStartupRoutine = null;
         }
 
-        if (cameraRoutine != null)
-        {
-            StopCoroutine(cameraRoutine);
-            cameraRoutine = null;
-        }
-
         active = false;
         startingSwing = false;
-        SetCameraActive(false);
     }
 
     private IEnumerator SwingStartup()
@@ -155,23 +142,6 @@ public class Player_TongueSwing : MonoBehaviour
             active = false;
             projection.BeginRetract();
         }
-    }
-
-    private IEnumerator EnableCameraAfterDelay()
-    {
-        if (swingCameraDelay > 0f)
-            yield return new WaitForSeconds(swingCameraDelay);
-
-        if (IsSwinging)
-            SetCameraActive(true);
-
-        cameraRoutine = null;
-    }
-
-    private void SetCameraActive(bool isActive)
-    {
-        if (swingCamera != null)
-            swingCamera.SetActive(isActive);
     }
 
     private void OnDisable()
