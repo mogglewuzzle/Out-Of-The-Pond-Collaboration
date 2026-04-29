@@ -108,16 +108,22 @@ public class PlayerTongueProjection : MonoBehaviour
 
     private void FireTongue()
     {
+        /* 
+        * always make tounge go towards center of screen
+        * when testing, just using tongueOrigin.forward as direction makes it very hard to aim
+        */
+
+        Ray screenCenterRay = GetScreenCenterRay();
+        fireDirection = screenCenterRay.direction;
+
         if (useScreenCenterFirePoint)
         {
-            Ray screenCenterRay = GetScreenCenterRay();
             fireStartPosition = GetFireStartPosition(screenCenterRay);
-            fireDirection = screenCenterRay.direction;
         }
         else
         {
+            // not useScreenCenterFirePoint prefered, as the tounge doesn't start from behind the frog and in the actual mouth
             fireStartPosition = tongueOrigin.position;
-            fireDirection = tongueOrigin.forward;
         }
 
         tipPosition = fireStartPosition;
