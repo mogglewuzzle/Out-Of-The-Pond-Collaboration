@@ -297,7 +297,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &213961755
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1175,11 +1175,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1787668842}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &508554158 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8359410263486921697, guid: 4fdf92531617eb149882326568071636, type: 3}
-  m_PrefabInstance: {fileID: 1652312958314983396}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &635607115
 GameObject:
   m_ObjectHideFlags: 0
@@ -1412,7 +1407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.5058824}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.4745098}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2664,7 +2659,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1779030892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3486,10 +3481,14 @@ PrefabInstance:
       propertyPath: cameraTransform
       value: 
       objectReference: {fileID: 2793314718335474321}
-    - target: {fileID: 3491679380879408030, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: -5495902117074765545, guid: 74003b918e9664442883d69c3fc27d45, type: 3}
+    - target: {fileID: 108382538353945808, guid: 4fdf92531617eb149882326568071636, type: 3}
+      propertyPath: debugGroundCheck
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524190655188326682, guid: 4fdf92531617eb149882326568071636, type: 3}
+      propertyPath: useScreenCenterFirePoint
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4878324643418289694, guid: 4fdf92531617eb149882326568071636, type: 3}
       propertyPath: aimCamera
       value: 
@@ -3565,10 +3564,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8359410263486921697, guid: 4fdf92531617eb149882326568071636, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4515682494504145904}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4fdf92531617eb149882326568071636, type: 3}
 --- !u!81 &1842450900155695310
 AudioListener:
@@ -3832,7 +3828,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1524190655188326682, guid: 4fdf92531617eb149882326568071636, type: 3}
   m_PrefabInstance: {fileID: 1652312958314983396}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 508554158}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 217b7f95917520741b7ebb94d71df9c2, type: 3}
@@ -3843,7 +3839,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5535248026419742877, guid: 4fdf92531617eb149882326568071636, type: 3}
   m_PrefabInstance: {fileID: 1652312958314983396}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 508554158}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ab9eb29a0583f9b46bb339482336f8c4, type: 3}
@@ -3854,24 +3850,12 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 807783362672105233, guid: 4fdf92531617eb149882326568071636, type: 3}
   m_PrefabInstance: {fileID: 1652312958314983396}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 508554158}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4af5c11cc8190e429d75b25925c3599, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAimController
---- !u!114 &4515682494504145904
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 508554158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03238c2691ba81549976d89c2d283e37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Player_MouseLock
 --- !u!154 &4867871925352272226
 TerrainCollider:
   m_ObjectHideFlags: 0
