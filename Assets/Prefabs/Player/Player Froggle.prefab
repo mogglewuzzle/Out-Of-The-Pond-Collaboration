@@ -462,6 +462,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9055210116562995960}
   - component: {fileID: 3491679380879408030}
+  - component: {fileID: 365956912431893901}
   m_Layer: 3
   m_Name: Cube
   m_TagString: Untagged
@@ -536,7 +537,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: -5495902117074765545, guid: 4fbd532d3f4bfd248b6381797c2c14e9, type: 3}
+  m_Mesh: {fileID: -5495902117074765545, guid: 74003b918e9664442883d69c3fc27d45, type: 3}
   m_Bones:
   - {fileID: 654370950191693315}
   - {fileID: 3856982421136517560}
@@ -557,6 +558,20 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.00041980436, y: 0.0074584577, z: 0.000078110024}
     m_Extent: {x: 0.015543884, y: 0.038375147, z: 0.01955001}
   m_DirtyAABB: 0
+--- !u!114 &365956912431893901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2862438274105554898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0762b2b9e0d5d894da310bba880acb3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Blink_Animation
+  openMat: {fileID: 2100000, guid: 11482a85914c3fd4a8587d35e31bafe8, type: 2}
+  blinkMat: {fileID: 2100000, guid: 601e029ee7c152c4e9b92b7a8083dc51, type: 2}
 --- !u!1 &3243321386867918583
 GameObject:
   m_ObjectHideFlags: 0
@@ -1441,6 +1456,7 @@ GameObject:
   - component: {fileID: 5334675483134022352}
   - component: {fileID: 7866744332092305658}
   - component: {fileID: 4878324643418289694}
+  - component: {fileID: 6100951251279255071}
   m_Layer: 3
   m_Name: Player Froggle
   m_TagString: Player
@@ -1760,12 +1776,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovementController
   moveSpeed: 5
+  sprintAcceleration: 0.3
   feetPoint: {fileID: 3431637087839159340}
   groundCheckDistance: 1
   groundMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  debugGroundCheck: 1
+  debugGroundCheck: 0
   debugRayLength: 20
   cameraTransform: {fileID: 0}
 --- !u!114 &8941425629739178495
@@ -1824,7 +1841,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerTongueProject
   tongueOrigin: {fileID: 3085156451193525150}
   lineRenderer: {fileID: 7967057991447379198}
-  useScreenCenterFirePoint: 1
+  useScreenCenterFirePoint: 0
   screenCenterFirePoint: {fileID: 0}
   screenCenterFirePointDistance: 5
   screenCenterAimOffset: {x: 0.05, y: 0}
@@ -1967,6 +1984,18 @@ MonoBehaviour:
   attractCameraDelay: 0.1
   grabCameraDelay: 0.1
   swingCameraDelay: 0.1
+--- !u!114 &6100951251279255071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8359410263486921697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03238c2691ba81549976d89c2d283e37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player_MouseLock
 --- !u!1 &8654065101012283222
 GameObject:
   m_ObjectHideFlags: 0

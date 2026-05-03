@@ -10,6 +10,7 @@ public class PlayerInputHandler : MonoBehaviour
     public bool SprintHeld { get; private set; }
     public bool FreeCameraHeld { get; private set; }
     public bool TongueThrowHeld { get; private set; }
+    public bool InteractPressed { get; private set; }
     public bool PickUpPressed { get; private set; }
     public bool PickUpHeld { get; private set; }
     public bool ThrowObjectPressed { get; private set; }
@@ -40,6 +41,8 @@ public class PlayerInputHandler : MonoBehaviour
         input.Player.TongueThrow.performed += ctx => TongueThrowHeld = true;
         input.Player.TongueThrow.canceled  += ctx => TongueThrowHeld = false;
 
+        input.Player.Interact.performed += ctx => InteractPressed = true;
+
         input.Player.PickUp.performed += ctx =>
         {
             PickUpPressed = true;
@@ -53,6 +56,7 @@ public class PlayerInputHandler : MonoBehaviour
     private void LateUpdate()
     {
         JumpPressed = false;
+        InteractPressed = false;
         PickUpPressed = false;
         ThrowObjectPressed = false;
     }

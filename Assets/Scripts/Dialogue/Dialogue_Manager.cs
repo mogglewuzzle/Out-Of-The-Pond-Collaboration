@@ -1,0 +1,388 @@
+using UnityEngine;
+using UnityEngine.Events;
+using Unity.Cinemachine;
+
+[DisallowMultipleComponent]
+[AddComponentMenu("Dialogue/Dialogue Manager")]
+public class Dialogue_Manager : MonoBehaviour
+{
+    public static Dialogue_Manager Instance { get; private set; }
+
+    [Header("References")]
+    [SerializeField] private Dialogue_UI dialogueUI;
+    [SerializeField] private GameObject playerObject;
+    [SerializeField] private GameObject gameplayCrosshair;
+
+    [Header("Player Dialogue Camera")]
+    [SerializeField] private CinemachineCamera playerDialogueCamera;
+    [SerializeField] private int playerDialogueCameraPriority = 60;
+
+    [Header("NPC Dialogue Camera")]
+    [SerializeField] private CinemachineCamera npcDialogueCamera;
+    [SerializeField] private int npcDialogueCameraPriority = 55;
+    [Tooltip("If enabled, the NPC dialogue camera priority is only raised after the player has spoken. If disabled, it is raised as soon as dialogue starts.")]
+    [SerializeField] private bool useNpcCameraOnlyAfterPlayerSpeaks;
+    [Tooltip("If enabled, the NPC dialogue camera's Tracking Target is set to the NPC currently being spoken to.")]
+    [SerializeField] private bool autoSetNpcCameraTrackingTarget = true;
+    [Tooltip("If enabled, the NPC dialogue camera's Tracking Target is restored when dialogue ends. Disable this for a dedicated dialogue camera that can stay on the last NPC.")]
+    [SerializeField] private bool restoreNpcCameraTrackingTargetOnEnd = true;
+
+    [Header("Player Response")]
+    [SerializeField] private string playerSpeakerName = "Player";
+
+    [Header("Player Lock")]
+    [SerializeField] private bool lockPlayerDuringDialogue = true;
+    [SerializeField] private bool showCursorDuringDialogue = true;
+
+    [Header("Dialogue Submit")]
+    [Tooltip("When enabled, the player's Interact input activates the currently selected dialogue button.")]
+    [SerializeField] private bool useInteractToSubmitSelectedButton = true;
+
+    [Header("Events")]
+    [SerializeField] private UnityEvent onDialogueStarted;
+    [SerializeField] private UnityEvent onDialogueEnded;
+
+    public Dialogue_Node CurrentNode { get; private set; }
+    public GameObject CurrentSpeakerObject { get; private set; }
+    public bool IsDialogueActive => CurrentNode != null || pendingNodeAfterPlayerResponse != null;
+
+    private Dialogue_Node pendingNodeAfterPlayerResponse;
+    private Behaviour[] playerBehavioursToDisable;
+    private bool[] playerBehaviourPreviousStates;
+    private CursorLockMode previousCursorLockState;
+    private bool previousCursorVisible;
+    private bool playerLocked;
+    private PlayerInputHandler playerInput;
+    private int ignoreInteractSubmitFrame = -1;
+    private bool showEndDialogueButton;
+    private string endDialogueButtonText;
+    private int playerDialogueCameraPreviousPriority;
+    private bool playerDialogueCameraPriorityChanged;
+    private int npcDialogueCameraPreviousPriority;
+    private bool npcDialogueCameraPriorityChanged;
+    private Transform npcDialogueCameraPreviousTrackingTarget;
+    private bool npcDialogueCameraTrackingTargetChanged;
+    private bool playerHasSpokenThisDialogue;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Debug.LogWarning("Multiple Dialogue_Manager objects exist in the scene.", this);
+            return;
+        }
+
+        Instance = this;
+
+        if (dialogueUI == null)
+            dialogueUI = FindFirstObjectByType<Dialogue_UI>();
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this)
+            Instance = null;
+    }
+
+    private void Update()
+    {
+        if (!useInteractToSubmitSelectedButton || !IsDialogueActive)
+            return;
+
+        if (Time.frameCount == ignoreInteractSubmitFrame)
+            return;
+
+        CachePlayerInput();
+
+        if (playerInput == null || !playerInput.InteractPressed || dialogueUI == null)
+            return;
+
+        if (dialogueUI.IsTyping && dialogueUI.AllowInteractToSpeedUpTyping)
+        {
+            dialogueUI.SpeedUpTypingOnce();
+            return;
+        }
+
+        if (dialogueUI.CanContinuePlayerLineWithInteract)
+        {
+            dialogueUI.ContinuePlayerLineFromInteract();
+            return;
+        }
+
+        dialogueUI.SubmitSelectedButton();
+    }
+
+    public void StartDialogue(
+        Dialogue_Node startingNode,
+        GameObject speakerObject = null,
+        bool showEndButton = true,
+        string endButtonText = "Goodbye")
+    {
+        if (startingNode == null)
+        {
+            Debug.LogWarning("Tried to start dialogue without a starting node.", this);
+            return;
+        }
+
+        CurrentSpeakerObject = speakerObject;
+        showEndDialogueButton = showEndButton;
+        endDialogueButtonText = endButtonText;
+        playerHasSpokenThisDialogue = false;
+
+        ignoreInteractSubmitFrame = Time.frameCount;
+        LockPlayer();
+        ApplyNpcCameraTrackingTarget(speakerObject);
+
+        if (!useNpcCameraOnlyAfterPlayerSpeaks)
+            ApplyNpcDialogueCameraPriority();
+
+        onDialogueStarted?.Invoke();
+        ShowNode(startingNode);
+    }
+
+    public void Choose(DialogueChoice choice)
+    {
+        if (choice == null)
+        {
+            EndDialogue();
+            return;
+        }
+
+        ShowPlayerResponse(choice);
+    }
+
+    public void EndDialogue()
+    {
+        CurrentNode = null;
+        CurrentSpeakerObject = null;
+        pendingNodeAfterPlayerResponse = null;
+
+        RestorePlayerDialogueCameraPriority();
+        RestoreNpcDialogueCameraPriority();
+        if (restoreNpcCameraTrackingTargetOnEnd)
+            RestoreNpcCameraTrackingTarget();
+
+        if (dialogueUI != null)
+            dialogueUI.Hide();
+
+        UnlockPlayer();
+        onDialogueEnded?.Invoke();
+    }
+
+    private void ShowNode(Dialogue_Node node)
+    {
+        if (node == null)
+        {
+            EndDialogue();
+            return;
+        }
+
+        CurrentNode = node;
+
+        if (dialogueUI != null)
+        {
+            RestorePlayerDialogueCameraPriority();
+            if (!useNpcCameraOnlyAfterPlayerSpeaks || playerHasSpokenThisDialogue)
+                ApplyNpcDialogueCameraPriority();
+
+            dialogueUI.ShowNode(node, Choose, showEndDialogueButton, endDialogueButtonText, EndDialogue);
+        }
+        else
+        {
+            RestorePlayerDialogueCameraPriority();
+            if (!useNpcCameraOnlyAfterPlayerSpeaks || playerHasSpokenThisDialogue)
+                ApplyNpcDialogueCameraPriority();
+
+            Debug.Log($"{node.SpeakerName}: {node.DialogueText}", node);
+        }
+    }
+
+    private void ShowPlayerResponse(DialogueChoice choice)
+    {
+        CurrentNode = null;
+        pendingNodeAfterPlayerResponse = choice.NextNode;
+        playerHasSpokenThisDialogue = true;
+        RestoreNpcDialogueCameraPriority();
+        ApplyPlayerDialogueCameraPriority();
+
+        if (dialogueUI != null)
+        {
+            dialogueUI.ShowLine(
+                playerSpeakerName,
+                choice.PlayerResponseText,
+                ContinueAfterPlayerResponse);
+        }
+        else
+        {
+            Debug.Log($"{playerSpeakerName}: {choice.PlayerResponseText}", this);
+            ContinueAfterPlayerResponse();
+        }
+    }
+
+    private void ContinueAfterPlayerResponse()
+    {
+        Dialogue_Node nextNode = pendingNodeAfterPlayerResponse;
+        pendingNodeAfterPlayerResponse = null;
+        RestorePlayerDialogueCameraPriority();
+
+        ShowNode(nextNode);
+    }
+
+    private void LockPlayer()
+    {
+        if (!lockPlayerDuringDialogue || playerLocked)
+            return;
+
+        playerLocked = true;
+        CachePlayerBehaviours();
+
+        if (playerBehavioursToDisable != null)
+        {
+            playerBehaviourPreviousStates = new bool[playerBehavioursToDisable.Length];
+
+            for (int i = 0; i < playerBehavioursToDisable.Length; i++)
+            {
+                Behaviour behaviour = playerBehavioursToDisable[i];
+                if (behaviour == null)
+                    continue;
+
+                playerBehaviourPreviousStates[i] = behaviour.enabled;
+                behaviour.enabled = false;
+            }
+        }
+
+        if (gameplayCrosshair != null)
+            gameplayCrosshair.SetActive(false);
+
+        if (showCursorDuringDialogue)
+        {
+            previousCursorLockState = Cursor.lockState;
+            previousCursorVisible = Cursor.visible;
+
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+    }
+
+    private void UnlockPlayer()
+    {
+        if (!playerLocked)
+            return;
+
+        playerLocked = false;
+
+        if (playerBehavioursToDisable != null && playerBehaviourPreviousStates != null)
+        {
+            for (int i = 0; i < playerBehavioursToDisable.Length; i++)
+            {
+                Behaviour behaviour = playerBehavioursToDisable[i];
+                if (behaviour == null)
+                    continue;
+
+                behaviour.enabled = playerBehaviourPreviousStates[i];
+            }
+        }
+
+        if (gameplayCrosshair != null)
+            gameplayCrosshair.SetActive(true);
+
+        if (showCursorDuringDialogue)
+        {
+            Cursor.lockState = previousCursorLockState;
+            Cursor.visible = previousCursorVisible;
+        }
+    }
+
+    private void CachePlayerBehaviours()
+    {
+        if (playerBehavioursToDisable != null || playerObject == null)
+            return;
+
+        playerBehavioursToDisable = new Behaviour[]
+        {
+            playerObject.GetComponent<PlayerMovementController>(),
+            playerObject.GetComponent<PlayerRotationController>(),
+            playerObject.GetComponent<PlayerCameraController>(),
+            playerObject.GetComponent<PlayerFreeCameraController>(),
+            playerObject.GetComponent<PlayerAimController>(),
+            playerObject.GetComponent<PlayerSprintController>(),
+            playerObject.GetComponent<PlayerJumpController>(),
+            playerObject.GetComponent<PlayerTongueProjection>(),
+            playerObject.GetComponent<Player_TongueAttract>(),
+            playerObject.GetComponent<Player_TongueGrab>(),
+            playerObject.GetComponent<Player_TongueSwing>(),
+            playerObject.GetComponent<Player_PickupControl>(),
+            playerObject.GetComponent<Player_ThrowObjectControl>()
+        };
+    }
+
+    private void CachePlayerInput()
+    {
+        if (playerInput != null || playerObject == null)
+            return;
+
+        playerInput = playerObject.GetComponent<PlayerInputHandler>();
+    }
+
+    private void ApplyPlayerDialogueCameraPriority()
+    {
+        if (playerDialogueCamera == null || playerDialogueCameraPriorityChanged)
+            return;
+
+        playerDialogueCameraPreviousPriority = playerDialogueCamera.Priority;
+        playerDialogueCamera.Priority = playerDialogueCameraPriority;
+        playerDialogueCameraPriorityChanged = true;
+    }
+
+    private void RestorePlayerDialogueCameraPriority()
+    {
+        if (playerDialogueCamera == null || !playerDialogueCameraPriorityChanged)
+            return;
+
+        playerDialogueCamera.Priority = playerDialogueCameraPreviousPriority;
+        playerDialogueCameraPriorityChanged = false;
+    }
+
+    private void ApplyNpcDialogueCameraPriority()
+    {
+        if (npcDialogueCamera == null || npcDialogueCameraPriorityChanged)
+            return;
+
+        npcDialogueCameraPreviousPriority = npcDialogueCamera.Priority;
+        npcDialogueCamera.Priority = npcDialogueCameraPriority;
+        npcDialogueCameraPriorityChanged = true;
+    }
+
+    private void RestoreNpcDialogueCameraPriority()
+    {
+        if (npcDialogueCamera == null || !npcDialogueCameraPriorityChanged)
+            return;
+
+        npcDialogueCamera.Priority = npcDialogueCameraPreviousPriority;
+        npcDialogueCameraPriorityChanged = false;
+    }
+
+    private void ApplyNpcCameraTrackingTarget(GameObject dialogueCharacter)
+    {
+        if (!autoSetNpcCameraTrackingTarget || npcDialogueCamera == null || dialogueCharacter == null)
+            return;
+
+        if (!npcDialogueCameraTrackingTargetChanged || !restoreNpcCameraTrackingTargetOnEnd)
+        {
+            npcDialogueCameraPreviousTrackingTarget = npcDialogueCamera.Target.TrackingTarget;
+            npcDialogueCameraTrackingTargetChanged = true;
+        }
+
+        npcDialogueCamera.Target.TrackingTarget = dialogueCharacter.transform;
+    }
+
+    private void RestoreNpcCameraTrackingTarget()
+    {
+        if (npcDialogueCamera == null || !npcDialogueCameraTrackingTargetChanged)
+            return;
+
+        npcDialogueCamera.Target.TrackingTarget = npcDialogueCameraPreviousTrackingTarget;
+        npcDialogueCameraPreviousTrackingTarget = null;
+        npcDialogueCameraTrackingTargetChanged = false;
+    }
+}
