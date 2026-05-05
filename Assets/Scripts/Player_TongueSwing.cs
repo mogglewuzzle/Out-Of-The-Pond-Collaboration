@@ -11,6 +11,12 @@ public class Player_TongueSwing : MonoBehaviour
     [SerializeField] private float swingMinGroundDistance = 1.5f;
     [SerializeField] private float maxSwingRopeLength = 25f;
 
+    [Header("Release Boost")]
+    [SerializeField] private float releaseForwardSpeed = 12f;
+    [SerializeField] private float releaseUpSpeed = 3f;
+    [SerializeField] private float releaseLaunchDuration = 0.35f;
+    [SerializeField] private float minSwingTimeForReleaseBoost = 0.25f;
+
     [Header("References")]
     [SerializeField] private Transform feetPoint;
     [SerializeField] private LayerMask groundMask = ~0;
@@ -25,6 +31,7 @@ public class Player_TongueSwing : MonoBehaviour
     private bool startingSwing;
     private Vector3 latchPoint;
     private float ropeLength;
+    private float activeSwingStartTime = -999f;
     private Coroutine swingStartupRoutine;
 
     public bool IsSwinging => active || startingSwing;
@@ -52,6 +59,18 @@ public class Player_TongueSwing : MonoBehaviour
 
     public void StopSwing()
     {
+        StopSwing(false);
+    }
+
+    public void ReleaseSwing()
+    {
+        StopSwing(true);
+    }
+
+    private void StopSwing(bool applyReleaseBoost)
+    {
+        bool wasActive = active;
+
         if (swingStartupRoutine != null)
         {
             StopCoroutine(swingStartupRoutine);
@@ -60,6 +79,9 @@ public class Player_TongueSwing : MonoBehaviour
 
         active = false;
         startingSwing = false;
+
+        if (applyReleaseBoost && wasActive)
+            ApplyReleaseBoost();
     }
 
     private IEnumerator SwingStartup()
@@ -78,7 +100,62 @@ public class Player_TongueSwing : MonoBehaviour
 
         startingSwing = false;
         active = true;
+        activeSwingStartTime = Time.time;
         swingStartupRoutine = null;
+    }
+
+    private void ApplyReleaseBoost()
+    {
+        if (Time.time - activeSwingStartTime < minSwingTimeForReleaseBoost)
+            return;
+
+        Vector3 releaseDirection = GetReleaseForwardDirection();
+        Vector3 launchVelocity = Vector3.zero;
+
+        if (releaseDirection != Vector3.zero && releaseForwardSpeed > 0f)
+            launchVelocity += releaseDirection * releaseForwardSpeed;
+
+        if (releaseUpSpeed > 0f)
+            launchVelocity += Vector3.up * releaseUpSpeed;
+
+        if (launchVelocity == Vector3.zero)
+            return;
+
+        if (movement != null)
+            movement.BeginExternalLaunch(launchVelocity, releaseLaunchDuration);
+        else
+            rb.linearVelocity += launchVelocity;
+    }
+
+    private Vector3 GetReleaseForwardDirection()
+    {
+        Vector3 horizontalVelocity = Vector3.ProjectOnPlane(rb.linearVelocity, Vector3.up);
+        if (horizontalVelocity.sqrMagnitude > 0.01f)
+            return horizontalVelocity.normalized;
+
+        Vector2 move = input != null ? input.MoveInput : Vector2.zero;
+        if (move.sqrMagnitude > 0.01f && cam != null)
+        {
+            Vector3 camForward = Vector3.ProjectOnPlane(cam.transform.forward, Vector3.up).normalized;
+            Vector3 camRight = Vector3.ProjectOnPlane(cam.transform.right, Vector3.up).normalized;
+            Vector3 inputDirection = camForward * move.y + camRight * move.x;
+
+            if (inputDirection.sqrMagnitude > 0.01f)
+                return inputDirection.normalized;
+        }
+
+        Vector3 playerForward = Vector3.ProjectOnPlane(transform.forward, Vector3.up);
+        if (playerForward.sqrMagnitude > 0.01f)
+            return playerForward.normalized;
+
+        if (cam != null)
+        {
+            Vector3 cameraForward = Vector3.ProjectOnPlane(cam.transform.forward, Vector3.up);
+            if (cameraForward.sqrMagnitude > 0.01f)
+                return cameraForward.normalized;
+        }
+
+        return Vector3.zero;
     }
 
     private void Update()

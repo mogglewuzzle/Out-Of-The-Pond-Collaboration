@@ -855,7 +855,7 @@ Transform:
   m_GameObject: {fileID: 4428328995417785311}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.22, z: 0}
+  m_LocalPosition: {x: 0, y: 0.344, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -935,7 +935,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -1238,7 +1238,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5567114698688809037
 Transform:
   m_ObjectHideFlags: 0
@@ -1457,6 +1457,7 @@ GameObject:
   - component: {fileID: 7866744332092305658}
   - component: {fileID: 4878324643418289694}
   - component: {fileID: 6100951251279255071}
+  - component: {fileID: 4260354098332897029}
   m_Layer: 3
   m_Name: Player Froggle
   m_TagString: Player
@@ -1494,7 +1495,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8359410263486921697}
   serializedVersion: 5
-  m_Mass: 5
+  m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1532,8 +1533,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.257275, y: 6.8984423, z: 1.6874579}
-  m_Center: {x: 0.07042909, y: 3.52387, z: -0.0474723}
+  m_Size: {x: 2.257275, y: 6.8902335, z: 1.6874579}
+  m_Center: {x: 0.07042909, y: 3.5279744, z: -0.0474723}
 --- !u!120 &7967057991447379198
 LineRenderer:
   serializedVersion: 3
@@ -1705,16 +1706,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCameraController
   aimPivot: {fileID: 8709792742642679742}
   pitchSpeed: 60
-  pitchMax: 15
-  pitchMin: 10
+  pitchMax: 40
+  pitchMin: 15
   invertPitch: 0
   aimPitchMultiplier: 0.5
   enableFreeLookPitch: 1
   freeLookPivot: {fileID: 1146856190868469532}
   freeLookPitchSpeed: 80
   freeLookPitchMultiplier: 1
-  freeLookPitchMax: 20
-  freeLookPitchMin: 10
+  freeLookPitchMax: 30
+  freeLookPitchMin: 15
   invertFreeLookPitch: 0
   freeLookPitchRecenter: 0
   freeLookRecenterSpeed: 45
@@ -1747,7 +1748,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f437dcedaf8bbed4e884bb4fcb2f4b37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerRotationController
-  rotationSpeed: 30
+  rotationSpeed: 120
   stickDeadzone: 0.15
   stickCurve: 2
   aimRotationMultiplier: 0.5
@@ -1777,12 +1778,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovementController
   moveSpeed: 5
   sprintAcceleration: 0.3
+  fallGravityMultiplier: 4
   feetPoint: {fileID: 3431637087839159340}
-  groundCheckDistance: 1
+  groundCheckDistance: 0.1
+  groundCheckRadius: 1
+  groundCheckOriginOffset: 0.35
   groundMask:
     serializedVersion: 2
-    m_Bits: 4294967295
-  debugGroundCheck: 0
+    m_Bits: 3146863
+  debugGroundCheck: 1
   debugRayLength: 20
   cameraTransform: {fileID: 0}
 --- !u!114 &8941425629739178495
@@ -1797,7 +1801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74d46aaee174fd24b8f899f1576990e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerJumpController
-  jumpForce: 50
+  jumpForce: 10
   coyoteTime: 0.15
   jumpBufferTime: 0.15
 --- !u!114 &3217419412627563550
@@ -1841,8 +1845,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerTongueProject
   tongueOrigin: {fileID: 3085156451193525150}
   lineRenderer: {fileID: 7967057991447379198}
-  useScreenCenterFirePoint: 0
-  screenCenterFirePoint: {fileID: 0}
+  useScreenCenterFirePoint: 1
+  screenCenterFirePoint: {fileID: 5567114698688809037}
   screenCenterFirePointDistance: 5
   screenCenterAimOffset: {x: 0.05, y: 0}
   screenCenterFreeLookOffset: {x: 0.05, y: 0}
@@ -1853,7 +1857,7 @@ MonoBehaviour:
   surfaceHookDuration: 0.1
   extendSpeed: 30
   retractSpeed: 25
-  maxRange: 20
+  maxRange: 30
   tipRadius: 0.1
   collidableLayers:
     serializedVersion: 2
@@ -1864,6 +1868,15 @@ MonoBehaviour:
   AttractPointTag: AttractPoint
   GrabPointTag: GrabPoint
   SwingPointTag: SwingPoint
+  useAutoAim: 1
+  autoAimRadius: 10
+  autoAimMaxAngle: 45
+  autoAimTagPriority:
+  - GrabPoint
+  - SwingPoint
+  - AttractPoint
+  useAimSlowdown: 1
+  aimSlowdownMultiplier: 0.5
 --- !u!114 &2945388515790302031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1959,7 +1972,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8359410263486921697}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a4cfad24a90426c498e3cab4c9bec9fa, type: 3}
   m_Name: 
@@ -1996,6 +2009,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03238c2691ba81549976d89c2d283e37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player_MouseLock
+--- !u!114 &4260354098332897029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8359410263486921697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ac1e85e56a255a4cac36120dffccfc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player_DialogueInteract
+  playerCamera: {fileID: 0}
+  startDistanceFromCamera: 8
+  interactRange: 8
+  castRadius: 2
+  interactMask:
+    serializedVersion: 2
+    m_Bits: 64
+  dialogueCharacterTag: DialogueCharacter
+  hitTriggerColliders: 1
+  debugLogs: 0
 --- !u!1 &8654065101012283222
 GameObject:
   m_ObjectHideFlags: 0

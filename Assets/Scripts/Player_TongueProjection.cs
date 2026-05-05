@@ -45,10 +45,24 @@ public class PlayerTongueProjection : MonoBehaviour
     [SerializeField] private string GrabPointTag = "GrabPoint";
     [SerializeField] private string SwingPointTag = "SwingPoint";
 
+    [Header("Auto Aim")]
+    [SerializeField] private bool useAutoAim = true;
+    [Tooltip("World-space thickness of the search tube around the screen-center ray. Larger values catch targets farther beside the ray, but the same value appears smaller on screen at long distances.")]
+    [SerializeField] private float autoAimRadius = 0.75f;
+    [Tooltip("Cone limit from the crosshair direction. This keeps the world-space radius from grabbing targets that feel too far from the crosshair on screen.")]
+    [SerializeField] private float autoAimMaxAngle = 7f;
+    [Tooltip("Only these tags can receive auto aim. Tags listed earlier win first when multiple valid targets are close together, then the closest-to-crosshair target wins.")]
+    [SerializeField] private string[] autoAimTagPriority = { "AttractPoint", "GrabPoint", "SwingPoint" };
+    [Tooltip("When enabled, look speed is reduced while a valid auto aim target is near the crosshair.")]
+    [SerializeField] private bool useAimSlowdown = true;
+    [Tooltip("Look speed multiplier while aim slowdown is active. Lower values feel stickier near tongue targets.")]
+    [SerializeField, Range(0.1f, 1f)] private float aimSlowdownMultiplier = 0.5f;
+
     private Vector3 tipPosition;
     private Vector3 fireDirection;
     private Vector3 fireStartPosition;
     private float hookTimer;
+    private float currentAimSlowdownMultiplier = 1f;
 
     private bool wasHeld;
     private PlayerInputHandler input;
@@ -67,6 +81,8 @@ public class PlayerTongueProjection : MonoBehaviour
         (attractModule != null && attractModule.IsAttracting) ||
         (grabModule != null && grabModule.IsGrabbing) ||
         (swingModule != null && swingModule.IsSwinging);
+
+    public float AimSlowdownMultiplier => currentAimSlowdownMultiplier;
 
     private Camera cam;
 
@@ -91,6 +107,7 @@ public class PlayerTongueProjection : MonoBehaviour
     private void Update()
     {
         UpdateScreenCenterFirePoint();
+        UpdateAimSlowdown();
 
         bool held = input != null && input.TongueThrowHeld;
 
@@ -114,7 +131,6 @@ public class PlayerTongueProjection : MonoBehaviour
         */
 
         Ray screenCenterRay = GetScreenCenterRay();
-        fireDirection = screenCenterRay.direction;
 
         if (useScreenCenterFirePoint)
         {
@@ -125,6 +141,8 @@ public class PlayerTongueProjection : MonoBehaviour
             // not useScreenCenterFirePoint prefered, as the tounge doesn't start from behind the frog and in the actual mouth
             fireStartPosition = tongueOrigin.position;
         }
+
+        fireDirection = GetFireDirection(screenCenterRay);
 
         tipPosition = fireStartPosition;
         state = State.Extending;
@@ -140,6 +158,98 @@ public class PlayerTongueProjection : MonoBehaviour
 
         Vector2 offset = GetScreenCenterOffset();
         return cam.ViewportPointToRay(new Vector3(0.5f + offset.x, 0.5f + offset.y, 0f));
+    }
+
+    private Vector3 GetFireDirection(Ray screenCenterRay)
+    {
+        if (useAutoAim && TryGetAutoAimPoint(screenCenterRay, out Vector3 autoAimPoint))
+        {
+            Vector3 assistedDirection = (autoAimPoint - fireStartPosition).normalized;
+            if (assistedDirection != Vector3.zero)
+                return assistedDirection;
+        }
+
+        return screenCenterRay.direction;
+    }
+
+    private bool TryGetAutoAimPoint(Ray screenCenterRay, out Vector3 autoAimPoint)
+    {
+        autoAimPoint = Vector3.zero;
+
+        if (autoAimRadius <= 0f || autoAimMaxAngle <= 0f)
+            return false;
+
+        RaycastHit[] hits = Physics.SphereCastAll(
+            screenCenterRay,
+            autoAimRadius,
+            maxRange,
+            collidableLayers & ~tongueLayerMask);
+
+        int bestPriority = int.MaxValue;
+        float bestAngle = float.PositiveInfinity;
+        float bestDistance = float.PositiveInfinity;
+        bool foundTarget = false;
+
+        foreach (RaycastHit hit in hits)
+        {
+            int priority = GetAutoAimTagPriority(hit.collider);
+            if (priority < 0)
+                continue;
+
+            Vector3 toHit = hit.point - screenCenterRay.origin;
+            if (toHit == Vector3.zero)
+                continue;
+
+            float angle = Vector3.Angle(screenCenterRay.direction, toHit);
+            if (angle > autoAimMaxAngle)
+                continue;
+
+            bool isBetter =
+                priority < bestPriority ||
+                (priority == bestPriority && angle < bestAngle) ||
+                (priority == bestPriority && Mathf.Approximately(angle, bestAngle) && hit.distance < bestDistance);
+
+            if (!isBetter)
+                continue;
+
+            autoAimPoint = hit.point;
+            bestPriority = priority;
+            bestAngle = angle;
+            bestDistance = hit.distance;
+            foundTarget = true;
+        }
+
+        return foundTarget;
+    }
+
+    private void UpdateAimSlowdown()
+    {
+        currentAimSlowdownMultiplier = 1f;
+
+        if (!useAimSlowdown)
+            return;
+
+        Ray screenCenterRay = GetScreenCenterRay();
+        Vector3 autoAimPoint;
+        if (TryGetAutoAimPoint(screenCenterRay, out autoAimPoint))
+            currentAimSlowdownMultiplier = aimSlowdownMultiplier;
+    }
+
+    private int GetAutoAimTagPriority(Collider hitCollider)
+    {
+        if (hitCollider == null)
+            return -1;
+
+        if (autoAimTagPriority != null)
+        {
+            for (int i = 0; i < autoAimTagPriority.Length; i++)
+            {
+                if (!string.IsNullOrEmpty(autoAimTagPriority[i]) && hitCollider.tag == autoAimTagPriority[i])
+                    return i;
+            }
+        }
+
+        return -1;
     }
 
     private Vector2 GetScreenCenterOffset()
@@ -279,7 +389,9 @@ public class PlayerTongueProjection : MonoBehaviour
         attractModule.StopAttract();
         if (grabModule != null)
             grabModule.StopGrab();
-        swingModule.StopSwing();
+
+        if (swingModule != null)
+            swingModule.ReleaseSwing();
     }
 
     private void UpdateLine()

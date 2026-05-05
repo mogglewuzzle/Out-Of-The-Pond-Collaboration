@@ -11,6 +11,7 @@ public class PlayerRotationController : MonoBehaviour
     private PlayerInputHandler input;
     private PlayerAimController aim;
     private PlayerFreeCameraController freeCamera; // NEW
+    private PlayerTongueProjection tongueProjection;
     private Rigidbody rb;
     private float currentYaw;
 
@@ -19,6 +20,7 @@ public class PlayerRotationController : MonoBehaviour
         input      = GetComponent<PlayerInputHandler>();
         aim        = GetComponent<PlayerAimController>();
         freeCamera = GetComponent<PlayerFreeCameraController>(); // NEW
+        tongueProjection = GetComponent<PlayerTongueProjection>();
         rb         = GetComponent<Rigidbody>();
 
         currentYaw = transform.eulerAngles.y;
@@ -35,7 +37,8 @@ public class PlayerRotationController : MonoBehaviour
         float remapped = Mathf.Clamp01((rawX - stickDeadzone) / (1f - stickDeadzone));
         float curved   = Mathf.Sign(input.LookInput.x) * Mathf.Pow(remapped, stickCurve);
 
-        float speed = rotationSpeed * (aim.IsAiming ? aimRotationMultiplier : 1f);
+        float slowdownMultiplier = tongueProjection != null ? tongueProjection.AimSlowdownMultiplier : 1f;
+        float speed = rotationSpeed * (aim.IsAiming ? aimRotationMultiplier : 1f) * slowdownMultiplier;
 
         currentYaw += curved * speed * Time.fixedDeltaTime;
 

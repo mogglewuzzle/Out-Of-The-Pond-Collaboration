@@ -37,6 +37,7 @@ public class PlayerCameraController : MonoBehaviour
     private PlayerInputHandler input;
     private PlayerAimController aim;
     private PlayerFreeCameraController freeCamera;
+    private PlayerTongueProjection tongueProjection;
 
     private float currentPitch;
     private float currentFreeLookPitch;
@@ -50,6 +51,7 @@ public class PlayerCameraController : MonoBehaviour
         input = GetComponent<PlayerInputHandler>();
         aim = GetComponent<PlayerAimController>();
         freeCamera = GetComponent<PlayerFreeCameraController>();
+        tongueProjection = GetComponent<PlayerTongueProjection>();
     }
 
     private void FixedUpdate()
@@ -100,7 +102,7 @@ public class PlayerCameraController : MonoBehaviour
         float curved = Mathf.Sign(input.LookInput.y) * Mathf.Pow(remapped, stickCurve);
         float direction = invertPitch ? 1f : -1f;
 
-        currentPitch += curved * pitchSpeed * aimPitchMultiplier * direction * Time.fixedDeltaTime;
+        currentPitch += curved * pitchSpeed * aimPitchMultiplier * GetAimSlowdownMultiplier() * direction * Time.fixedDeltaTime;
         currentPitch = Mathf.Clamp(currentPitch, -pitchMax, pitchMin);
 
         aimPivot.localRotation = Quaternion.Euler(currentPitch, 0f, 0f);
@@ -156,9 +158,14 @@ public class PlayerCameraController : MonoBehaviour
         float curved = Mathf.Sign(input.LookInput.y) * Mathf.Pow(remapped, stickCurve);
         float direction = invertFreeLookPitch ? 1f : -1f;
 
-        currentFreeLookPitch += curved * freeLookPitchSpeed * freeLookPitchMultiplier * direction * Time.fixedDeltaTime;
+        currentFreeLookPitch += curved * freeLookPitchSpeed * freeLookPitchMultiplier * GetAimSlowdownMultiplier() * direction * Time.fixedDeltaTime;
         currentFreeLookPitch = Mathf.Clamp(currentFreeLookPitch, -freeLookPitchMax, freeLookPitchMin);
 
         freeLookPivot.localRotation = Quaternion.Euler(currentFreeLookPitch, 0f, 0f);
+    }
+
+    private float GetAimSlowdownMultiplier()
+    {
+        return tongueProjection != null ? tongueProjection.AimSlowdownMultiplier : 1f;
     }
 }

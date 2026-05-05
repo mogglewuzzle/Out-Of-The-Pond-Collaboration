@@ -6,10 +6,20 @@ public class PlayerMovementController : MonoBehaviour
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float sprintAcceleration = 0.3f;
+    [Tooltip("Horizontal movement multiplier while the player is not grounded.")]
+    [SerializeField, Range(0f, 1f)] private float airborneMovementMultiplier = 0.6f;
+
+    [Header("Gravity")]
+    [Tooltip("Extra gravity applied any time the player is not grounded. 0 means no extra airborne gravity.")]
+    [SerializeField] private float airborneGravityMultiplier = 0.5f;
+    [Tooltip("Extra gravity applied while the player is falling. 1 uses normal gravity; higher values fall faster.")]
+    [SerializeField] private float fallGravityMultiplier = 2f;
 
     [Header("Ground Check")]
     [SerializeField] private Transform feetPoint;
-    [SerializeField] private float groundCheckDistance = 0.2f;
+    [SerializeField] private float groundCheckDistance = 0.55f;
+    [SerializeField] private float groundCheckRadius = 0.25f;
+    [SerializeField] private float groundCheckOriginOffset = 0.35f;
     [SerializeField] private LayerMask groundMask = ~0;
 
     [Header("Debug")]
@@ -29,8 +39,13 @@ public class PlayerMovementController : MonoBehaviour
 
     // for calculating acceleration/deceleration when sprinting
     private float currentSpeed;
+    private Vector3 externalVelocity;
+    private Vector3 launchVelocity;
+    private float launchTimer;
+    private float launchDuration;
 
     private Rigidbody rb;
+    private Collider[] playerColliders;
 
     public float CurrentHorizontalSpeed { get; private set; }
     public bool IsGroundedCached { get; private set; }
@@ -39,6 +54,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+        playerColliders = GetComponentsInChildren<Collider>();
 
         input  = GetComponent<PlayerInputHandler>();
         sprint = GetComponent<PlayerSprintController>();
@@ -60,6 +76,8 @@ public class PlayerMovementController : MonoBehaviour
 
         Move();
         HandleJump();
+        ApplyAirborneGravity();
+        ApplyFallGravity();
     }
 
     private void Update()
@@ -86,14 +104,20 @@ public class PlayerMovementController : MonoBehaviour
         moveInputWorld = Vector3.ClampMagnitude(moveInputWorld, 1f);
 
         float targetSpeed = Accelerate();
+        if (!IsGroundedCached)
+            targetSpeed *= airborneMovementMultiplier;
 
         Vector3 move = moveInputWorld * targetSpeed;
+        Vector3 finalVelocity = move + GetLaunchVelocity() + externalVelocity;
 
         rb.linearVelocity = new Vector3(
-            move.x,
-            rb.linearVelocity.y,
-            move.z
+            finalVelocity.x,
+            rb.linearVelocity.y + finalVelocity.y,
+            finalVelocity.z
         );
+
+        externalVelocity = Vector3.zero;
+        TickLaunch();
 
         CurrentHorizontalSpeed = new Vector3(
             rb.linearVelocity.x,
@@ -124,21 +148,54 @@ public class PlayerMovementController : MonoBehaviour
         jump.ConsumeJump();
     }
 
+    private void ApplyFallGravity()
+    {
+        if (swing != null && swing.IsSwinging)
+            return;
+
+        if (IsGroundedCached || rb.linearVelocity.y >= 0f)
+            return;
+
+        rb.AddForce(Physics.gravity * fallGravityMultiplier, ForceMode.Acceleration);
+    }
+
+    private void ApplyAirborneGravity()
+    {
+        if (swing != null && swing.IsSwinging)
+            return;
+
+        if (IsGroundedCached || airborneGravityMultiplier <= 0f)
+            return;
+
+        rb.AddForce(Physics.gravity * airborneGravityMultiplier, ForceMode.Acceleration);
+    }
+
     private bool IsGrounded()
     {
-        Vector3 origin = feetPoint != null ? feetPoint.position : transform.position;
-
-        return Physics.Raycast(
+        Vector3 origin = GetGroundCheckOrigin();
+        RaycastHit[] hits = Physics.SphereCastAll(
             origin,
+            groundCheckRadius,
             Vector3.down,
             groundCheckDistance,
-            groundMask
+            groundMask,
+            QueryTriggerInteraction.Ignore
         );
+
+        for (int i = 0; i < hits.Length; i++)
+        {
+            Collider hitCollider = hits[i].collider;
+
+            if (hitCollider != null && !IsPlayerCollider(hitCollider))
+                return true;
+        }
+
+        return false;
     }
 
     private void DrawGroundDebug()
     {
-        Vector3 origin = feetPoint != null ? feetPoint.position : transform.position;
+        Vector3 origin = GetGroundCheckOrigin();
 
         bool grounded = IsGroundedCached;
 
@@ -149,6 +206,48 @@ public class PlayerMovementController : MonoBehaviour
         );
 
         Debug.Log("Grounded: " + grounded);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (!debugGroundCheck)
+            return;
+
+        Vector3 origin = GetGroundCheckOrigin();
+        Vector3 end = origin + Vector3.down * groundCheckDistance;
+        Color color = IsGroundedCached ? Color.green : Color.red;
+
+        Gizmos.color = color;
+        Gizmos.DrawWireSphere(origin, groundCheckRadius);
+        Gizmos.DrawWireSphere(end, groundCheckRadius);
+
+        Vector3 right = Vector3.right * groundCheckRadius;
+        Vector3 forward = Vector3.forward * groundCheckRadius;
+
+        Gizmos.DrawLine(origin + right, end + right);
+        Gizmos.DrawLine(origin - right, end - right);
+        Gizmos.DrawLine(origin + forward, end + forward);
+        Gizmos.DrawLine(origin - forward, end - forward);
+    }
+
+    private Vector3 GetGroundCheckOrigin()
+    {
+        Vector3 origin = feetPoint != null ? feetPoint.position : transform.position;
+        return origin + Vector3.up * groundCheckOriginOffset;
+    }
+
+    private bool IsPlayerCollider(Collider hitCollider)
+    {
+        if (playerColliders == null)
+            return false;
+
+        for (int i = 0; i < playerColliders.Length; i++)
+        {
+            if (hitCollider == playerColliders[i])
+                return true;
+        }
+
+        return false;
     }
 
     private float Accelerate()
@@ -165,5 +264,39 @@ public class PlayerMovementController : MonoBehaviour
         }
 
         return currentSpeed;
+    }
+
+    public void AddExternalVelocity(Vector3 velocity)
+    {
+        externalVelocity += velocity;
+    }
+
+    public void BeginExternalLaunch(Vector3 velocity, float duration)
+    {
+        launchVelocity = velocity;
+        launchDuration = Mathf.Max(0f, duration);
+        launchTimer = launchDuration;
+    }
+
+    private Vector3 GetLaunchVelocity()
+    {
+        if (launchTimer <= 0f || launchDuration <= 0f)
+            return Vector3.zero;
+
+        float t = launchTimer / launchDuration;
+        return launchVelocity * t;
+    }
+
+    private void TickLaunch()
+    {
+        if (launchTimer <= 0f)
+            return;
+
+        launchTimer -= Time.fixedDeltaTime;
+        if (launchTimer <= 0f)
+        {
+            launchTimer = 0f;
+            launchVelocity = Vector3.zero;
+        }
     }
 }
