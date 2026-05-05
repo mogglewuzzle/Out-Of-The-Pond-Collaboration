@@ -3,8 +3,11 @@ using UnityEngine;
 public class PlayerJumpController : MonoBehaviour
 {
     [Header("Jump Settings")]
+    [Tooltip("Upward force applied when the player jumps. Higher values make the jump stronger.")]
     [SerializeField] private float jumpForce = 7f;
+    [Tooltip("How long after leaving the ground the player is still allowed to jump.")]
     [SerializeField] private float coyoteTime = 0.15f;
+    [Tooltip("How long before landing a jump input is remembered and used once grounded.")]
     [SerializeField] private float jumpBufferTime = 0.15f;
 
     private PlayerInputHandler input;
