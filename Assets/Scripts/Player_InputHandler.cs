@@ -14,6 +14,8 @@ public class PlayerInputHandler : MonoBehaviour
     public bool PickUpPressed { get; private set; }
     public bool PickUpHeld { get; private set; }
     public bool ThrowObjectPressed { get; private set; }
+    public bool ThrowObjectHeld { get; private set; }
+    public bool ThrowObjectReleased { get; private set; }
 
     private InputSystem_Actions input;
 
@@ -50,7 +52,16 @@ public class PlayerInputHandler : MonoBehaviour
         };
         input.Player.PickUp.canceled += ctx => PickUpHeld = false;
 
-        input.Player.ThrowObject.performed += ctx => ThrowObjectPressed = true;
+        input.Player.ThrowObject.performed += ctx =>
+        {
+            ThrowObjectPressed = true;
+            ThrowObjectHeld = true;
+        };
+        input.Player.ThrowObject.canceled += ctx =>
+        {
+            ThrowObjectHeld = false;
+            ThrowObjectReleased = true;
+        };
     }
 
     private void LateUpdate()
@@ -59,8 +70,15 @@ public class PlayerInputHandler : MonoBehaviour
         InteractPressed = false;
         PickUpPressed = false;
         ThrowObjectPressed = false;
+        ThrowObjectReleased = false;
     }
 
     private void OnEnable()  => input.Player.Enable();
-    private void OnDisable() => input.Player.Disable();
+
+    private void OnDisable()
+    {
+        input.Player.Disable();
+        ThrowObjectHeld = false;
+        ThrowObjectReleased = false;
+    }
 }

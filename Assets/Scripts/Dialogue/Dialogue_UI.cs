@@ -165,7 +165,7 @@ public class Dialogue_UI : MonoBehaviour
     {
         ClearChoices();
 
-        if (node.Choices == null || node.Choices.Count == 0)
+        if (!HasVisibleChoices(node))
         {
             if (!showEndButton)
             {
@@ -190,6 +190,9 @@ public class Dialogue_UI : MonoBehaviour
         for (int i = 0; i < node.Choices.Count; i++)
         {
             DialogueChoice choice = node.Choices[i];
+            if (choice == null || !choice.Active)
+                continue;
+
             Button button = CreateChoiceButton(choice.ChoiceText, choice, onChoiceSelected);
 
             if (firstButton == null)
@@ -197,6 +200,21 @@ public class Dialogue_UI : MonoBehaviour
         }
 
         SelectButton(firstButton);
+    }
+
+    private bool HasVisibleChoices(Dialogue_Node node)
+    {
+        if (node.Choices == null || node.Choices.Count == 0)
+            return false;
+
+        for (int i = 0; i < node.Choices.Count; i++)
+        {
+            DialogueChoice choice = node.Choices[i];
+            if (choice != null && choice.Active)
+                return true;
+        }
+
+        return false;
     }
 
     private Button CreateChoiceButton(string label, DialogueChoice choice, Action<DialogueChoice> onChoiceSelected)

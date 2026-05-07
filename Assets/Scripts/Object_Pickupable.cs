@@ -39,6 +39,7 @@ public class Object_Pickupable : MonoBehaviour
     public float ThrowForce => throwForce;
     public float UpwardThrowBoost => upwardThrowBoost;
     public float ThrownGravityMultiplier => thrownGravityMultiplier;
+    public bool UsesGravityWhenThrown => originalUseGravity;
 
     public void OnPickedUp()
     {

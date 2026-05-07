@@ -1238,7 +1238,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5567114698688809037
 Transform:
   m_ObjectHideFlags: 0
@@ -1455,7 +1455,6 @@ GameObject:
   - component: {fileID: 7808582135137537667}
   - component: {fileID: 5334675483134022352}
   - component: {fileID: 7866744332092305658}
-  - component: {fileID: 4878324643418289694}
   - component: {fileID: 6100951251279255071}
   - component: {fileID: 4260354098332897029}
   m_Layer: 3
@@ -1476,7 +1475,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.5785098, y: 0.40000018, z: -6.213917}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1518819705876862887}
   - {fileID: 9055210116562995960}
@@ -1778,7 +1777,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovementController
   moveSpeed: 5
   sprintAcceleration: 0.3
-  fallGravityMultiplier: 4
+  airborneMovementMultiplier: 1
+  airborneGravityMultiplier: 1
+  fallGravityMultiplier: 3
   feetPoint: {fileID: 3431637087839159340}
   groundCheckDistance: 0.1
   groundCheckRadius: 1
@@ -1801,7 +1802,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74d46aaee174fd24b8f899f1576990e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerJumpController
-  jumpForce: 10
+  jumpForce: 15
   coyoteTime: 0.15
   jumpBufferTime: 0.15
 --- !u!114 &3217419412627563550
@@ -1846,13 +1847,15 @@ MonoBehaviour:
   tongueOrigin: {fileID: 3085156451193525150}
   lineRenderer: {fileID: 7967057991447379198}
   useScreenCenterFirePoint: 1
-  screenCenterFirePoint: {fileID: 5567114698688809037}
+  screenCenterFirePoint: {fileID: 0}
   screenCenterFirePointDistance: 5
   screenCenterAimOffset: {x: 0.05, y: 0}
   screenCenterFreeLookOffset: {x: 0.05, y: 0}
   useCurvedTongueLine: 1
   curvedTongueLinePoints: 12
   tongueCurveBend: 0.5
+  tongueBulletPrefab: {fileID: 3826563934869142170, guid: b4f1eb677fe9e07428cc08bef6e41388, type: 3}
+  destroyTongueBulletOnRetract: 1
   maxDistanceHookDuration: 0.15
   surfaceHookDuration: 0.1
   extendSpeed: 30
@@ -1861,7 +1864,7 @@ MonoBehaviour:
   tipRadius: 0.1
   collidableLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 3147003
   tongueLayerMask:
     serializedVersion: 2
     m_Bits: 1024
@@ -1903,12 +1906,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 706d33cbbffbd984ab624d3ac77c7dd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player_TongueSwing
-  swingGravityMultiplier: 2
+  swingGravityMultiplier: 3
   swingHorizontalAcceleration: 20
   swingGroundDelay: 0.15
   swingStartupPullForce: 12
   swingMinGroundDistance: 1.5
   maxSwingRopeLength: 25
+  releaseForwardSpeed: 20
+  releaseUpSpeed: 0
+  releaseLaunchDuration: 0.35
+  minSwingTimeForReleaseBoost: 0.25
   feetPoint: {fileID: 3431637087839159340}
   groundMask:
     serializedVersion: 2
@@ -1965,38 +1972,47 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player_ThrowObjectControl
   playerCamera: {fileID: 0}
---- !u!114 &4878324643418289694
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8359410263486921697}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4cfad24a90426c498e3cab4c9bec9fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Player_CameraStateController
-  normalCamera: {fileID: 0}
-  aimCamera: {fileID: 0}
-  freeLookCamera: {fileID: 0}
-  attractCamera: {fileID: 0}
-  grabCamera: {fileID: 0}
-  swingCamera: {fileID: 0}
-  normalDefaultPriority: 1
-  aimDefaultPriority: 0
-  freeLookDefaultPriority: 0
-  attractDefaultPriority: 0
-  grabDefaultPriority: 0
-  swingDefaultPriority: 0
-  aimActivePriority: 2
-  freeLookActivePriority: 5
-  attractActivePriority: 3
-  grabActivePriority: 3
-  swingActivePriority: 3
-  attractCameraDelay: 0.1
-  grabCameraDelay: 0.1
-  swingCameraDelay: 0.1
+  arcLineRenderer: {fileID: 0}
+  canvasToDisableWhileHolding: {fileID: 0}
+  throwDirectionOffset: {x: 0.2, y: 0}
+  showThrowArc: 1
+  arcMaxPointCount: 120
+  arcMaxSimulationTime: 8
+  arcTimeStep: 0.08
+  arcCollisionRadius: 0.15
+  arcCollisionMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  arcLineWidth: 0.5
+  arcLineColor: {r: 0.45911938, g: 0.11694545, b: 0.11694545, a: 1}
+  useChargedThrow: 1
+  maxChargeTime: 1.5
+  minThrowMultiplier: 1
+  maxThrowMultiplier: 2
+  chargeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &6100951251279255071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2022,7 +2038,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player_DialogueInteract
   playerCamera: {fileID: 0}
-  startDistanceFromCamera: 8
+  startDistanceFromCamera: 2
   interactRange: 8
   castRadius: 2
   interactMask:

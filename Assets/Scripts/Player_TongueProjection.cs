@@ -26,6 +26,12 @@ public class PlayerTongueProjection : MonoBehaviour
     [Tooltip("How strongly the visual tongue bends toward the captured screen-center fire path. Values above 1 can exaggerate the curve.")]
     [SerializeField] private float tongueCurveBend = 0.5f;
 
+    [Header("Tongue Bullet Trigger")]
+    [Tooltip("Optional invisible trigger prefab that moves with the tongue tip. Use this for trigger-based reactions such as above-character dialogue.")]
+    [SerializeField] private GameObject tongueBulletPrefab;
+    [Tooltip("If enabled, the spawned tongue bullet is destroyed when the tongue starts retracting. If disabled, it remains until the tongue finishes retracting.")]
+    [SerializeField] private bool destroyTongueBulletOnRetract = true;
+
     [Header("Hook Timing")]
     [Tooltip("How long the tongue tip stays hooked when it reaches max distance without hitting anything.")]
     [SerializeField] private float maxDistanceHookDuration = 0.15f;
@@ -63,6 +69,7 @@ public class PlayerTongueProjection : MonoBehaviour
     private Vector3 fireStartPosition;
     private float hookTimer;
     private float currentAimSlowdownMultiplier = 1f;
+    private GameObject activeTongueBullet;
 
     private bool wasHeld;
     private PlayerInputHandler input;
@@ -104,6 +111,11 @@ public class PlayerTongueProjection : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        DestroyTongueBullet();
+    }
+
     private void Update()
     {
         UpdateScreenCenterFirePoint();
@@ -120,6 +132,7 @@ public class PlayerTongueProjection : MonoBehaviour
         wasHeld = held;
 
         TickState();
+        UpdateTongueBulletPosition();
         UpdateLine();
     }
 
@@ -146,6 +159,7 @@ public class PlayerTongueProjection : MonoBehaviour
 
         tipPosition = fireStartPosition;
         state = State.Extending;
+        SpawnTongueBullet();
 
         if (lineRenderer != null)
             lineRenderer.enabled = true;
@@ -378,6 +392,7 @@ public class PlayerTongueProjection : MonoBehaviour
         if (Vector3.Distance(tipPosition, retractTarget) < 0.01f)
         {
             state = State.Idle;
+            DestroyTongueBullet();
             if (lineRenderer != null)
                 lineRenderer.enabled = false;
         }
@@ -386,6 +401,9 @@ public class PlayerTongueProjection : MonoBehaviour
     public void BeginRetract()
     {
         state = State.Retracting;
+        if (destroyTongueBulletOnRetract)
+            DestroyTongueBullet();
+
         attractModule.StopAttract();
         if (grabModule != null)
             grabModule.StopGrab();
@@ -454,5 +472,55 @@ public class PlayerTongueProjection : MonoBehaviour
     public void SetTipPosition(Vector3 pos)
     {
         tipPosition = pos;
+        UpdateTongueBulletPosition();
+    }
+
+    private void SpawnTongueBullet()
+    {
+        DestroyTongueBullet();
+
+        if (tongueBulletPrefab == null)
+            return;
+
+        Quaternion rotation = fireDirection.sqrMagnitude > 0.0001f
+            ? Quaternion.LookRotation(fireDirection.normalized, Vector3.up)
+            : Quaternion.identity;
+
+        activeTongueBullet = Instantiate(tongueBulletPrefab, tipPosition, rotation);
+        EnsureTongueBulletPhysics(activeTongueBullet);
+    }
+
+    private void UpdateTongueBulletPosition()
+    {
+        if (activeTongueBullet == null)
+            return;
+
+        activeTongueBullet.transform.position = tipPosition;
+
+        if (fireDirection.sqrMagnitude > 0.0001f)
+            activeTongueBullet.transform.rotation = Quaternion.LookRotation(fireDirection.normalized, Vector3.up);
+    }
+
+    private void DestroyTongueBullet()
+    {
+        if (activeTongueBullet == null)
+            return;
+
+        Destroy(activeTongueBullet);
+        activeTongueBullet = null;
+    }
+
+    private void EnsureTongueBulletPhysics(GameObject bulletObject)
+    {
+        Collider[] bulletColliders = bulletObject.GetComponentsInChildren<Collider>();
+        for (int i = 0; i < bulletColliders.Length; i++)
+            bulletColliders[i].isTrigger = true;
+
+        Rigidbody bulletRigidbody = bulletObject.GetComponent<Rigidbody>();
+        if (bulletRigidbody == null)
+            bulletRigidbody = bulletObject.AddComponent<Rigidbody>();
+
+        bulletRigidbody.isKinematic = true;
+        bulletRigidbody.useGravity = false;
     }
 }

@@ -10,6 +10,8 @@ TagManager:
   - GrabPoint
   - Hazard
   - DialogueCharacter
+  - Tongue
+  - StoryItem
   layers:
   - Default
   - TransparentFX

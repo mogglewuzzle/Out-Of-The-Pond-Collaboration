@@ -148,6 +148,7 @@ public class Dialogue_Manager : MonoBehaviour
             return;
         }
 
+        choice.MarkChosen();
         ShowPlayerResponse(choice);
     }
 

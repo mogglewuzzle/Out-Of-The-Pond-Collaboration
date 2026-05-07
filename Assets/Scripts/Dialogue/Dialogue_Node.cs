@@ -12,11 +12,28 @@ public class DialogueChoice
     [SerializeField] private string playerResponseText;
     [Tooltip("The node that appears after the player's sentence.")]
     [SerializeField] private Dialogue_Node nextNode;
+    [Tooltip("If disabled, this choice is hidden from the dialogue list.")]
+    [SerializeField] private bool active = true;
+    [Tooltip("If enabled, this choice becomes inactive after the player selects it.")]
+    [SerializeField] private bool deactivateAfterChosen = false;
 
     public string ChoiceText => choiceText;
     public string PlayerResponseText => string.IsNullOrWhiteSpace(playerResponseText) ? choiceText : playerResponseText;
     public Dialogue_Node NextNode => nextNode;
     public bool EndsConversation => nextNode == null;
+    public bool Active => active;
+    public bool DeactivateAfterChosen => deactivateAfterChosen;
+
+    public void SetActive(bool isActive)
+    {
+        active = isActive;
+    }
+
+    public void MarkChosen()
+    {
+        if (deactivateAfterChosen)
+            active = false;
+    }
 }
 
 [DisallowMultipleComponent]
