@@ -12,8 +12,6 @@ public class Dialogue_AboveCharacter : MonoBehaviour
     private class TaggedDialogueEntry
     {
         [SerializeField] private string triggerTag = "Player";
-        [Tooltip("Collider used by this entry. It can be a trigger collider or a normal collider.")]
-        [SerializeField] private Collider triggerCollider;
         [SerializeField] private string firstText;
         [SerializeField] private string secondText;
         [SerializeField] private string thirdText;
@@ -21,7 +19,6 @@ public class Dialogue_AboveCharacter : MonoBehaviour
         private int nextTextIndex;
 
         public string TriggerTag => triggerTag;
-        public Collider TriggerCollider => triggerCollider;
 
         public string GetNextText()
         {
@@ -54,18 +51,25 @@ public class Dialogue_AboveCharacter : MonoBehaviour
     [SerializeField] private bool faceCamera = true;
     [SerializeField] private bool keepUpright = true;
     [SerializeField] private Camera targetCamera;
+    [Tooltip("Shared collider used for every dialogue entry. If empty, the first parent collider is used.")]
+    [SerializeField] private Collider triggerCollider;
 
     [Header("Triggers")]
     [SerializeField] private bool checkParentTags = true;
     [SerializeField] private List<TaggedDialogueEntry> taggedDialogueEntries = new List<TaggedDialogueEntry>();
 
+    [Header("Completed Dialogue")]
+    [SerializeField] private string completedFirstText;
+    [SerializeField] private string completedSecondText;
+    [SerializeField] private string completedThirdText;
+
     private readonly HashSet<string> activeTriggerContacts = new HashSet<string>();
     private Coroutine hideRoutine;
+    private int nextCompletedTextIndex;
 
     private void Awake()
     {
-        if (targetCamera == null)
-            targetCamera = Camera.main;
+        AssignMissingReferences();
 
         RegisterTriggerRelays();
         HideDialogue();
@@ -92,11 +96,12 @@ public class Dialogue_AboveCharacter : MonoBehaviour
         if (triggeringObject == null)
             return;
 
-        string contactKey = GetContactKey(entryTriggerCollider, triggeringObject);
+        Collider contactTriggerCollider = GetContactTriggerCollider(entryTriggerCollider);
+        string contactKey = GetContactKey(contactTriggerCollider, triggeringObject);
         if (!activeTriggerContacts.Add(contactKey))
             return;
 
-        TaggedDialogueEntry entry = GetEntryForObject(entryTriggerCollider, other);
+        TaggedDialogueEntry entry = GetEntryForObject(other);
         if (entry == null)
             return;
 
@@ -107,21 +112,23 @@ public class Dialogue_AboveCharacter : MonoBehaviour
     {
         GameObject triggeringObject = GetTriggeringObject(other);
         if (triggeringObject != null)
-            activeTriggerContacts.Remove(GetContactKey(entryTriggerCollider, triggeringObject));
+            activeTriggerContacts.Remove(GetContactKey(GetContactTriggerCollider(entryTriggerCollider), triggeringObject));
 
         if (hideOnExit)
             HideDialogue();
     }
 
-    private TaggedDialogueEntry GetEntryForObject(Collider entryTriggerCollider, Collider other)
+    public void ShowCompletedDialogueEntry()
+    {
+        ShowDialogue(GetNextCompletedText());
+    }
+
+    private TaggedDialogueEntry GetEntryForObject(Collider other)
     {
         for (int i = 0; i < taggedDialogueEntries.Count; i++)
         {
             TaggedDialogueEntry entry = taggedDialogueEntries[i];
             if (entry == null || string.IsNullOrWhiteSpace(entry.TriggerTag))
-                continue;
-
-            if (entry.TriggerCollider != null && entryTriggerCollider != entry.TriggerCollider)
                 continue;
 
             if (ObjectHasTag(other, entry.TriggerTag.Trim()))
@@ -162,6 +169,14 @@ public class Dialogue_AboveCharacter : MonoBehaviour
         return other.gameObject;
     }
 
+    private Collider GetContactTriggerCollider(Collider entryTriggerCollider)
+    {
+        if (entryTriggerCollider != null)
+            return entryTriggerCollider;
+
+        return triggerCollider;
+    }
+
     private string GetContactKey(Collider entryTriggerCollider, GameObject triggeringObject)
     {
         int triggerId = entryTriggerCollider != null ? entryTriggerCollider.GetInstanceID() : 0;
@@ -170,18 +185,14 @@ public class Dialogue_AboveCharacter : MonoBehaviour
 
     private void RegisterTriggerRelays()
     {
-        for (int i = 0; i < taggedDialogueEntries.Count; i++)
-        {
-            TaggedDialogueEntry entry = taggedDialogueEntries[i];
-            if (entry == null || entry.TriggerCollider == null)
-                continue;
+        if (triggerCollider == null)
+            return;
 
-            Dialogue_AboveCharacterTrigger relay = entry.TriggerCollider.GetComponent<Dialogue_AboveCharacterTrigger>();
-            if (relay == null)
-                relay = entry.TriggerCollider.gameObject.AddComponent<Dialogue_AboveCharacterTrigger>();
+        Dialogue_AboveCharacterTrigger relay = triggerCollider.GetComponent<Dialogue_AboveCharacterTrigger>();
+        if (relay == null)
+            relay = triggerCollider.gameObject.AddComponent<Dialogue_AboveCharacterTrigger>();
 
-            relay.Assign(this, entry.TriggerCollider);
-        }
+        relay.Assign(this, triggerCollider);
     }
 
     private void ShowDialogue(string text)
@@ -198,13 +209,33 @@ public class Dialogue_AboveCharacter : MonoBehaviour
             hideRoutine = StartCoroutine(HideAfterDelay());
     }
 
+    private string GetNextCompletedText()
+    {
+        string selectedText;
+        switch (nextCompletedTextIndex)
+        {
+            case 0:
+                selectedText = completedFirstText;
+                break;
+            case 1:
+                selectedText = completedSecondText;
+                break;
+            default:
+                selectedText = completedThirdText;
+                break;
+        }
+
+        nextCompletedTextIndex = (nextCompletedTextIndex + 1) % 3;
+        return selectedText;
+    }
+
     private void UpdateFacing()
     {
         if (!faceCamera || dialogueRoot == null || !dialogueRoot.activeInHierarchy)
             return;
 
         if (targetCamera == null)
-            targetCamera = Camera.main;
+            targetCamera = FindMainCamera();
 
         if (targetCamera == null)
             return;
@@ -251,6 +282,7 @@ public class Dialogue_AboveCharacter : MonoBehaviour
     private void OnValidate()
     {
         displayDuration = Mathf.Max(0f, displayDuration);
+        AssignMissingReferences();
     }
 
     private void OnDisable()
@@ -265,5 +297,37 @@ public class Dialogue_AboveCharacter : MonoBehaviour
 
         if (dialogueText != null)
             dialogueRoot = dialogueText.gameObject;
+
+        AssignMissingReferences();
+    }
+
+    private void AssignMissingReferences()
+    {
+        if (targetCamera == null)
+            targetCamera = FindMainCamera();
+
+        if (triggerCollider == null)
+            triggerCollider = FindFirstParentCollider();
+    }
+
+    private Camera FindMainCamera()
+    {
+        GameObject cameraObject = GameObject.FindGameObjectWithTag("MainCamera");
+        return cameraObject != null ? cameraObject.GetComponent<Camera>() : null;
+    }
+
+    private Collider FindFirstParentCollider()
+    {
+        Transform current = transform.parent;
+        while (current != null)
+        {
+            Collider parentCollider = current.GetComponent<Collider>();
+            if (parentCollider != null)
+                return parentCollider;
+
+            current = current.parent;
+        }
+
+        return null;
     }
 }

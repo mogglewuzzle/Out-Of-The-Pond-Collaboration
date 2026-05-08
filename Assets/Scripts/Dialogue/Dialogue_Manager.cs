@@ -1,6 +1,8 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using Unity.Cinemachine;
+using UnityEngine.InputSystem;
 
 [DisallowMultipleComponent]
 [AddComponentMenu("Dialogue/Dialogue Manager")]
@@ -34,9 +36,21 @@ public class Dialogue_Manager : MonoBehaviour
     [SerializeField] private bool lockPlayerDuringDialogue = true;
     [SerializeField] private bool showCursorDuringDialogue = true;
 
+    [Header("Player Dialogue Position")]
+    [SerializeField] private bool movePlayerToDialoguePosition = true;
+    [SerializeField] private float playerDistanceFromSpeaker = 2f;
+    [SerializeField] private float playerSideOffset = 0f;
+    [SerializeField] private float playerRepositionSpeed = 2f;
+    [SerializeField] private bool rotatePlayerTowardSpeaker = true;
+    [SerializeField] private float playerRotationSpeed = 540f;
+
     [Header("Dialogue Submit")]
     [Tooltip("When enabled, the player's Interact input activates the currently selected dialogue button.")]
     [SerializeField] private bool useInteractToSubmitSelectedButton = true;
+
+    [Header("Dialogue Cancel")]
+    [SerializeField] private bool useCancelInputToEndDialogue = true;
+    [SerializeField] private InputActionReference cancelDialogueAction;
 
     [Header("Events")]
     [SerializeField] private UnityEvent onDialogueStarted;
@@ -46,6 +60,7 @@ public class Dialogue_Manager : MonoBehaviour
     public GameObject CurrentSpeakerObject { get; private set; }
     public bool IsDialogueActive => CurrentNode != null || pendingNodeAfterPlayerResponse != null;
 
+    private Dialogue_Source currentDialogueSource;
     private Dialogue_Node pendingNodeAfterPlayerResponse;
     private Behaviour[] playerBehavioursToDisable;
     private bool[] playerBehaviourPreviousStates;
@@ -54,6 +69,7 @@ public class Dialogue_Manager : MonoBehaviour
     private bool playerLocked;
     private PlayerInputHandler playerInput;
     private int ignoreInteractSubmitFrame = -1;
+    private int ignoreCancelInputFrame = -1;
     private bool showEndDialogueButton;
     private string endDialogueButtonText;
     private int playerDialogueCameraPreviousPriority;
@@ -63,6 +79,9 @@ public class Dialogue_Manager : MonoBehaviour
     private Transform npcDialogueCameraPreviousTrackingTarget;
     private bool npcDialogueCameraTrackingTargetChanged;
     private bool playerHasSpokenThisDialogue;
+    private Coroutine playerRepositionRoutine;
+    private bool cancelDialogueActionEnabledByManager;
+    private bool endAfterPlayerResponse;
 
     private void Awake()
     {
@@ -84,8 +103,24 @@ public class Dialogue_Manager : MonoBehaviour
             Instance = null;
     }
 
+    private void OnEnable()
+    {
+        EnableCancelDialogueAction();
+    }
+
+    private void OnDisable()
+    {
+        DisableCancelDialogueAction();
+    }
+
     private void Update()
     {
+        if (ShouldCancelDialogueFromInput())
+        {
+            EndDialogue();
+            return;
+        }
+
         if (!useInteractToSubmitSelectedButton || !IsDialogueActive)
             return;
 
@@ -118,19 +153,33 @@ public class Dialogue_Manager : MonoBehaviour
         bool showEndButton = true,
         string endButtonText = "Goodbye")
     {
+        StartDialogue(null, startingNode, speakerObject, showEndButton, endButtonText);
+    }
+
+    public void StartDialogue(
+        Dialogue_Source dialogueSource,
+        Dialogue_Node startingNode,
+        GameObject speakerObject = null,
+        bool showEndButton = true,
+        string endButtonText = "Goodbye")
+    {
         if (startingNode == null)
         {
             Debug.LogWarning("Tried to start dialogue without a starting node.", this);
             return;
         }
 
+        currentDialogueSource = dialogueSource;
         CurrentSpeakerObject = speakerObject;
         showEndDialogueButton = showEndButton;
         endDialogueButtonText = endButtonText;
         playerHasSpokenThisDialogue = false;
+        endAfterPlayerResponse = false;
 
         ignoreInteractSubmitFrame = Time.frameCount;
+        ignoreCancelInputFrame = Time.frameCount;
         LockPlayer();
+        BeginPlayerDialogueReposition(speakerObject);
         ApplyNpcCameraTrackingTarget(speakerObject);
 
         if (!useNpcCameraOnlyAfterPlayerSpeaks)
@@ -149,6 +198,14 @@ public class Dialogue_Manager : MonoBehaviour
         }
 
         choice.MarkChosen();
+        if (choice.FinalChoice)
+        {
+            if (currentDialogueSource != null)
+                currentDialogueSource.MarkDialogueCompleted();
+
+            endAfterPlayerResponse = true;
+        }
+
         ShowPlayerResponse(choice);
     }
 
@@ -156,7 +213,9 @@ public class Dialogue_Manager : MonoBehaviour
     {
         CurrentNode = null;
         CurrentSpeakerObject = null;
+        currentDialogueSource = null;
         pendingNodeAfterPlayerResponse = null;
+        endAfterPlayerResponse = false;
 
         RestorePlayerDialogueCameraPriority();
         RestoreNpcDialogueCameraPriority();
@@ -166,6 +225,7 @@ public class Dialogue_Manager : MonoBehaviour
         if (dialogueUI != null)
             dialogueUI.Hide();
 
+        StopPlayerDialogueReposition();
         UnlockPlayer();
         onDialogueEnded?.Invoke();
     }
@@ -222,6 +282,12 @@ public class Dialogue_Manager : MonoBehaviour
 
     private void ContinueAfterPlayerResponse()
     {
+        if (endAfterPlayerResponse)
+        {
+            EndDialogue();
+            return;
+        }
+
         Dialogue_Node nextNode = pendingNodeAfterPlayerResponse;
         pendingNodeAfterPlayerResponse = null;
         RestorePlayerDialogueCameraPriority();
@@ -292,6 +358,177 @@ public class Dialogue_Manager : MonoBehaviour
             Cursor.lockState = previousCursorLockState;
             Cursor.visible = previousCursorVisible;
         }
+    }
+
+    private void BeginPlayerDialogueReposition(GameObject speakerObject)
+    {
+        StopPlayerDialogueReposition();
+
+        if (!movePlayerToDialoguePosition || playerObject == null || speakerObject == null)
+            return;
+
+        playerRepositionRoutine = StartCoroutine(MovePlayerToDialoguePosition(speakerObject.transform));
+    }
+
+    private IEnumerator MovePlayerToDialoguePosition(Transform speakerTransform)
+    {
+        if (speakerTransform == null)
+        {
+            playerRepositionRoutine = null;
+            yield break;
+        }
+
+        Rigidbody playerRigidbody = playerObject.GetComponent<Rigidbody>();
+        Transform playerTransform = playerObject.transform;
+
+        Vector3 targetPosition = GetPlayerDialogueTargetPosition(speakerTransform, playerTransform.position.y);
+
+        while (Vector3.Distance(playerTransform.position, targetPosition) > 0.01f)
+        {
+            if (speakerTransform == null)
+            {
+                playerRepositionRoutine = null;
+                yield break;
+            }
+
+            Vector3 nextPosition = Vector3.MoveTowards(
+                playerTransform.position,
+                targetPosition,
+                playerRepositionSpeed * Time.fixedDeltaTime);
+
+            if (playerRigidbody != null)
+            {
+                playerRigidbody.linearVelocity = new Vector3(0f, playerRigidbody.linearVelocity.y, 0f);
+                playerRigidbody.MovePosition(nextPosition);
+            }
+            else
+            {
+                playerTransform.position = nextPosition;
+            }
+
+            if (rotatePlayerTowardSpeaker)
+                RotatePlayerTowardSpeaker(playerRigidbody, playerTransform, speakerTransform.position);
+
+            yield return new WaitForFixedUpdate();
+        }
+
+        if (playerRigidbody != null)
+        {
+            playerRigidbody.linearVelocity = new Vector3(0f, playerRigidbody.linearVelocity.y, 0f);
+            playerRigidbody.MovePosition(targetPosition);
+        }
+        else
+        {
+            playerTransform.position = targetPosition;
+        }
+
+        if (rotatePlayerTowardSpeaker)
+            RotatePlayerTowardSpeaker(playerRigidbody, playerTransform, speakerTransform.position);
+
+        playerRepositionRoutine = null;
+    }
+
+    private Vector3 GetPlayerDialogueTargetPosition(Transform speakerTransform, float playerHeight)
+    {
+        Vector3 speakerForward = speakerTransform.forward;
+        speakerForward.y = 0f;
+
+        if (speakerForward.sqrMagnitude <= 0.0001f)
+            speakerForward = Vector3.forward;
+
+        speakerForward.Normalize();
+
+        Vector3 speakerRight = speakerTransform.right;
+        speakerRight.y = 0f;
+
+        if (speakerRight.sqrMagnitude <= 0.0001f)
+            speakerRight = Vector3.right;
+
+        speakerRight.Normalize();
+
+        Vector3 targetPosition =
+            speakerTransform.position +
+            speakerForward * playerDistanceFromSpeaker +
+            speakerRight * playerSideOffset;
+
+        targetPosition.y = playerHeight;
+        return targetPosition;
+    }
+
+    private void RotatePlayerTowardSpeaker(Rigidbody playerRigidbody, Transform playerTransform, Vector3 speakerPosition)
+    {
+        Vector3 directionToSpeaker = speakerPosition - playerTransform.position;
+        directionToSpeaker.y = 0f;
+
+        if (directionToSpeaker.sqrMagnitude <= 0.0001f)
+            return;
+
+        Quaternion targetRotation = Quaternion.LookRotation(directionToSpeaker.normalized, Vector3.up);
+        Quaternion nextRotation = Quaternion.RotateTowards(
+            playerTransform.rotation,
+            targetRotation,
+            playerRotationSpeed * Time.fixedDeltaTime);
+
+        if (playerRigidbody != null)
+            playerRigidbody.MoveRotation(nextRotation);
+        else
+            playerTransform.rotation = nextRotation;
+    }
+
+    private void StopPlayerDialogueReposition()
+    {
+        if (playerRepositionRoutine == null)
+            return;
+
+        StopCoroutine(playerRepositionRoutine);
+        playerRepositionRoutine = null;
+    }
+
+    private void OnValidate()
+    {
+        playerDistanceFromSpeaker = Mathf.Max(0f, playerDistanceFromSpeaker);
+        playerRepositionSpeed = Mathf.Max(0.01f, playerRepositionSpeed);
+        playerRotationSpeed = Mathf.Max(0f, playerRotationSpeed);
+    }
+
+    private bool ShouldCancelDialogueFromInput()
+    {
+        if (!useCancelInputToEndDialogue || !IsDialogueActive)
+            return false;
+
+        if (Time.frameCount == ignoreCancelInputFrame)
+            return false;
+
+        EnableCancelDialogueAction();
+
+        InputAction cancelAction = cancelDialogueAction != null ? cancelDialogueAction.action : null;
+        return cancelAction != null && cancelAction.WasPressedThisFrame();
+    }
+
+    private void EnableCancelDialogueAction()
+    {
+        if (!useCancelInputToEndDialogue)
+            return;
+
+        InputAction cancelAction = cancelDialogueAction != null ? cancelDialogueAction.action : null;
+        if (cancelAction == null)
+            return;
+
+        if (cancelAction.enabled)
+            return;
+
+        cancelAction.Enable();
+        cancelDialogueActionEnabledByManager = true;
+    }
+
+    private void DisableCancelDialogueAction()
+    {
+        InputAction cancelAction = cancelDialogueAction != null ? cancelDialogueAction.action : null;
+        if (cancelAction == null || !cancelDialogueActionEnabledByManager)
+            return;
+
+        cancelAction.Disable();
+        cancelDialogueActionEnabledByManager = false;
     }
 
     private void CachePlayerBehaviours()

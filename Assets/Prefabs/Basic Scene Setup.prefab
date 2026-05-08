@@ -1,117 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &68802725579955555
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7792280632903153640}
-  - component: {fileID: 7598532213710315010}
-  m_Layer: 0
-  m_Name: Get Lost
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7792280632903153640
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 68802725579955555}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5927108732046288260}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7598532213710315010
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 68802725579955555}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4eed38e452d87c7428f4c86506a4d752, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Dialogue_Node
-  speakerName: 
-  dialogueText: Well be gone then!
-  choices: []
---- !u!1 &134676954337632835
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4830758452593126121}
-  - component: {fileID: 2888126771096910660}
-  m_Layer: 0
-  m_Name: Intro
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4830758452593126121
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 134676954337632835}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5927108732046288260}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2888126771096910660
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 134676954337632835}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4eed38e452d87c7428f4c86506a4d752, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Dialogue_Node
-  speakerName: 
-  dialogueText: 'Good morning Froggle. I didn''t expect to see you so early in the
-    morning. Is something the matter? '
-  choices:
-  - choiceText: I'm fine.
-    playerResponseText: 'Actually, I''m doing really well good sir Elder frog. '
-    nextNode: {fileID: 7598532213710315010}
-    active: 1
-    deactivateAfterChosen: 0
-  - choiceText: I want a family.
-    playerResponseText: 'I think I''m ready to start a family, but I''m scared. What
-      was it like when you had your first child? '
-    nextNode: {fileID: 4199238963222738410}
-    active: 1
-    deactivateAfterChosen: 1
-  - choiceText: 'I want to leave the village. '
-    playerResponseText: I hate it here sir Elder frog. This village is holding back
-      and it's time I explored the world!
-    nextNode: {fileID: 7598532213710315010}
-    active: 1
-    deactivateAfterChosen: 1
 --- !u!1 &210505203169825236
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,7 +168,6 @@ Transform:
   m_Children:
   - {fileID: 1807454906976881901}
   - {fileID: 8973068749658150782}
-  - {fileID: 5544995917622318283}
   - {fileID: 1278147118612296304}
   - {fileID: 6798581111764263517}
   - {fileID: 4843004302309879918}
@@ -391,57 +278,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!1 &1285866919309387465
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5927108732046288260}
-  - component: {fileID: 5025479612512607108}
-  m_Layer: 0
-  m_Name: Elderfrog
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5927108732046288260
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1285866919309387465}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 4830758452593126121}
-  - {fileID: 7792280632903153640}
-  - {fileID: 2598505821793748234}
-  m_Father: {fileID: 5544995917622318283}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5025479612512607108
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1285866919309387465}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c757906811fd65459d5ef22dad0ac00, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Dialogue_Source
-  dialogueCharacter: {fileID: 0}
-  startingNode: {fileID: 2888126771096910660}
-  showEndDialogueButton: 1
-  endDialogueButtonText: Goodbye
 --- !u!1 &1639951448129347076
 GameObject:
   m_ObjectHideFlags: 0
@@ -855,13 +691,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2100256891705232731}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.000000074505806, z: 0.000000029802322, w: 1}
-  m_LocalPosition: {x: -1.517029, y: 7.4999905, z: -11.12243}
+  m_LocalRotation: {x: 0, y: -0.000000074505806, z: 0.000000029802322, w: 1}
+  m_LocalPosition: {x: -89.99451, y: -43.511818, z: 51.847248}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1807454906976881901}
-  m_LocalEulerAnglesHint: {x: 0, y: 0.03, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.04}
 --- !u!114 &1617789732544978544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -917,11 +753,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 625c14eee3ad46c99df7c7c891ef668a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineThirdPersonFollow
-  Damping: {x: 0.1, y: 0.5, z: 0.3}
-  ShoulderOffset: {x: 2.82, y: 0.07, z: -6.5}
+  Damping: {x: 0.1, y: 0.44, z: 0.3}
+  ShoulderOffset: {x: 3.4, y: 2.47, z: -4.03}
   VerticalArmLength: 0.4
   CameraSide: 1
-  CameraDistance: 0
+  CameraDistance: 5
   AvoidObstacles:
     Enabled: 0
     CollisionFilter:
@@ -964,7 +800,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4249744975865936464
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2164,53 +2000,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &6137618246511667324
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2598505821793748234}
-  - component: {fileID: 4199238963222738410}
-  m_Layer: 0
-  m_Name: Family
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2598505821793748234
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6137618246511667324}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5927108732046288260}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4199238963222738410
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6137618246511667324}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4eed38e452d87c7428f4c86506a4d752, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Dialogue_Node
-  speakerName: 
-  dialogueText: 'Ho ho ho! You? Have a family? You stupid juvenile frog. '
-  choices: []
 --- !u!1 &6664915113591098195
 GameObject:
   m_ObjectHideFlags: 0
@@ -2425,100 +2214,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!1 &7249016797083208525
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5544995917622318283}
-  - component: {fileID: 2818180316397756893}
-  - component: {fileID: 3242810267545003878}
-  m_Layer: 0
-  m_Name: Dialogue
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5544995917622318283
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7249016797083208525}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 5927108732046288260}
-  m_Father: {fileID: 7797723437502772290}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2818180316397756893
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7249016797083208525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee95b7e786837f64ea3882bb4810dfcd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DialogueManager
-  dialogueUI: {fileID: 3242810267545003878}
-  playerObject: {fileID: 0}
-  gameplayCrosshair: {fileID: 8138728078835264592}
-  playerDialogueCamera: {fileID: 6340493673786517589}
-  playerDialogueCameraPriority: 10
-  npcDialogueCamera: {fileID: 1393862803334545366}
-  npcDialogueCameraPriority: 10
-  useNpcCameraOnlyAfterPlayerSpeaks: 0
-  autoSetNpcCameraTrackingTarget: 1
-  restoreNpcCameraTrackingTargetOnEnd: 1
-  playerSpeakerName: Froggle
-  lockPlayerDuringDialogue: 1
-  showCursorDuringDialogue: 0
-  useInteractToSubmitSelectedButton: 1
-  onDialogueStarted:
-    m_PersistentCalls:
-      m_Calls: []
-  onDialogueEnded:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &3242810267545003878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7249016797083208525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 828e519c49d21a943867ec8ce43e488d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Dialogue_UI
-  root: {fileID: 676287739605641365}
-  npcDialoguePanel: {fileID: 6664915113591098195}
-  playerDialoguePanel: {fileID: 3010796252137661712}
-  npcSpeakerNameText: {fileID: 3082906752544091049}
-  npcDialogueBodyText: {fileID: 2036388295637396792}
-  playerSpeakerNameText: {fileID: 7129675564013084681}
-  playerDialogueBodyText: {fileID: 5434566280312332858}
-  choiceContainer: {fileID: 1144478144418045897}
-  choiceButtonPrefab: {fileID: 1548991119877197290, guid: 7285fcad63b103f469e4cefa23644d85, type: 3}
-  usePlayerContinueButton: 0
-  playerContinueButton: {fileID: 0}
-  useTypewriter: 1
-  typeStartDelay: 1
-  charactersPerSecond: 30
-  interactSpeedMultiplier: 8
-  allowInteractToSpeedUpTyping: 1
 --- !u!1 &7540931557708454784
 GameObject:
   m_ObjectHideFlags: 0
@@ -3118,7 +2813,7 @@ Transform:
   m_GameObject: {fileID: 8978732506977576931}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.000000074505806, z: 0.000000029802322, w: 1}
-  m_LocalPosition: {x: -1.517029, y: 7.4999905, z: -11.12243}
+  m_LocalPosition: {x: -89.99451, y: -43.511818, z: 51.847248}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3482,7 +3177,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1120743472701107863
 RectTransform:
   m_ObjectHideFlags: 0

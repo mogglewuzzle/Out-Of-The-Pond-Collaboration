@@ -14,10 +14,13 @@ public class Dialogue_Source : MonoBehaviour
     [Tooltip("Button text shown on the final NPC line when Show End Dialogue Button is enabled.")]
     [SerializeField] private string endDialogueButtonText = "Goodbye";
 
+    private bool dialogueCompleted;
+
     public GameObject DialogueCharacter => dialogueCharacter != null ? dialogueCharacter : gameObject;
     public Dialogue_Node StartingNode => startingNode;
     public bool ShowEndDialogueButton => showEndDialogueButton;
     public string EndDialogueButtonText => endDialogueButtonText;
+    public bool DialogueCompleted => dialogueCompleted;
 
     public bool BelongsTo(GameObject target)
     {
@@ -30,6 +33,12 @@ public class Dialogue_Source : MonoBehaviour
 
     public void StartDialogue()
     {
+        if (dialogueCompleted)
+        {
+            ShowCompletedAboveCharacterDialogue();
+            return;
+        }
+
         if (startingNode == null)
         {
             Debug.LogWarning($"{name} has no starting dialogue node assigned.", this);
@@ -43,6 +52,23 @@ public class Dialogue_Source : MonoBehaviour
             return;
         }
 
-        manager.StartDialogue(startingNode, DialogueCharacter, showEndDialogueButton, endDialogueButtonText);
+        manager.StartDialogue(this, startingNode, DialogueCharacter, showEndDialogueButton, endDialogueButtonText);
+    }
+
+    public void MarkDialogueCompleted()
+    {
+        dialogueCompleted = true;
+    }
+
+    private void ShowCompletedAboveCharacterDialogue()
+    {
+        Dialogue_AboveCharacter aboveCharacter = DialogueCharacter.GetComponentInChildren<Dialogue_AboveCharacter>(true);
+        if (aboveCharacter == null)
+            aboveCharacter = GetComponentInChildren<Dialogue_AboveCharacter>(true);
+        if (aboveCharacter == null)
+            aboveCharacter = GetComponentInParent<Dialogue_AboveCharacter>(true);
+
+        if (aboveCharacter != null)
+            aboveCharacter.ShowCompletedDialogueEntry();
     }
 }

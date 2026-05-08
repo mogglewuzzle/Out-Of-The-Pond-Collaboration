@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [DisallowMultipleComponent]
 [AddComponentMenu("Dialogue/Player Dialogue Interact")]
@@ -7,6 +8,10 @@ public class Player_DialogueInteract : MonoBehaviour
     [Header("References")]
     [Tooltip("Optional. Leave empty to automatically use Camera.main, which is the camera tagged MainCamera. Assign this manually only if dialogue aiming should use a different camera.")]
     [SerializeField] private Camera playerCamera;
+
+    [Header("Input")]
+    [Tooltip("Optional. If assigned, this action starts dialogue. If empty, the script uses PlayerInputHandler.InteractPressed.")]
+    [SerializeField] private InputActionReference interactAction;
 
     [Header("Detection")]
     [Tooltip("Distance in front of the camera where the dialogue check starts.")]
@@ -25,6 +30,7 @@ public class Player_DialogueInteract : MonoBehaviour
     [SerializeField] private bool debugLogs;
 
     private PlayerInputHandler input;
+    private bool interactActionEnabledByThisScript;
 
     private void Awake()
     {
@@ -35,9 +41,19 @@ public class Player_DialogueInteract : MonoBehaviour
 
     }
 
+    private void OnEnable()
+    {
+        EnableInteractAction();
+    }
+
+    private void OnDisable()
+    {
+        DisableInteractAction();
+    }
+
     private void Update()
     {
-        if (input == null || !input.InteractPressed)
+        if (!WasInteractPressedThisFrame())
             return;
 
         if (Dialogue_Manager.Instance != null && Dialogue_Manager.Instance.IsDialogueActive)
@@ -52,6 +68,18 @@ public class Player_DialogueInteract : MonoBehaviour
 
         LogDebug($"Starting dialogue from {source.name}.");
         source.StartDialogue();
+    }
+
+    private bool WasInteractPressedThisFrame()
+    {
+        InputAction action = interactAction != null ? interactAction.action : null;
+        if (action != null)
+        {
+            EnableInteractAction();
+            return action.WasPressedThisFrame();
+        }
+
+        return input != null && input.InteractPressed;
     }
 
     private Dialogue_Source FindDialogueSource()
@@ -139,6 +167,26 @@ public class Player_DialogueInteract : MonoBehaviour
     {
         if (debugLogs)
             Debug.Log($"[{nameof(Player_DialogueInteract)}] {message}", this);
+    }
+
+    private void EnableInteractAction()
+    {
+        InputAction action = interactAction != null ? interactAction.action : null;
+        if (action == null || action.enabled)
+            return;
+
+        action.Enable();
+        interactActionEnabledByThisScript = true;
+    }
+
+    private void DisableInteractAction()
+    {
+        InputAction action = interactAction != null ? interactAction.action : null;
+        if (action == null || !interactActionEnabledByThisScript)
+            return;
+
+        action.Disable();
+        interactActionEnabledByThisScript = false;
     }
 
     private void OnDrawGizmosSelected()

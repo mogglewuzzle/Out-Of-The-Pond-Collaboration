@@ -26,6 +26,11 @@ public class PlayerRotationController : MonoBehaviour
         currentYaw = transform.eulerAngles.y;
     }
 
+    private void OnEnable()
+    {
+        currentYaw = transform.eulerAngles.y;
+    }
+
     private void FixedUpdate()
     {
         // Don't rotate the player while orbiting in free cam
