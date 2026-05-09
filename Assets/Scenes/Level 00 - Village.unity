@@ -2591,14 +2591,7 @@ MonoBehaviour:
     village! '
   choices:
   - choiceText: 'Thank you '
-    playerResponseText: 'I appreciate your service. '
-    nextNode: {fileID: 0}
-    active: 1
-    deactivateAfterChosen: 0
-    goodbyeChoice: 0
-    finalChoice: 0
-  - choiceText: 
-    playerResponseText: ' '
+    playerResponseText: 'Thank you for your service. Goodbye!  '
     nextNode: {fileID: 0}
     active: 1
     deactivateAfterChosen: 0
@@ -10409,7 +10402,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4260354098332897029, guid: 4fdf92531617eb149882326568071636, type: 3}
       propertyPath: castRadius
-      value: 2
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4260354098332897029, guid: 4fdf92531617eb149882326568071636, type: 3}
+      propertyPath: interactRange
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4260354098332897029, guid: 4fdf92531617eb149882326568071636, type: 3}
       propertyPath: interactAction
