@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 [DisallowMultipleComponent]
 [AddComponentMenu("Systems/Scene Manager")]
@@ -10,8 +9,8 @@ public class Systems_SceneManager : MonoBehaviour
     public static Systems_SceneManager Instance { get; private set; }
 
     [Header("Fade")]
+    [Tooltip("Required. Assign the CanvasGroup on your fullscreen black fade panel.")]
     [SerializeField] private CanvasGroup fadeCanvasGroup;
-    [SerializeField] private Color fadeColor = Color.black;
     [SerializeField] private float fadeOutDuration = 0.5f;
     [SerializeField] private float fadeInDuration = 0.5f;
     [SerializeField] private bool fadeInOnSceneStart = true;
@@ -34,16 +33,19 @@ public class Systems_SceneManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        if (fadeCanvasGroup == null)
-            fadeCanvasGroup = CreateFadeCanvas();
-        else
+        if (fadeCanvasGroup != null)
             DontDestroyOnLoad(fadeCanvasGroup.transform.root.gameObject);
+        else
+            Debug.LogWarning($"{nameof(Systems_SceneManager)} needs a fade CanvasGroup assigned. Scene transitions will load without fading.", this);
     }
 
     private void Start()
     {
         if (fadeInOnSceneStart)
+        {
+            SetFadeAlpha(1f);
             FadeIn();
+        }
     }
 
     private void OnDestroy()
@@ -120,10 +122,23 @@ public class Systems_SceneManager : MonoBehaviour
         fadeRoutine = StartCoroutine(FadeTo(targetAlpha, duration));
     }
 
+    private void SetFadeAlpha(float alpha)
+    {
+        if (fadeCanvasGroup == null)
+            return;
+
+        fadeCanvasGroup.alpha = alpha;
+        fadeCanvasGroup.blocksRaycasts = alpha > 0f;
+    }
+
     private IEnumerator FadeTo(float targetAlpha, float duration)
     {
         if (fadeCanvasGroup == null)
-            fadeCanvasGroup = CreateFadeCanvas();
+        {
+            Debug.LogWarning($"{nameof(Systems_SceneManager)} cannot fade because no fade CanvasGroup is assigned.", this);
+            fadeRoutine = null;
+            yield break;
+        }
 
         fadeCanvasGroup.blocksRaycasts = targetAlpha > 0f;
 
@@ -154,33 +169,4 @@ public class Systems_SceneManager : MonoBehaviour
         return useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
     }
 
-    private CanvasGroup CreateFadeCanvas()
-    {
-        GameObject canvasObject = new GameObject("Scene Fade Canvas");
-        DontDestroyOnLoad(canvasObject);
-
-        Canvas canvas = canvasObject.AddComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = short.MaxValue;
-
-        canvasObject.AddComponent<CanvasScaler>();
-        canvasObject.AddComponent<GraphicRaycaster>();
-
-        GameObject imageObject = new GameObject("Fade Image");
-        imageObject.transform.SetParent(canvasObject.transform, false);
-
-        Image image = imageObject.AddComponent<Image>();
-        image.color = fadeColor;
-
-        RectTransform rectTransform = image.rectTransform;
-        rectTransform.anchorMin = Vector2.zero;
-        rectTransform.anchorMax = Vector2.one;
-        rectTransform.offsetMin = Vector2.zero;
-        rectTransform.offsetMax = Vector2.zero;
-
-        CanvasGroup canvasGroup = imageObject.AddComponent<CanvasGroup>();
-        canvasGroup.alpha = fadeInOnSceneStart ? 1f : 0f;
-        canvasGroup.blocksRaycasts = canvasGroup.alpha > 0f;
-        return canvasGroup;
-    }
 }

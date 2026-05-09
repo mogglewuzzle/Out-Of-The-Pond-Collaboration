@@ -63,8 +63,7 @@ public class Player_PickupControl : MonoBehaviour
         if (heldObject == null || holdPoint == null)
             return;
 
-        heldObject.Rigidbody.MovePosition(holdPoint.position);
-        heldObject.Rigidbody.MoveRotation(holdPoint.rotation);
+        heldObject.MoveToHoldPoint(holdPoint);
     }
 
     private Object_Pickupable FindBestPickupCandidate()
@@ -144,10 +143,7 @@ public class Player_PickupControl : MonoBehaviour
         heldObject.OnPickedUp();
 
         if (holdPoint != null)
-        {
-            heldObject.Rigidbody.position = holdPoint.position;
-            heldObject.Rigidbody.rotation = holdPoint.rotation;
-        }
+            heldObject.SnapToHoldPoint(holdPoint);
     }
 
     private void DropHeldObject()

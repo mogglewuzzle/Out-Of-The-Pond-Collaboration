@@ -7,6 +7,8 @@ public class Object_Pickupable : MonoBehaviour
     [Header("Pickup Settings")]
     [SerializeField] private int pickupPriority = 0;
     [SerializeField] private bool disableGravityWhileHeld = true;
+    [Tooltip("Optional child transform used to align this object to the player's hold point. If empty, the object root is aligned instead.")]
+    [SerializeField] private Transform holdPoint;
 
     [Header("Layer Settings")]
     [SerializeField] private string defaultLayerName = "Pickupable";
@@ -40,6 +42,26 @@ public class Object_Pickupable : MonoBehaviour
     public float UpwardThrowBoost => upwardThrowBoost;
     public float ThrownGravityMultiplier => thrownGravityMultiplier;
     public bool UsesGravityWhenThrown => originalUseGravity;
+
+    public void MoveToHoldPoint(Transform targetHoldPoint)
+    {
+        if (targetHoldPoint == null)
+            return;
+
+        GetHoldAlignment(targetHoldPoint, out Vector3 targetPosition, out Quaternion targetRotation);
+        Rigidbody.MovePosition(targetPosition);
+        Rigidbody.MoveRotation(targetRotation);
+    }
+
+    public void SnapToHoldPoint(Transform targetHoldPoint)
+    {
+        if (targetHoldPoint == null)
+            return;
+
+        GetHoldAlignment(targetHoldPoint, out Vector3 targetPosition, out Quaternion targetRotation);
+        Rigidbody.position = targetPosition;
+        Rigidbody.rotation = targetRotation;
+    }
 
     public void OnPickedUp()
     {
@@ -116,6 +138,19 @@ public class Object_Pickupable : MonoBehaviour
     {
         int layerIndex = LayerMask.NameToLayer(layerName);
         return layerIndex >= 0 ? layerIndex : gameObject.layer;
+    }
+
+    private void GetHoldAlignment(Transform targetHoldPoint, out Vector3 targetPosition, out Quaternion targetRotation)
+    {
+        if (holdPoint == null)
+        {
+            targetPosition = targetHoldPoint.position;
+            targetRotation = targetHoldPoint.rotation;
+            return;
+        }
+
+        targetRotation = targetHoldPoint.rotation * Quaternion.Inverse(holdPoint.localRotation);
+        targetPosition = targetHoldPoint.position - targetRotation * holdPoint.localPosition;
     }
 
     private void OnDisable()
