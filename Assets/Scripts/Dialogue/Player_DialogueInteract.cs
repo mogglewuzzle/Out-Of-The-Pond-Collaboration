@@ -6,16 +6,14 @@ using UnityEngine.InputSystem;
 public class Player_DialogueInteract : MonoBehaviour
 {
     [Header("References")]
-    [Tooltip("Optional. Leave empty to automatically use Camera.main, which is the camera tagged MainCamera. Assign this manually only if dialogue aiming should use a different camera.")]
-    [SerializeField] private Camera playerCamera;
+    [Tooltip("Point on the player where the dialogue cast starts. The cast fires along this transform's forward direction. If empty, the player's transform is used.")]
+    [SerializeField] private Transform interactOrigin;
 
     [Header("Input")]
     [Tooltip("Optional. If assigned, this action starts dialogue. If empty, the script uses PlayerInputHandler.InteractPressed.")]
     [SerializeField] private InputActionReference interactAction;
 
     [Header("Detection")]
-    [Tooltip("Distance in front of the camera where the dialogue check starts.")]
-    [SerializeField] private float startDistanceFromCamera = 0.5f;
     [Tooltip("How far forward from the start point the dialogue check can reach.")]
     [SerializeField] private float interactRange = 3f;
     [Tooltip("Radius of the invisible cast. Larger values make it easier to start dialogue without aiming exactly at the collider.")]
@@ -35,10 +33,6 @@ public class Player_DialogueInteract : MonoBehaviour
     private void Awake()
     {
         input = GetComponent<PlayerInputHandler>();
-
-        if (playerCamera == null)
-            playerCamera = Camera.main;
-
     }
 
     private void OnEnable()
@@ -110,14 +104,8 @@ public class Player_DialogueInteract : MonoBehaviour
 
     private Ray GetInteractionRay()
     {
-        if (playerCamera != null)
-        {
-            Vector3 direction = playerCamera.transform.forward;
-            Vector3 origin = playerCamera.transform.position + direction * startDistanceFromCamera;
-            return new Ray(origin, direction);
-        }
-
-        return new Ray(transform.position, transform.forward);
+        Transform origin = interactOrigin != null ? interactOrigin : transform;
+        return new Ray(origin.position, origin.forward);
     }
 
     private Dialogue_Source GetDialogueSourceFromCollider(Collider hitCollider)

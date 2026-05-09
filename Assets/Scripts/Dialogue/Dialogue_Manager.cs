@@ -58,7 +58,7 @@ public class Dialogue_Manager : MonoBehaviour
 
     public Dialogue_Node CurrentNode { get; private set; }
     public GameObject CurrentSpeakerObject { get; private set; }
-    public bool IsDialogueActive => CurrentNode != null || pendingNodeAfterPlayerResponse != null;
+    public bool IsDialogueActive => CurrentNode != null || pendingNodeAfterPlayerResponse != null || showingPlayerResponse;
 
     private Dialogue_Source currentDialogueSource;
     private Dialogue_Node pendingNodeAfterPlayerResponse;
@@ -82,6 +82,7 @@ public class Dialogue_Manager : MonoBehaviour
     private Coroutine playerRepositionRoutine;
     private bool cancelDialogueActionEnabledByManager;
     private bool endAfterPlayerResponse;
+    private bool showingPlayerResponse;
 
     private void Awake()
     {
@@ -175,6 +176,7 @@ public class Dialogue_Manager : MonoBehaviour
         endDialogueButtonText = endButtonText;
         playerHasSpokenThisDialogue = false;
         endAfterPlayerResponse = false;
+        showingPlayerResponse = false;
 
         ignoreInteractSubmitFrame = Time.frameCount;
         ignoreCancelInputFrame = Time.frameCount;
@@ -198,12 +200,12 @@ public class Dialogue_Manager : MonoBehaviour
         }
 
         choice.MarkChosen();
+        endAfterPlayerResponse = choice.EndsConversation || choice.FinalChoice;
+
         if (choice.FinalChoice)
         {
             if (currentDialogueSource != null)
                 currentDialogueSource.MarkDialogueCompleted();
-
-            endAfterPlayerResponse = true;
         }
 
         ShowPlayerResponse(choice);
@@ -216,6 +218,7 @@ public class Dialogue_Manager : MonoBehaviour
         currentDialogueSource = null;
         pendingNodeAfterPlayerResponse = null;
         endAfterPlayerResponse = false;
+        showingPlayerResponse = false;
 
         RestorePlayerDialogueCameraPriority();
         RestoreNpcDialogueCameraPriority();
@@ -262,6 +265,7 @@ public class Dialogue_Manager : MonoBehaviour
     {
         CurrentNode = null;
         pendingNodeAfterPlayerResponse = choice.NextNode;
+        showingPlayerResponse = true;
         playerHasSpokenThisDialogue = true;
         RestoreNpcDialogueCameraPriority();
         ApplyPlayerDialogueCameraPriority();
@@ -282,6 +286,8 @@ public class Dialogue_Manager : MonoBehaviour
 
     private void ContinueAfterPlayerResponse()
     {
+        showingPlayerResponse = false;
+
         if (endAfterPlayerResponse)
         {
             EndDialogue();

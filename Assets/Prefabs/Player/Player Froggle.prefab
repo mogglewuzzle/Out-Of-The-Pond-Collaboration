@@ -2175,8 +2175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ac1e85e56a255a4cac36120dffccfc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player_DialogueInteract
-  playerCamera: {fileID: 0}
-  startDistanceFromCamera: 2
+  interactOrigin: {fileID: 3085156451193525150}
   interactRange: 8
   castRadius: 2
   interactMask:

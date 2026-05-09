@@ -16,13 +16,15 @@ public class DialogueChoice
     [SerializeField] private bool active = true;
     [Tooltip("If enabled, this choice becomes inactive after the player selects it.")]
     [SerializeField] private bool deactivateAfterChosen = false;
+    [Tooltip("If enabled, the player says this response and then dialogue closes instead of moving to another node.")]
+    [SerializeField] private bool goodbyeChoice = false;
     [Tooltip("If enabled, the player says this response, dialogue ends, and this NPC can no longer start normal dialogue this play session.")]
     [SerializeField] private bool finalChoice = false;
 
     public string ChoiceText => choiceText;
     public string PlayerResponseText => string.IsNullOrWhiteSpace(playerResponseText) ? choiceText : playerResponseText;
     public Dialogue_Node NextNode => nextNode;
-    public bool EndsConversation => nextNode == null;
+    public bool EndsConversation => goodbyeChoice || nextNode == null;
     public bool Active => active;
     public bool DeactivateAfterChosen => deactivateAfterChosen;
     public bool FinalChoice => finalChoice;
