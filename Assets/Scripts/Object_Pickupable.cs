@@ -100,6 +100,17 @@ public class Object_Pickupable : MonoBehaviour
         layerResetRoutine = StartCoroutine(ResetLayerAfterDelay());
     }
 
+    public void OnConsumed()
+    {
+        applyThrownGravity = false;
+        CancelLayerReset();
+        Rigidbody.useGravity = originalUseGravity;
+        Rigidbody.isKinematic = originalIsKinematic;
+        Rigidbody.linearVelocity = Vector3.zero;
+        Rigidbody.angularVelocity = Vector3.zero;
+        SetLayerRecursively(gameObject, GetLayerIndexOrCurrent(defaultLayerName));
+    }
+
     private void FixedUpdate()
     {
         if (!applyThrownGravity || Rigidbody.isKinematic || !Rigidbody.useGravity)

@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 6050295463824883519}
   - component: {fileID: 1359054807963621830}
   - component: {fileID: 4551578227350980589}
+  - component: {fileID: 4166691219147035767}
   m_Layer: 20
   m_Name: Apple
-  m_TagString: GrabPoint
+  m_TagString: Consumable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -164,6 +165,23 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 5461320835613783329, guid: e2d49ffa371a4ff4991303c4eb1aab30, type: 3}
+--- !u!114 &4166691219147035767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2717654220966566416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fe89b3d26836584fad05c02bda84ff2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Object_Consumable
+  deactivateOnConsume: 1
+  objectToDeactivate: {fileID: 2717654220966566416}
+  onConsumed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4337837822985715936
 GameObject:
   m_ObjectHideFlags: 0

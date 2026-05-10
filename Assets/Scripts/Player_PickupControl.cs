@@ -35,6 +35,12 @@ public class Player_PickupControl : MonoBehaviour
 
     private void Update()
     {
+        if (input != null && input.ConsumePressed)
+        {
+            TryConsumeHeldObject();
+            return;
+        }
+
         if (holdOnlyWhileButtonHeld && heldObject != null && input != null && !input.PickUpHeld)
         {
             DropHeldObject();
@@ -163,6 +169,25 @@ public class Player_PickupControl : MonoBehaviour
         Object_Pickupable objectToThrow = heldObject;
         heldObject = null;
         objectToThrow.OnThrown(throwVelocity);
+        return true;
+    }
+
+    public bool TryConsumeHeldObject()
+    {
+        if (heldObject == null)
+            return false;
+
+        Object_Consumable consumable = heldObject.GetComponent<Object_Consumable>();
+        if (consumable == null)
+            consumable = heldObject.GetComponentInChildren<Object_Consumable>();
+
+        if (consumable == null)
+            return false;
+
+        Object_Pickupable objectToConsume = heldObject;
+        heldObject = null;
+        objectToConsume.OnConsumed();
+        consumable.Consume(gameObject, objectToConsume.gameObject);
         return true;
     }
 

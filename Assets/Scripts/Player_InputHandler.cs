@@ -16,6 +16,7 @@ public class PlayerInputHandler : MonoBehaviour
     public bool ThrowObjectPressed { get; private set; }
     public bool ThrowObjectHeld { get; private set; }
     public bool ThrowObjectReleased { get; private set; }
+    public bool ConsumePressed { get; private set; }
 
     private InputSystem_Actions input;
 
@@ -62,6 +63,8 @@ public class PlayerInputHandler : MonoBehaviour
             ThrowObjectHeld = false;
             ThrowObjectReleased = true;
         };
+
+        input.Player.Consume.performed += ctx => ConsumePressed = true;
     }
 
     private void LateUpdate()
@@ -71,6 +74,7 @@ public class PlayerInputHandler : MonoBehaviour
         PickUpPressed = false;
         ThrowObjectPressed = false;
         ThrowObjectReleased = false;
+        ConsumePressed = false;
     }
 
     private void OnEnable()  => input.Player.Enable();
@@ -80,5 +84,6 @@ public class PlayerInputHandler : MonoBehaviour
         input.Player.Disable();
         ThrowObjectHeld = false;
         ThrowObjectReleased = false;
+        ConsumePressed = false;
     }
 }

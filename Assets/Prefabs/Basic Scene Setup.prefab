@@ -67,7 +67,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'This is the dialogue that will be spoken. '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 79be32d4b06e25f4ebbe3413bddbb6a8, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: bdd68e757330d35448fd4d0d8c5bd1fa, type: 2}
   m_sharedMaterial: {fileID: -9042232920788981532, guid: 79be32d4b06e25f4ebbe3413bddbb6a8, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -134,7 +134,7 @@ MonoBehaviour:
   m_margin: {x: 20, y: -30, z: 20, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &344162733556036082
@@ -172,6 +172,7 @@ Transform:
   - {fileID: 6798581111764263517}
   - {fileID: 3013135249478407277}
   - {fileID: 4843004302309879918}
+  - {fileID: 5097496303746637254}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &410395095171368764
@@ -210,6 +211,60 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &554162082085530870
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5097496303746637254}
+  - component: {fileID: 7864916894021929008}
+  m_Layer: 0
+  m_Name: Consumable Systems
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5097496303746637254
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 554162082085530870}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7797723437502772290}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7864916894021929008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 554162082085530870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4faf3ff1e47b5a34a8e53f614d55e1ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Systems_ConsumedItemTracker
+  persistAcrossScenes: 0
+  thresholds:
+  - itemTag: Consumable
+    requiredCount: 2
+    onlyTriggerOnce: 1
+    objectsToActivate:
+    - {fileID: 0}
+    objectsToDeactivate:
+    - {fileID: 0}
+  consumedCounts: []
 --- !u!1 &676287739605641365
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,7 +439,7 @@ RectTransform:
   m_Father: {fileID: 8525430770819360136}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -493,7 +548,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Speaker Name:'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 79be32d4b06e25f4ebbe3413bddbb6a8, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4b6b3636508db594fad008baa9cb51ae, type: 2}
   m_sharedMaterial: {fileID: -9042232920788981532, guid: 79be32d4b06e25f4ebbe3413bddbb6a8, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -560,7 +615,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1928569225121302044
@@ -742,7 +797,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'This is the dialogue that will be spoken. '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 79be32d4b06e25f4ebbe3413bddbb6a8, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: bdd68e757330d35448fd4d0d8c5bd1fa, type: 2}
   m_sharedMaterial: {fileID: -9042232920788981532, guid: 79be32d4b06e25f4ebbe3413bddbb6a8, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -809,7 +864,7 @@ MonoBehaviour:
   m_margin: {x: 20, y: -30, z: 20, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &2100256891705232731
@@ -1598,7 +1653,7 @@ RectTransform:
   m_Father: {fileID: 2983809525209924597}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1947,7 +2002,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3013135249478407277
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3029,7 +3084,7 @@ RectTransform:
   m_Father: {fileID: 1931502633426606195}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3439,7 +3494,6 @@ MonoBehaviour:
   - {fileID: 7727032971491509709, guid: 2c0a613ac8df67244af6c707f73b1ad3, type: 3}
   gameplayActionMapName: Player
   uiActionMapName: UI
-  uiInputModule: {fileID: 0}
   playerInputHandler: {fileID: 0}
   gameplayBehavioursToDisable: []
   showCursorWhileOpen: 1
@@ -4290,7 +4344,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Speaker Name:'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 79be32d4b06e25f4ebbe3413bddbb6a8, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4b6b3636508db594fad008baa9cb51ae, type: 2}
   m_sharedMaterial: {fileID: -9042232920788981532, guid: 79be32d4b06e25f4ebbe3413bddbb6a8, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -4357,7 +4411,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &7505559537990977787
@@ -4393,7 +4447,7 @@ RectTransform:
   m_Father: {fileID: 1350368802003943934}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -5739,6 +5793,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1144478144418045897}
     m_Modifications:
+    - target: {fileID: 2641781487310287107, guid: 7285fcad63b103f469e4cefa23644d85, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: bdd68e757330d35448fd4d0d8c5bd1fa, type: 2}
+    - target: {fileID: 2641781487310287107, guid: 7285fcad63b103f469e4cefa23644d85, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6151928641107302798, guid: 7285fcad63b103f469e4cefa23644d85, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
