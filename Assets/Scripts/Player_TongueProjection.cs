@@ -48,7 +48,7 @@ public class PlayerTongueProjection : MonoBehaviour
 
     [Header("Tags")]
     [SerializeField] private string AttractPointTag = "AttractPoint";
-    [SerializeField] private string GrabPointTag = "GrabPoint";
+    [SerializeField] private string[] GrabPointTags = { "GrabPoint" };
     [SerializeField] private string SwingPointTag = "SwingPoint";
 
     [Header("Auto Aim")]
@@ -330,7 +330,7 @@ public class PlayerTongueProjection : MonoBehaviour
                 attractModule.BeginAttract(hit.point);
                 state = State.Idle;
             }
-            else if (hit.collider.CompareTag(GrabPointTag))
+            else if (HasAnyGrabPointTag(hit.collider))
             {
                 Rigidbody targetRb = hit.rigidbody != null ? hit.rigidbody : hit.collider.attachedRigidbody;
 
@@ -467,6 +467,20 @@ public class PlayerTongueProjection : MonoBehaviour
         return oneMinusT * oneMinusT * start
              + 2f * oneMinusT * t * control
              + t * t * end;
+    }
+
+    private bool HasAnyGrabPointTag(Collider hitCollider)
+    {
+        if (hitCollider == null || GrabPointTags == null || GrabPointTags.Length == 0)
+            return false;
+
+        for (int i = 0; i < GrabPointTags.Length; i++)
+        {
+            if (!string.IsNullOrWhiteSpace(GrabPointTags[i]) && hitCollider.CompareTag(GrabPointTags[i].Trim()))
+                return true;
+        }
+
+        return false;
     }
 
     public void SetTipPosition(Vector3 pos)

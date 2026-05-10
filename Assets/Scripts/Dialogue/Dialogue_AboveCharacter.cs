@@ -12,6 +12,7 @@ public class Dialogue_AboveCharacter : MonoBehaviour
     private class TaggedDialogueEntry
     {
         [SerializeField] private string triggerTag = "Player";
+        [SerializeField] private bool randomise;
         [SerializeField] private string firstText;
         [SerializeField] private string secondText;
         [SerializeField] private string thirdText;
@@ -22,6 +23,9 @@ public class Dialogue_AboveCharacter : MonoBehaviour
 
         public string GetNextText()
         {
+            if (randomise)
+                return GetRandomText();
+
             string selectedText;
             switch (nextTextIndex)
             {
@@ -38,6 +42,21 @@ public class Dialogue_AboveCharacter : MonoBehaviour
 
             nextTextIndex = (nextTextIndex + 1) % 3;
             return selectedText;
+        }
+
+        private string GetRandomText()
+        {
+            int randomIndex = UnityEngine.Random.Range(0, 3);
+
+            switch (randomIndex)
+            {
+                case 0:
+                    return firstText;
+                case 1:
+                    return secondText;
+                default:
+                    return thirdText;
+            }
         }
     }
 
@@ -59,6 +78,7 @@ public class Dialogue_AboveCharacter : MonoBehaviour
     [SerializeField] private List<TaggedDialogueEntry> taggedDialogueEntries = new List<TaggedDialogueEntry>();
 
     [Header("Completed Dialogue")]
+    [SerializeField] private bool randomiseCompletedDialogue;
     [SerializeField] private string completedFirstText;
     [SerializeField] private string completedSecondText;
     [SerializeField] private string completedThirdText;
@@ -211,6 +231,9 @@ public class Dialogue_AboveCharacter : MonoBehaviour
 
     private string GetNextCompletedText()
     {
+        if (randomiseCompletedDialogue)
+            return GetRandomCompletedText();
+
         string selectedText;
         switch (nextCompletedTextIndex)
         {
@@ -227,6 +250,21 @@ public class Dialogue_AboveCharacter : MonoBehaviour
 
         nextCompletedTextIndex = (nextCompletedTextIndex + 1) % 3;
         return selectedText;
+    }
+
+    private string GetRandomCompletedText()
+    {
+        int randomIndex = UnityEngine.Random.Range(0, 3);
+
+        switch (randomIndex)
+        {
+            case 0:
+                return completedFirstText;
+            case 1:
+                return completedSecondText;
+            default:
+                return completedThirdText;
+        }
     }
 
     private void UpdateFacing()

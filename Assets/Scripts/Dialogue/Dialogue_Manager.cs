@@ -26,6 +26,8 @@ public class Dialogue_Manager : MonoBehaviour
     [SerializeField] private bool useNpcCameraOnlyAfterPlayerSpeaks;
     [Tooltip("If enabled, the NPC dialogue camera's Tracking Target is set to the NPC currently being spoken to.")]
     [SerializeField] private bool autoSetNpcCameraTrackingTarget = true;
+    [Tooltip("Optional. If set, the NPC dialogue camera targets the first object with this tag found on the speaker or its children. Leave empty to target the speaker object directly.")]
+    [SerializeField] private string npcCameraTargetTag;
     [Tooltip("If enabled, the NPC dialogue camera's Tracking Target is restored when dialogue ends. Disable this for a dedicated dialogue camera that can stay on the last NPC.")]
     [SerializeField] private bool restoreNpcCameraTrackingTargetOnEnd = true;
 
@@ -374,6 +376,9 @@ public class Dialogue_Manager : MonoBehaviour
         if (!movePlayerToDialoguePosition || playerObject == null || speakerObject == null)
             return;
 
+        if (speakerObject.GetComponentInParent<Dialogue_NoPlayerReposition>() != null)
+            return;
+
         playerRepositionRoutine = StartCoroutine(MovePlayerToDialoguePosition(speakerObject.transform));
     }
 
@@ -618,7 +623,63 @@ public class Dialogue_Manager : MonoBehaviour
             npcDialogueCameraTrackingTargetChanged = true;
         }
 
-        npcDialogueCamera.Target.TrackingTarget = dialogueCharacter.transform;
+        npcDialogueCamera.Target.TrackingTarget = GetNpcCameraTrackingTarget(dialogueCharacter);
+    }
+
+    private Transform GetNpcCameraTrackingTarget(GameObject dialogueCharacter)
+    {
+        if (dialogueCharacter == null)
+            return null;
+
+        if (string.IsNullOrWhiteSpace(npcCameraTargetTag))
+            return dialogueCharacter.transform;
+
+        Transform taggedTarget = FindTaggedCameraTarget(dialogueCharacter.transform, npcCameraTargetTag.Trim());
+        return taggedTarget != null ? taggedTarget : dialogueCharacter.transform;
+    }
+
+    private Transform FindTaggedCameraTarget(Transform speakerTransform, string targetTag)
+    {
+        if (speakerTransform == null || string.IsNullOrWhiteSpace(targetTag))
+            return null;
+
+        if (HasTag(speakerTransform.gameObject, targetTag))
+            return speakerTransform;
+
+        return FindTaggedChild(speakerTransform, targetTag);
+    }
+
+    private Transform FindTaggedChild(Transform root, string targetTag)
+    {
+        if (root == null)
+            return null;
+
+        for (int i = 0; i < root.childCount; i++)
+        {
+            Transform child = root.GetChild(i);
+
+            if (HasTag(child.gameObject, targetTag))
+                return child;
+
+            Transform taggedChild = FindTaggedChild(child, targetTag);
+            if (taggedChild != null)
+                return taggedChild;
+        }
+
+        return null;
+    }
+
+    private bool HasTag(GameObject targetObject, string targetTag)
+    {
+        try
+        {
+            return targetObject != null && targetObject.CompareTag(targetTag);
+        }
+        catch (UnityException)
+        {
+            Debug.LogWarning($"NPC camera target tag '{targetTag}' is not defined in Project Settings > Tags and Layers.", this);
+            return false;
+        }
     }
 
     private void RestoreNpcCameraTrackingTarget()

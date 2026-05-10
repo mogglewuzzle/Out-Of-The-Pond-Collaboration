@@ -12,6 +12,7 @@ TagManager:
   - DialogueCharacter
   - Tongue
   - StoryItem
+  - NPCTalkPoint
   layers:
   - Default
   - TransparentFX

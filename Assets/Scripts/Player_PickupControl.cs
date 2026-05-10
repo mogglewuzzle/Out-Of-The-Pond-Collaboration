@@ -13,7 +13,7 @@ public class Player_PickupControl : MonoBehaviour
     [SerializeField] private bool holdOnlyWhileButtonHeld = false;
     [SerializeField] private bool useConeAngle = true;
     [SerializeField] private float maxConeAngle = 15f;
-    [SerializeField] private string pickupTag = "GrabPoint";
+    [SerializeField] private string[] pickupTags = { "GrabPoint" };
     [SerializeField] private LayerMask lineOfSightMask = ~0;
     [SerializeField] private bool requireLineOfSight = true;
 
@@ -88,7 +88,7 @@ public class Player_PickupControl : MonoBehaviour
             if (pickupable == null || !uniqueCandidates.Add(pickupable))
                 continue;
 
-            if (!pickupable.CompareTag(pickupTag))
+            if (!HasAnyPickupTag(pickupable))
                 continue;
 
             Vector3 candidatePos = pickupable.Rigidbody.worldCenterOfMass;
@@ -164,6 +164,20 @@ public class Player_PickupControl : MonoBehaviour
         heldObject = null;
         objectToThrow.OnThrown(throwVelocity);
         return true;
+    }
+
+    private bool HasAnyPickupTag(Object_Pickupable pickupable)
+    {
+        if (pickupable == null || pickupTags == null || pickupTags.Length == 0)
+            return false;
+
+        for (int i = 0; i < pickupTags.Length; i++)
+        {
+            if (!string.IsNullOrWhiteSpace(pickupTags[i]) && pickupable.CompareTag(pickupTags[i].Trim()))
+                return true;
+        }
+
+        return false;
     }
 
     private void OnDrawGizmosSelected()
