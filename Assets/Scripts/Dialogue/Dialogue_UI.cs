@@ -71,6 +71,7 @@ public class Dialogue_UI : MonoBehaviour
 
     public void ShowNode(
         Dialogue_Node node,
+        string speakerName,
         Action<DialogueChoice> onChoiceSelected,
         bool showEndButton,
         string endButtonText,
@@ -89,7 +90,7 @@ public class Dialogue_UI : MonoBehaviour
         SetPanelState(showNpcPanel: true, showPlayerPanel: false);
 
         if (npcSpeakerNameText != null)
-            npcSpeakerNameText.text = node.SpeakerName;
+            npcSpeakerNameText.text = speakerName;
 
         ClearChoices();
         ShowText(npcDialogueBodyText, node.DialogueText, () =>

@@ -6,6 +6,8 @@ public class Dialogue_Source : MonoBehaviour
 {
     [Header("Dialogue")]
     [SerializeField] private GameObject dialogueCharacter;
+    [Tooltip("Name shown in the dialogue box for this speaker. Leave empty to use the dialogue character object's name.")]
+    [SerializeField] private string speakerName;
     [SerializeField] private Dialogue_Node startingNode;
 
     [Header("End Dialogue")]
@@ -17,6 +19,7 @@ public class Dialogue_Source : MonoBehaviour
     private bool dialogueCompleted;
 
     public GameObject DialogueCharacter => dialogueCharacter != null ? dialogueCharacter : gameObject;
+    public string SpeakerName => string.IsNullOrWhiteSpace(speakerName) ? DialogueCharacter.name : speakerName;
     public Dialogue_Node StartingNode => startingNode;
     public bool ShowEndDialogueButton => showEndDialogueButton;
     public string EndDialogueButtonText => endDialogueButtonText;

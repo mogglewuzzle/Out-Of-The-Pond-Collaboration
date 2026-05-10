@@ -252,7 +252,7 @@ public class Dialogue_Manager : MonoBehaviour
             if (!useNpcCameraOnlyAfterPlayerSpeaks || playerHasSpokenThisDialogue)
                 ApplyNpcDialogueCameraPriority();
 
-            dialogueUI.ShowNode(node, Choose, showEndDialogueButton, endDialogueButtonText, EndDialogue);
+            dialogueUI.ShowNode(node, GetCurrentSpeakerName(), Choose, showEndDialogueButton, endDialogueButtonText, EndDialogue);
         }
         else
         {
@@ -260,8 +260,19 @@ public class Dialogue_Manager : MonoBehaviour
             if (!useNpcCameraOnlyAfterPlayerSpeaks || playerHasSpokenThisDialogue)
                 ApplyNpcDialogueCameraPriority();
 
-            Debug.Log($"{node.SpeakerName}: {node.DialogueText}", node);
+            Debug.Log($"{GetCurrentSpeakerName()}: {node.DialogueText}", node);
         }
+    }
+
+    private string GetCurrentSpeakerName()
+    {
+        if (currentDialogueSource != null)
+            return currentDialogueSource.SpeakerName;
+
+        if (CurrentSpeakerObject != null)
+            return CurrentSpeakerObject.name;
+
+        return string.Empty;
     }
 
     private void ShowPlayerResponse(DialogueChoice choice)

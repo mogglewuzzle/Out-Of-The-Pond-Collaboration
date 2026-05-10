@@ -61,22 +61,12 @@ public class DialogueChoice
 public class Dialogue_Node : MonoBehaviour
 {
     [Header("Line")]
-    [Tooltip("Name shown in the dialogue box. Leave empty to use this node's parent GameObject name.")]
-    [SerializeField] private string speakerName;
     [TextArea(2, 6)]
     [SerializeField] private string dialogueText;
 
     [Header("Choices")]
     [SerializeField] private List<DialogueChoice> choices = new List<DialogueChoice>();
 
-    public string SpeakerName => string.IsNullOrWhiteSpace(speakerName)
-        ? GetDefaultSpeakerName()
-        : speakerName;
     public string DialogueText => dialogueText;
     public IReadOnlyList<DialogueChoice> Choices => choices;
-
-    private string GetDefaultSpeakerName()
-    {
-        return transform.parent != null ? transform.parent.name : gameObject.name;
-    }
 }
