@@ -21,11 +21,10 @@ public class DialogueChoice
     [Tooltip("If enabled, the player says this response, dialogue ends, and this NPC can no longer start normal dialogue this play session.")]
     [SerializeField] private bool finalChoice = false;
 
-    [Header("Object State Changes")]
-    [Tooltip("Objects to activate when this choice is selected.")]
-    [SerializeField] private List<GameObject> objectsToActivate = new List<GameObject>();
-    [Tooltip("Objects to deactivate when this choice is selected.")]
-    [SerializeField] private List<GameObject> objectsToDeactivate = new List<GameObject>();
+    [Tooltip("If enabled, this choice runs the Object_DialogueEvent with the matching Dialogue Event ID when selected.")]
+    [SerializeField] private bool runDialogueEvent = false;
+    [Tooltip("ID of the Object_DialogueEvent to run. Example: start_apple_quest")]
+    [SerializeField] private string dialogueEventId;
 
     public string ChoiceText => choiceText;
     public string PlayerResponseText => string.IsNullOrWhiteSpace(playerResponseText) ? choiceText : playerResponseText;
@@ -34,8 +33,8 @@ public class DialogueChoice
     public bool Active => active;
     public bool DeactivateAfterChosen => deactivateAfterChosen;
     public bool FinalChoice => finalChoice;
-    public IReadOnlyList<GameObject> ObjectsToActivate => objectsToActivate;
-    public IReadOnlyList<GameObject> ObjectsToDeactivate => objectsToDeactivate;
+    public bool RunDialogueEvent => runDialogueEvent;
+    public string DialogueEventId => dialogueEventId;
 
     public void SetActive(bool isActive)
     {
@@ -48,22 +47,12 @@ public class DialogueChoice
             active = false;
     }
 
-    public void ApplyObjectStateChanges()
+    public void RunLinkedDialogueEvent(UnityEngine.Object logContext = null)
     {
-        SetObjectsActive(objectsToActivate, true);
-        SetObjectsActive(objectsToDeactivate, false);
-    }
-
-    private static void SetObjectsActive(List<GameObject> objects, bool activeState)
-    {
-        if (objects == null)
+        if (!runDialogueEvent)
             return;
 
-        for (int i = 0; i < objects.Count; i++)
-        {
-            if (objects[i] != null)
-                objects[i].SetActive(activeState);
-        }
+        Object_DialogueEvent.RunById(dialogueEventId, logContext);
     }
 }
 

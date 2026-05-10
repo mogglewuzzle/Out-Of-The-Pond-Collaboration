@@ -28,6 +28,8 @@ public class Dialogue_UI : MonoBehaviour
     [Header("Choices")]
     [SerializeField] private Transform choiceContainer;
     [SerializeField] private Button choiceButtonPrefab;
+    [Tooltip("Realtime delay after choices appear before they can be selected or clicked.")]
+    [SerializeField] private float choiceInputDelay = 0.25f;
 
     [Header("Player Continue")]
     [Tooltip("If enabled, the player response waits for this button after typing finishes. If disabled, Interact continues after typing.")]
@@ -52,6 +54,8 @@ public class Dialogue_UI : MonoBehaviour
     private Action pendingAfterTyping;
     private Action pendingPlayerLineContinue;
     private UnityAction playerContinueButtonAction;
+    private Coroutine choiceInputDelayRoutine;
+    private bool choiceInputBlocked;
 
     public bool IsTyping => typing;
     public bool AllowInteractToSpeedUpTyping => allowInteractToSpeedUpTyping;
@@ -122,6 +126,7 @@ public class Dialogue_UI : MonoBehaviour
         ClearChoices();
         HidePlayerContinueButton();
         StopTyping();
+        StopChoiceInputDelay();
     }
 
     public void ContinuePlayerLineFromInteract()
@@ -143,6 +148,9 @@ public class Dialogue_UI : MonoBehaviour
 
         Button selectedButton = selectedObject.GetComponent<Button>();
         if (selectedButton == null || !selectedButton.IsActive() || !selectedButton.interactable)
+            return;
+
+        if (choiceInputBlocked && selectedButton.transform.parent == choiceContainer)
             return;
 
         selectedButton.onClick.Invoke();
@@ -177,7 +185,7 @@ public class Dialogue_UI : MonoBehaviour
                 return;
 
             Button endButton = CreateButton(endButtonText, onEndDialogue);
-            SelectButton(endButton);
+            BeginChoiceInputDelay(endButton);
             return;
         }
 
@@ -199,7 +207,7 @@ public class Dialogue_UI : MonoBehaviour
                 firstButton = button;
         }
 
-        SelectButton(firstButton);
+        BeginChoiceInputDelay(firstButton);
     }
 
     private bool HasVisibleChoices(Dialogue_Node node)
@@ -230,8 +238,48 @@ public class Dialogue_UI : MonoBehaviour
         if (buttonText != null)
             buttonText.text = label;
 
-        button.onClick.AddListener(() => onClick?.Invoke());
+        button.onClick.AddListener(() =>
+        {
+            if (choiceInputBlocked && button.transform.parent == choiceContainer)
+                return;
+
+            onClick?.Invoke();
+        });
         return button;
+    }
+
+    private void BeginChoiceInputDelay(Button firstButton)
+    {
+        StopChoiceInputDelay();
+
+        choiceInputBlocked = true;
+        SelectButton(firstButton);
+
+        if (choiceInputDelay <= 0f)
+        {
+            choiceInputBlocked = false;
+            return;
+        }
+
+        choiceInputDelayRoutine = StartCoroutine(EnableChoiceInputAfterDelay());
+    }
+
+    private IEnumerator EnableChoiceInputAfterDelay()
+    {
+        yield return new WaitForSecondsRealtime(choiceInputDelay);
+
+        choiceInputBlocked = false;
+        choiceInputDelayRoutine = null;
+    }
+
+    private void StopChoiceInputDelay()
+    {
+        if (choiceInputDelayRoutine == null)
+            return;
+
+        StopCoroutine(choiceInputDelayRoutine);
+        choiceInputDelayRoutine = null;
+        choiceInputBlocked = false;
     }
 
     private void SelectButton(Button button)
@@ -254,6 +302,8 @@ public class Dialogue_UI : MonoBehaviour
 
     private void ClearChoices()
     {
+        StopChoiceInputDelay();
+
         if (choiceContainer == null)
             return;
 

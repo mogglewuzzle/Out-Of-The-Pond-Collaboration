@@ -200,7 +200,7 @@ public class Dialogue_Manager : MonoBehaviour
         }
 
         choice.MarkChosen();
-        choice.ApplyObjectStateChanges();
+        choice.RunLinkedDialogueEvent(this);
         endAfterPlayerResponse = choice.EndsConversation || choice.FinalChoice;
 
         if (choice.FinalChoice)

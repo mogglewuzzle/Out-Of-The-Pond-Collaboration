@@ -405,8 +405,8 @@ MonoBehaviour:
     deactivateAfterChosen: 0
     goodbyeChoice: 0
     finalChoice: 0
-    objectsToActivate: []
-    objectsToDeactivate: []
+    runDialogueEvent: 0
+    dialogueEventId: 
   - choiceText: I need space
     playerResponseText: 'I just... I need a moment to think. '
     nextNode: {fileID: 1397343219}
@@ -414,8 +414,8 @@ MonoBehaviour:
     deactivateAfterChosen: 0
     goodbyeChoice: 0
     finalChoice: 0
-    objectsToActivate: []
-    objectsToDeactivate: []
+    runDialogueEvent: 0
+    dialogueEventId: 
 --- !u!1 &66866832
 GameObject:
   m_ObjectHideFlags: 0
@@ -1084,12 +1084,13 @@ MonoBehaviour:
   playerDialogueBodyText: {fileID: 673461483}
   choiceContainer: {fileID: 673461479}
   choiceButtonPrefab: {fileID: 1548991119877197290, guid: 7285fcad63b103f469e4cefa23644d85, type: 3}
+  choiceInputDelay: 0.5
   usePlayerContinueButton: 0
   playerContinueButton: {fileID: 0}
   useTypewriter: 1
   typeStartDelay: 1
   charactersPerSecond: 30
-  interactSpeedMultiplier: 4
+  interactSpeedMultiplier: 3
   allowInteractToSpeedUpTyping: 1
 --- !u!114 &228303181
 MonoBehaviour:
@@ -1603,8 +1604,8 @@ MonoBehaviour:
     deactivateAfterChosen: 0
     goodbyeChoice: 0
     finalChoice: 1
-    objectsToActivate: []
-    objectsToDeactivate: []
+    runDialogueEvent: 1
+    dialogueEventId: dialogue_opendoor
 --- !u!1 &365577143
 GameObject:
   m_ObjectHideFlags: 0
@@ -2087,9 +2088,8 @@ MonoBehaviour:
     deactivateAfterChosen: 0
     goodbyeChoice: 0
     finalChoice: 0
-    objectsToActivate: []
-    objectsToDeactivate:
-    - {fileID: 615479463}
+    runDialogueEvent: 0
+    dialogueEventId: 
   - choiceText: Say nothing
     playerResponseText: ....
     nextNode: {fileID: 341663445}
@@ -2097,9 +2097,8 @@ MonoBehaviour:
     deactivateAfterChosen: 0
     goodbyeChoice: 0
     finalChoice: 0
-    objectsToActivate: []
-    objectsToDeactivate:
-    - {fileID: 615479463}
+    runDialogueEvent: 0
+    dialogueEventId: 
 --- !u!1 &447962829
 GameObject:
   m_ObjectHideFlags: 0
@@ -2505,8 +2504,8 @@ MonoBehaviour:
     deactivateAfterChosen: 0
     goodbyeChoice: 0
     finalChoice: 0
-    objectsToActivate: []
-    objectsToDeactivate: []
+    runDialogueEvent: 0
+    dialogueEventId: 
 --- !u!1 &502682499 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6315284750492650164, guid: 14f2a3b5beda2774cb269f9ce254fb5c, type: 3}
@@ -3250,8 +3249,8 @@ MonoBehaviour:
     deactivateAfterChosen: 0
     goodbyeChoice: 0
     finalChoice: 0
-    objectsToActivate: []
-    objectsToDeactivate: []
+    runDialogueEvent: 0
+    dialogueEventId: 
 --- !u!1 &615479463
 GameObject:
   m_ObjectHideFlags: 0
@@ -3359,11 +3358,11 @@ Transform:
   m_GameObject: {fileID: 615479463}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7032263, y: -0.16012512, z: 0.16753207, w: 0.6721352}
-  m_LocalPosition: {x: -84.43, y: 26.42, z: 115.25}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.4, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2129433911}
   m_LocalEulerAnglesHint: {x: 92.59, y: -26.8, z: 0}
 --- !u!1 &617343080
 GameObject:
@@ -4115,8 +4114,8 @@ MonoBehaviour:
     deactivateAfterChosen: 0
     goodbyeChoice: 0
     finalChoice: 1
-    objectsToActivate: []
-    objectsToDeactivate: []
+    runDialogueEvent: 1
+    dialogueEventId: dialogue_opendoor
 --- !u!1 &733986473
 GameObject:
   m_ObjectHideFlags: 0
@@ -6797,8 +6796,8 @@ MonoBehaviour:
     deactivateAfterChosen: 0
     goodbyeChoice: 0
     finalChoice: 0
-    objectsToActivate: []
-    objectsToDeactivate: []
+    runDialogueEvent: 0
+    dialogueEventId: 
   - choiceText: Who are you?
     playerResponseText: 'Foul beast. Who are you and why are you in my room! '
     nextNode: {fileID: 1678142402}
@@ -6806,8 +6805,8 @@ MonoBehaviour:
     deactivateAfterChosen: 1
     goodbyeChoice: 0
     finalChoice: 0
-    objectsToActivate: []
-    objectsToDeactivate: []
+    runDialogueEvent: 0
+    dialogueEventId: 
   - choiceText: Go Away
     playerResponseText: 'Moonlily I think we need to talk... '
     nextNode: {fileID: 63368922}
@@ -6815,8 +6814,8 @@ MonoBehaviour:
     deactivateAfterChosen: 1
     goodbyeChoice: 0
     finalChoice: 0
-    objectsToActivate: []
-    objectsToDeactivate: []
+    runDialogueEvent: 0
+    dialogueEventId: 
 --- !u!1001 &1104467669
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9902,8 +9901,8 @@ MonoBehaviour:
     deactivateAfterChosen: 0
     goodbyeChoice: 0
     finalChoice: 0
-    objectsToActivate: []
-    objectsToDeactivate: []
+    runDialogueEvent: 0
+    dialogueEventId: 
   - choiceText: I don't want to
     playerResponseText: I'd rather not. And why are you so full of energy?
     nextNode: {fileID: 1863162167}
@@ -9911,8 +9910,8 @@ MonoBehaviour:
     deactivateAfterChosen: 0
     goodbyeChoice: 0
     finalChoice: 0
-    objectsToActivate: []
-    objectsToDeactivate: []
+    runDialogueEvent: 0
+    dialogueEventId: 
 --- !u!1 &1710426772
 GameObject:
   m_ObjectHideFlags: 0
@@ -9968,8 +9967,8 @@ MonoBehaviour:
     deactivateAfterChosen: 0
     goodbyeChoice: 0
     finalChoice: 0
-    objectsToActivate: []
-    objectsToDeactivate: []
+    runDialogueEvent: 0
+    dialogueEventId: 
 --- !u!1001 &1721135592
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10757,8 +10756,8 @@ MonoBehaviour:
     deactivateAfterChosen: 0
     goodbyeChoice: 0
     finalChoice: 0
-    objectsToActivate: []
-    objectsToDeactivate: []
+    runDialogueEvent: 0
+    dialogueEventId: 
 --- !u!4 &1823264276 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d079315bfd357b3429b5bd8110b82470, type: 3}
@@ -10977,8 +10976,8 @@ MonoBehaviour:
     deactivateAfterChosen: 0
     goodbyeChoice: 0
     finalChoice: 0
-    objectsToActivate: []
-    objectsToDeactivate: []
+    runDialogueEvent: 0
+    dialogueEventId: 
   - choiceText: 'I don''t care.  '
     playerResponseText: 'I''m not interested in some stupid apple scavenger hunt.
       I''m a grown frogman not a child.  '
@@ -10987,8 +10986,8 @@ MonoBehaviour:
     deactivateAfterChosen: 0
     goodbyeChoice: 0
     finalChoice: 0
-    objectsToActivate: []
-    objectsToDeactivate: []
+    runDialogueEvent: 0
+    dialogueEventId: 
 --- !u!1001 &1900721486
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11202,8 +11201,8 @@ MonoBehaviour:
     deactivateAfterChosen: 0
     goodbyeChoice: 0
     finalChoice: 0
-    objectsToActivate: []
-    objectsToDeactivate: []
+    runDialogueEvent: 0
+    dialogueEventId: 
 --- !u!1 &1907423016
 GameObject:
   m_ObjectHideFlags: 0
@@ -12690,6 +12689,58 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6786678960517873658, guid: eb52220b263c70e40a612e2dac63953c, type: 3}
+--- !u!1 &2129433909
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2129433911}
+  - component: {fileID: 2129433910}
+  m_Layer: 0
+  m_Name: Dialogue Event
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2129433910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2129433909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55dfdbdc121ce7c42b18fa618eac2595, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Object_DialogueEvent
+  eventId: dialogue_opendoor
+  objectsToActivate: []
+  objectsToDeactivate:
+  - {fileID: 615479463}
+  onEventRun:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!4 &2129433911
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2129433909}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -84.43, y: 26.42, z: 115.25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 615479467}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2130311992
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12808,8 +12859,8 @@ MonoBehaviour:
     deactivateAfterChosen: 0
     goodbyeChoice: 0
     finalChoice: 0
-    objectsToActivate: []
-    objectsToDeactivate: []
+    runDialogueEvent: 0
+    dialogueEventId: 
 --- !u!1001 &962718312821538709
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12965,6 +13016,6 @@ SceneRoots:
   - {fileID: 228303182}
   - {fileID: 2013081882}
   - {fileID: 308475972}
-  - {fileID: 615479467}
+  - {fileID: 2129433911}
   - {fileID: 907443695}
   - {fileID: 151319585}

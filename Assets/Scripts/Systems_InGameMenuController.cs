@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.UI;
 using System.Collections;
 
 [DisallowMultipleComponent]
@@ -22,8 +21,6 @@ public class Systems_InGameMenuController : MonoBehaviour
     [SerializeField] private string gameplayActionMapName = "Player";
     [Tooltip("Name of the UI action map in the Input Actions asset. This should usually stay as UI.")]
     [SerializeField] private string uiActionMapName = "UI";
-    [Tooltip("Optional. If left empty, the controller auto-finds the scene's InputSystemUIInputModule and enables it only while the menu is open.")]
-    [SerializeField] private InputSystemUIInputModule uiInputModule;
 
     [Header("Gameplay Control")]
     [Tooltip("Optional. If left empty, the controller auto-finds the first active PlayerInputHandler in the scene and disables it while the menu is open.")]
@@ -45,7 +42,6 @@ public class Systems_InGameMenuController : MonoBehaviour
     private CursorLockMode previousCursorLockState;
     private bool previousCursorVisible;
     private bool playerInputHandlerPreviousState;
-    private bool uiInputModulePreviousState;
     private Coroutine fadeRoutine;
     private int ignoreUiPauseFrame = -1;
 
@@ -57,9 +53,6 @@ public class Systems_InGameMenuController : MonoBehaviour
         if (menuCanvasGroup == null && menuRoot != null)
             menuCanvasGroup = menuRoot.GetComponent<CanvasGroup>();
 
-        if (uiInputModule == null)
-            uiInputModule = FindFirstObjectByType<InputSystemUIInputModule>();
-
         CacheActionMaps();
 
         if (hideMenuOnStart && menuRoot != null)
@@ -68,8 +61,6 @@ public class Systems_InGameMenuController : MonoBehaviour
             menuRoot.SetActive(false);
         }
 
-        if (hideMenuOnStart && uiInputModule != null)
-            uiInputModule.enabled = false;
     }
 
     private void OnEnable()
@@ -123,7 +114,6 @@ public class Systems_InGameMenuController : MonoBehaviour
         if (menuRoot != null)
             menuRoot.SetActive(true);
 
-        EnableUiInputModule();
         StartMenuFade(1f, true, false);
         DisableGameplayInput();
         EnableUiInput();
@@ -140,7 +130,6 @@ public class Systems_InGameMenuController : MonoBehaviour
 
         ClearSelectedObject();
         StartMenuFade(0f, false, true);
-        DisableUiInputModule();
         DisableUiInput();
         EnableGameplayInput();
         RestoreCursorState();
@@ -202,7 +191,6 @@ public class Systems_InGameMenuController : MonoBehaviour
         if (menuRoot != null)
             menuRoot.SetActive(false);
 
-        DisableUiInputModule();
         DisableUiInput();
         EnableGameplayInput();
         RestoreCursorState();
@@ -212,9 +200,7 @@ public class Systems_InGameMenuController : MonoBehaviour
     private void CacheActionMaps()
     {
         InputAction pause = pauseAction != null ? pauseAction.action : null;
-        InputActionAsset actionAsset = uiInputModule != null && uiInputModule.actionsAsset != null
-            ? uiInputModule.actionsAsset
-            : pause != null ? pause.actionMap?.asset : null;
+        InputActionAsset actionAsset = pause != null ? pause.actionMap?.asset : null;
 
         if (actionAsset == null)
             return;
@@ -289,25 +275,7 @@ public class Systems_InGameMenuController : MonoBehaviour
 
     private void DisableUiInput()
     {
-        if (uiActionMap != null)
-            uiActionMap.Disable();
-    }
-
-    private void EnableUiInputModule()
-    {
-        if (uiInputModule == null)
-            return;
-
-        uiInputModulePreviousState = uiInputModule.enabled;
-        uiInputModule.enabled = true;
-    }
-
-    private void DisableUiInputModule()
-    {
-        if (uiInputModule == null)
-            return;
-
-        uiInputModule.enabled = uiInputModulePreviousState;
+        // UI input is shared by dialogue and menus, so this controller does not disable it on close.
     }
 
     private void DisableGameplayInput()
