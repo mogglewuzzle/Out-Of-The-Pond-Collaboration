@@ -2273,12 +2273,18 @@ MonoBehaviour:
   swingGravityMultiplier: 3
   swingHorizontalAcceleration: 20
   swingGroundDelay: 0.15
-  swingStartupPullForce: 12
+  swingStartupPullForce: 20
+  swingStartupForwardPullForce: 0
   swingMinGroundDistance: 1.5
   maxSwingRopeLength: 25
+  changeLayerDuringSwingStartup: 1
+  swingStartupLayer:
+    serializedVersion: 2
+    m_Bits: 4194304
+  swingStartupLayerDuration: 1.5
   releaseForwardSpeed: 20
   releaseUpSpeed: 0
-  releaseLaunchDuration: 0.35
+  releaseLaunchDuration: 0.25
   minSwingTimeForReleaseBoost: 0.25
   feetPoint: {fileID: 3431637087839159340}
   groundMask:
@@ -2340,6 +2346,8 @@ MonoBehaviour:
   playerCamera: {fileID: 0}
   arcLineRenderer: {fileID: 0}
   canvasToDisableWhileHolding: {fileID: 0}
+  canvasToDisableWhileHoldingName: Canvas Crosshair
+  retryFindCanvasUntilFound: 1
   throwDirectionOffset: {x: 0.2, y: 0}
   showThrowArc: 1
   arcMaxPointCount: 120

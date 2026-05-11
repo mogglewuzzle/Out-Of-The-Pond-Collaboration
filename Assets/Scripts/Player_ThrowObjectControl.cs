@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player_ThrowObjectControl : MonoBehaviour
 {
@@ -7,6 +8,8 @@ public class Player_ThrowObjectControl : MonoBehaviour
     [SerializeField] private Camera playerCamera;
     [SerializeField] private LineRenderer arcLineRenderer;
     [SerializeField] private Canvas canvasToDisableWhileHolding;
+    [SerializeField] private string canvasToDisableWhileHoldingName = "Canvas Crosshair";
+    [SerializeField] private bool retryFindCanvasUntilFound = true;
 
     [Header("Throw Aim")]
     [SerializeField] private Vector2 throwDirectionOffset = Vector2.zero;
@@ -47,12 +50,14 @@ public class Player_ThrowObjectControl : MonoBehaviour
         EnsureArcLineRenderer();
         HideArc();
 
-        if (canvasToDisableWhileHolding != null)
-            canvasDefaultEnabled = canvasToDisableWhileHolding.enabled;
+        TryFindCanvasToDisableWhileHolding();
     }
 
     private void Update()
     {
+        if (retryFindCanvasUntilFound && canvasToDisableWhileHolding == null)
+            TryFindCanvasToDisableWhileHolding();
+
         UpdateHeldObjectCanvas();
         UpdateThrowCharge();
         UpdateThrowArc();
@@ -64,6 +69,56 @@ public class Player_ThrowObjectControl : MonoBehaviour
             return;
 
         canvasToDisableWhileHolding.enabled = pickupControl.HeldObject == null && canvasDefaultEnabled;
+    }
+
+    private void TryFindCanvasToDisableWhileHolding()
+    {
+        if (canvasToDisableWhileHolding != null)
+        {
+            canvasDefaultEnabled = canvasToDisableWhileHolding.enabled;
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(canvasToDisableWhileHoldingName))
+            return;
+
+        string requestedName = canvasToDisableWhileHoldingName.Trim();
+        for (int i = 0; i < SceneManager.sceneCount; i++)
+        {
+            Scene scene = SceneManager.GetSceneAt(i);
+            if (!scene.isLoaded)
+                continue;
+
+            GameObject[] rootObjects = scene.GetRootGameObjects();
+            for (int j = 0; j < rootObjects.Length; j++)
+            {
+                Canvas foundCanvas = FindCanvasByName(rootObjects[j].transform, requestedName);
+                if (foundCanvas == null)
+                    continue;
+
+                canvasToDisableWhileHolding = foundCanvas;
+                canvasDefaultEnabled = canvasToDisableWhileHolding.enabled;
+                return;
+            }
+        }
+    }
+
+    private Canvas FindCanvasByName(Transform parent, string canvasName)
+    {
+        if (parent == null)
+            return null;
+
+        if (parent.name == canvasName && parent.TryGetComponent(out Canvas canvas))
+            return canvas;
+
+        for (int i = 0; i < parent.childCount; i++)
+        {
+            Canvas foundCanvas = FindCanvasByName(parent.GetChild(i), canvasName);
+            if (foundCanvas != null)
+                return foundCanvas;
+        }
+
+        return null;
     }
 
     private void UpdateThrowCharge()
