@@ -8,8 +8,14 @@ public class Player_TongueSwing : MonoBehaviour
     [SerializeField] private float swingHorizontalAcceleration = 20f;
     [SerializeField] private float swingGroundDelay = 0.15f;
     [SerializeField] private float swingStartupPullForce = 12f;
+    [SerializeField] private float swingStartupForwardPullForce = 0f;
     [SerializeField] private float swingMinGroundDistance = 1.5f;
     [SerializeField] private float maxSwingRopeLength = 25f;
+
+    [Header("Startup Layer Override")]
+    [SerializeField] private bool changeLayerDuringSwingStartup;
+    [SerializeField] private LayerMask swingStartupLayer;
+    [SerializeField] private float swingStartupLayerDuration = 0.15f;
 
     [Header("Release Boost")]
     [SerializeField] private float releaseForwardSpeed = 12f;
@@ -33,6 +39,9 @@ public class Player_TongueSwing : MonoBehaviour
     private float ropeLength;
     private float activeSwingStartTime = -999f;
     private Coroutine swingStartupRoutine;
+    private Coroutine swingStartupLayerRoutine;
+    private Transform[] layerOverrideTransforms;
+    private int[] originalLayers;
 
     public bool IsSwinging => active || startingSwing;
 
@@ -77,6 +86,8 @@ public class Player_TongueSwing : MonoBehaviour
             swingStartupRoutine = null;
         }
 
+        StopSwingStartupLayerOverride();
+
         active = false;
         startingSwing = false;
 
@@ -86,6 +97,8 @@ public class Player_TongueSwing : MonoBehaviour
 
     private IEnumerator SwingStartup()
     {
+        BeginSwingStartupLayerOverride();
+
         if (movement != null && movement.IsGroundedCached)
         {
             Vector3 velocity = rb.linearVelocity;
@@ -93,6 +106,9 @@ public class Player_TongueSwing : MonoBehaviour
             rb.linearVelocity = velocity;
 
             rb.AddForce(Vector3.up * swingStartupPullForce, ForceMode.Impulse);
+            Vector3 startupForwardDirection = GetReleaseForwardDirection();
+            if (startupForwardDirection != Vector3.zero && swingStartupForwardPullForce > 0f)
+                rb.AddForce(startupForwardDirection * swingStartupForwardPullForce, ForceMode.Impulse);
 
             if (swingGroundDelay > 0f)
                 yield return new WaitForSeconds(swingGroundDelay);
@@ -102,6 +118,87 @@ public class Player_TongueSwing : MonoBehaviour
         active = true;
         activeSwingStartTime = Time.time;
         swingStartupRoutine = null;
+    }
+
+    private void BeginSwingStartupLayerOverride()
+    {
+        if (!changeLayerDuringSwingStartup || swingStartupLayerDuration <= 0f)
+            return;
+
+        int layer = GetSingleLayerIndex(swingStartupLayer);
+        if (layer < 0)
+        {
+            Debug.LogWarning($"{nameof(Player_TongueSwing)} on {name} needs exactly one Startup Layer Override layer selected.", this);
+            return;
+        }
+
+        StopSwingStartupLayerOverride();
+        layerOverrideTransforms = GetComponentsInChildren<Transform>(true);
+        originalLayers = new int[layerOverrideTransforms.Length];
+
+        for (int i = 0; i < layerOverrideTransforms.Length; i++)
+        {
+            Transform layerOverrideTransform = layerOverrideTransforms[i];
+            if (layerOverrideTransform == null)
+                continue;
+
+            originalLayers[i] = layerOverrideTransform.gameObject.layer;
+            layerOverrideTransform.gameObject.layer = layer;
+        }
+
+        swingStartupLayerRoutine = StartCoroutine(RestoreSwingStartupLayerAfterDelay());
+    }
+
+    private IEnumerator RestoreSwingStartupLayerAfterDelay()
+    {
+        yield return new WaitForSeconds(swingStartupLayerDuration);
+        RestoreSwingStartupLayer();
+    }
+
+    private void StopSwingStartupLayerOverride()
+    {
+        if (swingStartupLayerRoutine != null)
+        {
+            StopCoroutine(swingStartupLayerRoutine);
+            swingStartupLayerRoutine = null;
+        }
+
+        RestoreSwingStartupLayer();
+    }
+
+    private void RestoreSwingStartupLayer()
+    {
+        if (layerOverrideTransforms == null || originalLayers == null)
+            return;
+
+        int count = Mathf.Min(layerOverrideTransforms.Length, originalLayers.Length);
+        for (int i = 0; i < count; i++)
+        {
+            Transform layerOverrideTransform = layerOverrideTransforms[i];
+            if (layerOverrideTransform == null)
+                continue;
+
+            layerOverrideTransform.gameObject.layer = originalLayers[i];
+        }
+
+        layerOverrideTransforms = null;
+        originalLayers = null;
+        swingStartupLayerRoutine = null;
+    }
+
+    private int GetSingleLayerIndex(LayerMask layerMask)
+    {
+        int layerValue = layerMask.value;
+        if (layerValue == 0 || (layerValue & (layerValue - 1)) != 0)
+            return -1;
+
+        for (int i = 0; i < 32; i++)
+        {
+            if ((layerValue & (1 << i)) != 0)
+                return i;
+        }
+
+        return -1;
     }
 
     private void ApplyReleaseBoost()

@@ -26,10 +26,20 @@ public class Systems_RespawnManager : MonoBehaviour
     [Header("Respawn Timing")]
     [SerializeField] private float respawnDelay = 1f;
 
+    [Header("First Respawn Override")]
+    [Tooltip("When enabled, the first successful respawn request in this scene uses First Respawn Point, then all later respawns use the normal rules.")]
+    [SerializeField] private bool useFirstRespawnPointOnce;
+    [SerializeField] private Transform firstRespawnPoint;
+
     [Header("Respawn Points")]
+    [Tooltip("When enabled, respawn requests use the closest listed respawn point to the object being respawned instead of the requested point name.")]
+    [SerializeField] private bool useClosestRespawnPoint;
+    [Tooltip("When enabled, respawns use the closest point on the selected respawn point's collider instead of the respawn point transform position.")]
+    [SerializeField] private bool useClosestPointOnRespawnCollider;
     [SerializeField] private List<NamedRespawnPoint> respawnPoints = new List<NamedRespawnPoint>();
 
     private readonly HashSet<GameObject> respawningObjects = new HashSet<GameObject>();
+    private bool hasUsedFirstRespawnPoint;
 
     private void Awake()
     {
@@ -59,11 +69,8 @@ public class Systems_RespawnManager : MonoBehaviour
         if (objectToRespawn == null || respawningObjects.Contains(objectToRespawn))
             return;
 
-        if (!TryGetRespawnPoint(respawnPointName, out Transform respawnPoint))
-        {
-            Debug.LogWarning($"{nameof(Systems_RespawnManager)} cannot respawn {objectToRespawn.name}: no respawn point named '{respawnPointName}' found.", this);
+        if (!TryResolveRespawnPoint(objectToRespawn, respawnPointName, out Transform respawnPoint))
             return;
-        }
 
         if (respawnMode == RespawnMode.InstantiatePrefab && respawnPrefab == null)
         {
@@ -71,8 +78,44 @@ public class Systems_RespawnManager : MonoBehaviour
             return;
         }
 
+        if (useFirstRespawnPointOnce && !hasUsedFirstRespawnPoint && respawnPoint == firstRespawnPoint)
+            hasUsedFirstRespawnPoint = true;
+
+        Vector3 requestPosition = objectToRespawn.transform.position;
         respawningObjects.Add(objectToRespawn);
-        StartCoroutine(RespawnAfterDelay(objectToRespawn, respawnPoint, respawnMode, respawnPrefab, useRespawnPointRotation));
+        StartCoroutine(RespawnAfterDelay(objectToRespawn, respawnPoint, requestPosition, respawnMode, respawnPrefab, useRespawnPointRotation));
+    }
+
+    private bool TryResolveRespawnPoint(GameObject objectToRespawn, string respawnPointName, out Transform respawnPoint)
+    {
+        respawnPoint = null;
+
+        if (useFirstRespawnPointOnce && !hasUsedFirstRespawnPoint)
+        {
+            if (firstRespawnPoint == null)
+            {
+                Debug.LogWarning($"{nameof(Systems_RespawnManager)} cannot use first respawn override for {objectToRespawn.name}: no first respawn point assigned.", this);
+                return false;
+            }
+
+            respawnPoint = firstRespawnPoint;
+            return true;
+        }
+
+        if (useClosestRespawnPoint)
+        {
+            if (TryGetClosestRespawnPoint(objectToRespawn.transform.position, out respawnPoint))
+                return true;
+
+            Debug.LogWarning($"{nameof(Systems_RespawnManager)} cannot respawn {objectToRespawn.name}: no valid respawn points configured.", this);
+            return false;
+        }
+
+        if (TryGetRespawnPoint(respawnPointName, out respawnPoint))
+            return true;
+
+        Debug.LogWarning($"{nameof(Systems_RespawnManager)} cannot respawn {objectToRespawn.name}: no respawn point named '{respawnPointName}' found.", this);
+        return false;
     }
 
     public bool TryGetRespawnPoint(string respawnPointName, out Transform respawnPoint)
@@ -100,14 +143,42 @@ public class Systems_RespawnManager : MonoBehaviour
         return false;
     }
 
+    public bool TryGetClosestRespawnPoint(Vector3 worldPosition, out Transform respawnPoint)
+    {
+        respawnPoint = null;
+
+        if (respawnPoints == null)
+            return false;
+
+        float closestDistanceSqr = float.PositiveInfinity;
+
+        for (int i = 0; i < respawnPoints.Count; i++)
+        {
+            NamedRespawnPoint entry = respawnPoints[i];
+            if (entry == null || entry.point == null)
+                continue;
+
+            Vector3 candidatePosition = GetSpawnPosition(entry.point, worldPosition);
+            float distanceSqr = (candidatePosition - worldPosition).sqrMagnitude;
+            if (distanceSqr >= closestDistanceSqr)
+                continue;
+
+            closestDistanceSqr = distanceSqr;
+            respawnPoint = entry.point;
+        }
+
+        return respawnPoint != null;
+    }
+
     private IEnumerator RespawnAfterDelay(
         GameObject objectToRespawn,
         Transform respawnPoint,
+        Vector3 requestPosition,
         RespawnMode respawnMode,
         GameObject respawnPrefab,
         bool useRespawnPointRotation)
     {
-        Vector3 spawnPosition = respawnPoint.position;
+        Vector3 spawnPosition = GetSpawnPosition(respawnPoint, requestPosition);
         Quaternion spawnRotation = useRespawnPointRotation ? respawnPoint.rotation : objectToRespawn.transform.rotation;
 
         DeactivateObject(objectToRespawn);
@@ -135,6 +206,18 @@ public class Systems_RespawnManager : MonoBehaviour
         RespawnExistingObject(objectToRespawn, spawnPosition, spawnRotation);
         objectToRespawn.SetActive(true);
         respawningObjects.Remove(objectToRespawn);
+    }
+
+    private Vector3 GetSpawnPosition(Transform respawnPoint, Vector3 requestPosition)
+    {
+        if (!useClosestPointOnRespawnCollider)
+            return respawnPoint.position;
+
+        Collider respawnCollider = respawnPoint.GetComponent<Collider>();
+        if (respawnCollider == null)
+            return respawnPoint.position;
+
+        return respawnCollider.ClosestPoint(requestPosition);
     }
 
     private void DeactivateObject(GameObject objectToRespawn)

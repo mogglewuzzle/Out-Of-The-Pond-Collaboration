@@ -336,7 +336,7 @@ Transform:
   m_GameObject: {fileID: 2488880846635981178}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.327, z: 1.55}
+  m_LocalPosition: {x: -0, y: 3.327, z: 1.43}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -2068,7 +2068,7 @@ MonoBehaviour:
   aimPivot: {fileID: 8709792742642679742}
   pitchSpeed: 60
   pitchMax: 40
-  pitchMin: 15
+  pitchMin: 30
   invertPitch: 0
   aimPitchMultiplier: 0.5
   enableFreeLookPitch: 1
@@ -2076,7 +2076,7 @@ MonoBehaviour:
   freeLookPitchSpeed: 80
   freeLookPitchMultiplier: 1
   freeLookPitchMax: 30
-  freeLookPitchMin: 15
+  freeLookPitchMin: 30
   invertFreeLookPitch: 0
   freeLookPitchRecenter: 0
   freeLookRecenterSpeed: 45
@@ -2231,10 +2231,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   AttractPointTag: AttractPoint
-  GrabPointTag: GrabPoint
+  GrabPointTags:
+  - GrabPoint
+  - Consumable
   SwingPointTag: SwingPoint
   useAutoAim: 1
-  autoAimRadius: 10
+  autoAimRadius: 5
   autoAimMaxAngle: 45
   autoAimTagPriority:
   - GrabPoint
@@ -2311,16 +2313,18 @@ MonoBehaviour:
   pickupOrigin: {fileID: 3431637087839159340}
   holdPoint: {fileID: 6429789011799487989}
   playerCamera: {fileID: 0}
-  pickupRadius: 3
+  pickupRadius: 4
   holdOnlyWhileButtonHeld: 1
   useConeAngle: 0
-  maxConeAngle: 30
-  pickupTag: GrabPoint
+  maxConeAngle: 45
+  pickupTags:
+  - GrabPoint
+  - Consumable
   lineOfSightMask:
     serializedVersion: 2
     m_Bits: 1048599
   requireLineOfSight: 0
-  debugDraw: 0
+  debugDraw: 1
 --- !u!114 &7866744332092305658
 MonoBehaviour:
   m_ObjectHideFlags: 0

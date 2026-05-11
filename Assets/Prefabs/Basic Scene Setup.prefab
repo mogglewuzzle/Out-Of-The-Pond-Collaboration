@@ -172,7 +172,6 @@ Transform:
   - {fileID: 6798581111764263517}
   - {fileID: 3013135249478407277}
   - {fileID: 4843004302309879918}
-  - {fileID: 5097496303746637254}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &410395095171368764
@@ -211,60 +210,6 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &554162082085530870
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5097496303746637254}
-  - component: {fileID: 7864916894021929008}
-  m_Layer: 0
-  m_Name: Consumable Systems
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5097496303746637254
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 554162082085530870}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7797723437502772290}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7864916894021929008
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 554162082085530870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4faf3ff1e47b5a34a8e53f614d55e1ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Systems_ConsumedItemTracker
-  persistAcrossScenes: 0
-  thresholds:
-  - itemTag: Consumable
-    requiredCount: 2
-    onlyTriggerOnce: 1
-    objectsToActivate:
-    - {fileID: 0}
-    objectsToDeactivate:
-    - {fileID: 0}
-  consumedCounts: []
 --- !u!1 &676287739605641365
 GameObject:
   m_ObjectHideFlags: 0
@@ -3365,7 +3310,6 @@ GameObject:
   - component: {fileID: 8973068749658150782}
   - component: {fileID: 2620848302018279132}
   - component: {fileID: 6539261300272889856}
-  - component: {fileID: 5496370209964921367}
   - component: {fileID: 2402462780480599190}
   - component: {fileID: 1559423265653521769}
   m_Layer: 0
@@ -3454,24 +3398,6 @@ MonoBehaviour:
   attractCameraDelay: 0.1
   grabCameraDelay: 0.1
   swingCameraDelay: 0.1
---- !u!114 &5496370209964921367
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5723057978284630347}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cb8bc921d14489e8cb50ef7d3067812, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Systems_RespawnManager
-  respawnDelay: 1
-  respawnPoints:
-  - pointName: Tutorial01
-    point: {fileID: 0}
-  - pointName: Tutorial02
-    point: {fileID: 0}
 --- !u!114 &2402462780480599190
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -33,7 +33,7 @@ public class Object_Hazard : MonoBehaviour
 
     private void TryRequestRespawn(GameObject objectToRespawn)
     {
-        if (objectToRespawn == null || string.IsNullOrWhiteSpace(respawnPointName) || !HasAffectedTag(objectToRespawn))
+        if (objectToRespawn == null || !HasAffectedTag(objectToRespawn))
             return;
 
         if (respawnManager == null)

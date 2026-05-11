@@ -393,7 +393,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eed38e452d87c7428f4c86506a4d752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dialogue_Node
-  speakerName: 
   dialogueText: 'Oh okay sure! What''s on your mind my sweet darling Froggle? My
     most beautiful cuddliest wuzzlepuffin! '
   choices:
@@ -893,6 +892,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dialogue_Source
   dialogueCharacter: {fileID: 2008379654}
+  speakerName: Moonlily
   startingNode: {fileID: 1070394472}
   showEndDialogueButton: 1
   endDialogueButtonText: ...
@@ -1113,6 +1113,7 @@ MonoBehaviour:
   npcDialogueCameraPriority: 10
   useNpcCameraOnlyAfterPlayerSpeaks: 0
   autoSetNpcCameraTrackingTarget: 1
+  npcCameraTargetTag: 
   restoreNpcCameraTrackingTargetOnEnd: 1
   playerSpeakerName: Froggle
   lockPlayerDuringDialogue: 1
@@ -1594,7 +1595,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eed38e452d87c7428f4c86506a4d752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dialogue_Node
-  speakerName: 
   dialogueText: '*Moonlily looks sad, as though she was expecting a response*'
   choices:
   - choiceText: Leave
@@ -2078,7 +2078,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eed38e452d87c7428f4c86506a4d752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dialogue_Node
-  speakerName: 
   dialogueText: Yay!! I love you Froggle!
   choices:
   - choiceText: I love you too
@@ -2494,7 +2493,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eed38e452d87c7428f4c86506a4d752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dialogue_Node
-  speakerName: 
   dialogueText: 'Yearn??? '
   choices:
   - choiceText: Yearn
@@ -3239,7 +3237,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eed38e452d87c7428f4c86506a4d752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dialogue_Node
-  speakerName: 
   dialogueText: 'Huh? Do I ever what?  '
   choices:
   - choiceText: Yearn
@@ -4104,7 +4101,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eed38e452d87c7428f4c86506a4d752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dialogue_Node
-  speakerName: 
   dialogueText: '*Blushes*'
   choices:
   - choiceText: Leave
@@ -6785,7 +6781,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eed38e452d87c7428f4c86506a4d752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dialogue_Node
-  speakerName: 
   dialogueText: 'Froggle!  '
   choices:
   - choiceText: Darling Moonlily
@@ -6980,17 +6975,21 @@ MonoBehaviour:
   checkParentTags: 1
   taggedDialogueEntries:
   - triggerTag: GrabPoint
+    randomise: 0
     firstText: Ouch! Be careful!
     secondText: Hey that really hurt!
     thirdText: 'Oof! '
   - triggerTag: Tongue
+    randomise: 0
     firstText: Hey!
     secondText: 'Stop that. '
     thirdText: 'I''ll have you arrested.  '
   - triggerTag: StoryItem
+    randomise: 0
     firstText: Oh wow!
     secondText: 
     thirdText: 
+  randomiseCompletedDialogue: 0
   completedFirstText: 
   completedSecondText: 
   completedThirdText: 
@@ -8321,7 +8320,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eed38e452d87c7428f4c86506a4d752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dialogue_Node
-  speakerName: 
   dialogueText: 'Hmph! Fine, but don''t keep me waiting Mister! '
   choices: []
 --- !u!1 &1416013839
@@ -9890,7 +9888,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eed38e452d87c7428f4c86506a4d752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dialogue_Node
-  speakerName: 
   dialogueText: 'Hah! Froggle you''re so silly sometimes! It''s me Moonlily your
     girlfrog of course. Now come on and get up!  '
   choices:
@@ -9956,7 +9953,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eed38e452d87c7428f4c86506a4d752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dialogue_Node
-  speakerName: 
   dialogueText: 'Hmm. The apple hunt is normally your favourite day of the week.
     The whole village gets together for it. Froggle... is everything okay?  '
   choices:
@@ -10263,17 +10259,21 @@ MonoBehaviour:
   checkParentTags: 1
   taggedDialogueEntries:
   - triggerTag: GrabPoint
+    randomise: 0
     firstText: Ouch! Be careful!
     secondText: Hey that really hurt!
     thirdText: 'Oof! '
   - triggerTag: Tongue
+    randomise: 0
     firstText: Hey!
     secondText: 'Stop that. '
     thirdText: 'I''ll have you arrested.  '
   - triggerTag: StoryItem
+    randomise: 0
     firstText: Oh wow!
     secondText: 
     thirdText: 
+  randomiseCompletedDialogue: 0
   completedFirstText: 
   completedSecondText: 
   completedThirdText: 
@@ -10745,7 +10745,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eed38e452d87c7428f4c86506a4d752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dialogue_Node
-  speakerName: 
   dialogueText: '..... '
   choices:
   - choiceText: Explain more
@@ -10966,7 +10965,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eed38e452d87c7428f4c86506a4d752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dialogue_Node
-  speakerName: 
   dialogueText: 'Because it''s the weekly apple hunt! '
   choices:
   - choiceText: 'The apple hunt? '
@@ -11190,7 +11188,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eed38e452d87c7428f4c86506a4d752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dialogue_Node
-  speakerName: 
   dialogueText: '..... '
   choices:
   - choiceText: Explain
@@ -12848,7 +12845,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eed38e452d87c7428f4c86506a4d752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dialogue_Node
-  speakerName: 
   dialogueText: ...Froggle?
   choices:
   - choiceText: Nevermind

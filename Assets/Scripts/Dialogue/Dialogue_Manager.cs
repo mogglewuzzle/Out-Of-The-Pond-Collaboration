@@ -12,6 +12,7 @@ public class Dialogue_Manager : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private Dialogue_UI dialogueUI;
+    [Tooltip("Optional. If left empty, the manager auto-finds the first PlayerInputHandler in the scene, then falls back to the Player tag.")]
     [SerializeField] private GameObject playerObject;
     [SerializeField] private GameObject gameplayCrosshair;
 
@@ -98,6 +99,8 @@ public class Dialogue_Manager : MonoBehaviour
 
         if (dialogueUI == null)
             dialogueUI = FindFirstObjectByType<Dialogue_UI>();
+
+        CachePlayerObject();
     }
 
     private void OnDestroy()
@@ -383,6 +386,7 @@ public class Dialogue_Manager : MonoBehaviour
     private void BeginPlayerDialogueReposition(GameObject speakerObject)
     {
         StopPlayerDialogueReposition();
+        CachePlayerObject();
 
         if (!movePlayerToDialoguePosition || playerObject == null || speakerObject == null)
             return;
@@ -556,6 +560,8 @@ public class Dialogue_Manager : MonoBehaviour
 
     private void CachePlayerBehaviours()
     {
+        CachePlayerObject();
+
         if (playerBehavioursToDisable != null || playerObject == null)
             return;
 
@@ -579,10 +585,36 @@ public class Dialogue_Manager : MonoBehaviour
 
     private void CachePlayerInput()
     {
+        CachePlayerObject();
+
         if (playerInput != null || playerObject == null)
             return;
 
         playerInput = playerObject.GetComponent<PlayerInputHandler>();
+    }
+
+    private void CachePlayerObject()
+    {
+        if (playerObject != null)
+            return;
+
+        PlayerInputHandler foundPlayerInput = FindFirstObjectByType<PlayerInputHandler>();
+        if (foundPlayerInput != null)
+        {
+            playerObject = foundPlayerInput.gameObject;
+            return;
+        }
+
+        try
+        {
+            GameObject taggedPlayer = GameObject.FindGameObjectWithTag("Player");
+            if (taggedPlayer != null)
+                playerObject = taggedPlayer;
+        }
+        catch (UnityException)
+        {
+            Debug.LogWarning($"{nameof(Dialogue_Manager)} could not auto-find player by tag because the 'Player' tag is not defined.", this);
+        }
     }
 
     private void ApplyPlayerDialogueCameraPriority()

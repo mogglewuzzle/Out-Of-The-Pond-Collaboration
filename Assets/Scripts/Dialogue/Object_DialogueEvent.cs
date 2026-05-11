@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -19,7 +20,10 @@ public class Object_DialogueEvent : MonoBehaviour
 
     [Header("Unity Event")]
     [Tooltip("Optional extra actions to run after object state changes.")]
+    [SerializeField] private float unityEventDelay;
     [SerializeField] private UnityEvent onEventRun;
+
+    private Coroutine delayedUnityEventRoutine;
 
     public string EventId => eventId;
 
@@ -70,6 +74,28 @@ public class Object_DialogueEvent : MonoBehaviour
     {
         SetObjectsActive(objectsToActivate, true);
         SetObjectsActive(objectsToDeactivate, false);
+
+        if (delayedUnityEventRoutine != null)
+            StopCoroutine(delayedUnityEventRoutine);
+
+        if (unityEventDelay > 0f)
+        {
+            delayedUnityEventRoutine = StartCoroutine(RunUnityEventAfterDelay());
+            return;
+        }
+
+        RunUnityEvent();
+    }
+
+    private IEnumerator RunUnityEventAfterDelay()
+    {
+        yield return new WaitForSeconds(unityEventDelay);
+        RunUnityEvent();
+    }
+
+    private void RunUnityEvent()
+    {
+        delayedUnityEventRoutine = null;
         onEventRun?.Invoke();
     }
 
@@ -83,5 +109,10 @@ public class Object_DialogueEvent : MonoBehaviour
             if (objects[i] != null)
                 objects[i].SetActive(activeState);
         }
+    }
+
+    private void OnValidate()
+    {
+        unityEventDelay = Mathf.Max(0f, unityEventDelay);
     }
 }
