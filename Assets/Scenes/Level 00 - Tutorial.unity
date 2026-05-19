@@ -1492,6 +1492,7 @@ MonoBehaviour:
   playerDialogueBodyText: {fileID: 1915719162376125680}
   choiceContainer: {fileID: 1915719162376125686}
   choiceButtonPrefab: {fileID: 1548991119877197290, guid: 7285fcad63b103f469e4cefa23644d85, type: 3}
+  choiceInputDelay: 0.25
   usePlayerContinueButton: 0
   playerContinueButton: {fileID: 0}
   useTypewriter: 1
@@ -1520,6 +1521,7 @@ MonoBehaviour:
   npcDialogueCameraPriority: 10
   useNpcCameraOnlyAfterPlayerSpeaks: 0
   autoSetNpcCameraTrackingTarget: 1
+  npcCameraTargetTag: 
   restoreNpcCameraTrackingTargetOnEnd: 1
   playerSpeakerName: Froggle
   lockPlayerDuringDialogue: 1
@@ -1603,6 +1605,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dialogue_Source
   dialogueCharacter: {fileID: 3990725570915832259}
+  speakerName: 
   startingNode: {fileID: 1130040982}
   showEndDialogueButton: 1
   endDialogueButtonText: Goodbye
@@ -1732,7 +1735,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e552a5b1ee8d41e4fb76ba858b5fb2c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Object_Hazard
-  respawnManager: {fileID: 2039230164}
+  respawnManager: {fileID: 0}
   respawnPointName: Tutorial01
   respawnMode: 0
   respawnPrefab: {fileID: 8359410263486921697, guid: 4fdf92531617eb149882326568071636, type: 3}
@@ -2057,7 +2060,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eed38e452d87c7428f4c86506a4d752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dialogue_Node
-  speakerName: 
   dialogueText: 'Good morning Froggle. I didn''t expect to see you so early in the
     morning. Is something the matter? '
   choices:
@@ -2068,6 +2070,8 @@ MonoBehaviour:
     deactivateAfterChosen: 0
     goodbyeChoice: 0
     finalChoice: 0
+    runDialogueEvent: 0
+    dialogueEventId: 
   - choiceText: I want a family.
     playerResponseText: 'I think I''m ready to start a family, but I''m scared. What
       was it like when you had your first child? '
@@ -2076,6 +2080,8 @@ MonoBehaviour:
     deactivateAfterChosen: 1
     goodbyeChoice: 0
     finalChoice: 0
+    runDialogueEvent: 0
+    dialogueEventId: 
   - choiceText: 'I want to leave the village. '
     playerResponseText: I hate it here sir Elder frog. This village is holding back
       and it's time I explored the world!
@@ -2084,6 +2090,8 @@ MonoBehaviour:
     deactivateAfterChosen: 1
     goodbyeChoice: 0
     finalChoice: 0
+    runDialogueEvent: 0
+    dialogueEventId: 
 --- !u!1 &1131690603
 GameObject:
   m_ObjectHideFlags: 0
@@ -2473,7 +2481,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eed38e452d87c7428f4c86506a4d752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dialogue_Node
-  speakerName: 
   dialogueText: 'Ho ho ho! You? Have a family? You stupid juvenile frog. '
   choices: []
 --- !u!1 &1480496054
@@ -2878,7 +2885,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e552a5b1ee8d41e4fb76ba858b5fb2c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Object_Hazard
-  respawnManager: {fileID: 2039230164}
+  respawnManager: {fileID: 0}
   respawnPointName: Tutorial01
   respawnMode: 0
   respawnPrefab: {fileID: 8359410263486921697, guid: 4fdf92531617eb149882326568071636, type: 3}
@@ -3013,7 +3020,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eed38e452d87c7428f4c86506a4d752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dialogue_Node
-  speakerName: 
   dialogueText: Well be gone then!
   choices: []
 --- !u!4 &1974734735 stripped
@@ -3083,17 +3089,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8098536202330008508, guid: 5d039998fe56c6942a3e38adc607c714, type: 3}
   m_PrefabInstance: {fileID: 2027340198}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2039230164 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5496370209964921367, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
-  m_PrefabInstance: {fileID: 1915719162376125678}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cb8bc921d14489e8cb50ef7d3067812, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Systems_RespawnManager
 --- !u!1 &2103747020
 GameObject:
   m_ObjectHideFlags: 0
@@ -4008,6 +4003,22 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -13.652431
       objectReference: {fileID: 0}
+    - target: {fileID: 4551493874590600275, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4551493874590600275, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4551493874590600275, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.000000074505806
+      objectReference: {fileID: 0}
+    - target: {fileID: 4551493874590600275, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.000000029802322
+      objectReference: {fileID: 0}
     - target: {fileID: 5025479612512607108, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
       propertyPath: dialogueCharacter
       value: 
@@ -4055,6 +4066,22 @@ PrefabInstance:
     - target: {fileID: 6664172966257085127, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
       propertyPath: m_LocalPosition.z
       value: -13.652431
+      objectReference: {fileID: 0}
+    - target: {fileID: 6664172966257085127, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6664172966257085127, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6664172966257085127, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.000000074505806
+      objectReference: {fileID: 0}
+    - target: {fileID: 6664172966257085127, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.000000029802322
       objectReference: {fileID: 0}
     - target: {fileID: 7797723437502772290, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4885,17 +4912,21 @@ MonoBehaviour:
   checkParentTags: 1
   taggedDialogueEntries:
   - triggerTag: GrabPoint
+    randomise: 0
     firstText: Hey! Stop that!
     secondText: Don't throw things at me!
     thirdText: 'Beastly juveniles. '
   - triggerTag: Tongue
+    randomise: 0
     firstText: Don't touch me with your tongue!
     secondText: Put that tongue away before you hurt someone!
     thirdText: 'Mmm... Slimy.  '
   - triggerTag: StoryItem
+    randomise: 0
     firstText: Oh wow!
     secondText: 
     thirdText: 
+  randomiseCompletedDialogue: 0
   completedFirstText: 
   completedSecondText: 
   completedThirdText: 

@@ -274,6 +274,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Object_Pickupable
   pickupPriority: 1
   disableGravityWhileHeld: 1
+  holdPoint: {fileID: 0}
   defaultLayerName: Pickupable
   heldLayerName: BeingHeld
   layerResetDelay: 0.2
@@ -3520,9 +3521,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UI_CrosshairStateController
   aimCrosshairPanel: {fileID: 231043305}
   freeLookCrosshairPanel: {fileID: 781822009}
+  autoFindPanels: 1
+  aimCrosshairPanelName: Panel Crosshair Aim
+  freeLookCrosshairPanelName: Panel Crosshair Main
   aimController: {fileID: 4515682494504145884}
   freeCameraController: {fileID: 4515682494504145876}
   tongueProjection: {fileID: 4515682494504145875}
+  autoFindPlayerReferences: 1
+  includeInactiveObjects: 1
+  retryUntilFound: 1
+  playerTag: Player
 --- !u!4 &2039230163
 Transform:
   m_ObjectHideFlags: 0

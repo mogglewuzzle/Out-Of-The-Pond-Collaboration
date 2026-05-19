@@ -2137,11 +2137,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bad821148a3eef9478dceb00098b2bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovementController
-  moveSpeed: 5
+  moveSpeed: 10.5
   sprintAcceleration: 0.3
   airborneMovementMultiplier: 1
-  airborneGravityMultiplier: 1
-  fallGravityMultiplier: 3
+  airborneGravityMultiplier: 0.75
+  fallGravityMultiplier: 0.8
   feetPoint: {fileID: 3431637087839159340}
   groundCheckDistance: 0.5
   groundCheckRadius: 2
@@ -2164,7 +2164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74d46aaee174fd24b8f899f1576990e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerJumpController
-  jumpForce: 15
+  jumpForce: 20
   coyoteTime: 0.15
   jumpBufferTime: 0.15
 --- !u!114 &3217419412627563550
@@ -2220,7 +2220,7 @@ MonoBehaviour:
   destroyTongueBulletOnRetract: 1
   maxDistanceHookDuration: 0.15
   surfaceHookDuration: 0.1
-  extendSpeed: 30
+  extendSpeed: 100
   retractSpeed: 25
   maxRange: 30
   tipRadius: 0.1
