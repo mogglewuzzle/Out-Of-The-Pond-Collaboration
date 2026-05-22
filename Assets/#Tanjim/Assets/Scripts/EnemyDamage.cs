@@ -28,7 +28,7 @@ public class EnemyDamage : MonoBehaviour
     {
         if (Time.time < lastDamageTime + damageCooldown) return;
 
-        PlayerHealth health = other.GetComponent<PlayerHealth>();
+        PlayerHealthOld health = other.GetComponent<PlayerHealthOld>();
         if (health != null)
         {
             health.TakeDamage(damage);

@@ -8,7 +8,7 @@ public class HazardDamage : MonoBehaviour
     {
         Debug.Log("Something entered hazard: " + other.gameObject.name);
 
-        PlayerHealth health = other.GetComponent<PlayerHealth>();
+        PlayerHealthOld health = other.GetComponent<PlayerHealthOld>();
 
         if (health != null)
         {
