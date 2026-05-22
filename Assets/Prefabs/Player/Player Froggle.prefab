@@ -842,7 +842,7 @@ GameObject:
   - component: {fileID: 5276295636321083150}
   m_Layer: 3
   m_Name: Feet Grounding Point
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1817,6 +1817,10 @@ GameObject:
   - component: {fileID: 6100951251279255071}
   - component: {fileID: 4260354098332897029}
   - component: {fileID: 2180438392246524469}
+  - component: {fileID: 6308612557961594179}
+  - component: {fileID: 8770818217352162704}
+  - component: {fileID: 5996781958147496269}
+  - component: {fileID: 8413346615566233139}
   m_Layer: 3
   m_Name: Player Froggle
   m_TagString: Player
@@ -2444,6 +2448,98 @@ MonoBehaviour:
   returnSpeed: 120
   stickDeadzone: 0.15
   stickCurve: 2
+--- !u!114 &6308612557961594179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8359410263486921697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c9f0d41edaa4f4db69dc0fa62eb6b2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player_Health
+  startingHealth: 3
+  currentHealth: 3
+  clampToZero: 1
+  damageSources:
+  - damageTag: Hazard
+    healthDamageAmount: 99
+    cooldown: 1
+  - damageTag: Enemy
+    healthDamageAmount: 1
+    cooldown: 1.5
+  logDamageDebug: 1
+  recoverHealthOverTime: 1
+  recoveryDelayAfterHit: 5
+  recoveryAmount: 1
+  recoveryTickInterval: 1
+  flashAtLowHealth: 1
+  lowHealthThreshold: 1
+  flashingRenderer: {fileID: 0}
+  flashingChildName: Cube
+  foundFlashingRenderer: {fileID: 0}
+  flashColor: {r: 1, g: 0, b: 0, a: 1}
+  flashSpeed: 5
+  timeBetweenFlashes: 0.3
+  foundFlashingMaterial: {fileID: 0}
+--- !u!143 &8770818217352162704
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8359410263486921697}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Height: -3.8000002
+  m_Radius: 38.54406
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5996781958147496269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8359410263486921697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d825dbe524c72a14e9fe05fc4fc518ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerKnockbackWithDisable
+  damagingTag: Enemy
+  horizontalForce: 5
+  verticalForce: 3
+  cooldown: 1
+  componentsToDisable: []
+--- !u!114 &8413346615566233139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8359410263486921697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95252bd10220b4048815dc41dcd21374, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayParticleOnCollision
+  targetTag: Enemy
+  particleEffect: {fileID: 6499494292433985267, guid: cf8fc5b4a1bc9cd449a3259e9fd389ba, type: 3}
 --- !u!1 &8654065101012283222
 GameObject:
   m_ObjectHideFlags: 0

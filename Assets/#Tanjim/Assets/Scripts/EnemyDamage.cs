@@ -28,7 +28,11 @@ public class EnemyDamage : MonoBehaviour
     {
         if (Time.time < lastDamageTime + damageCooldown) return;
 
+<<<<<<< Updated upstream
         PlayerHealthOld health = other.GetComponent<PlayerHealthOld>();
+=======
+        PlayerHealth02 health = other.GetComponent<PlayerHealth02>();
+>>>>>>> Stashed changes
         if (health != null)
         {
             health.TakeDamage(damage);

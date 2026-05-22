@@ -1,6 +1,10 @@
 using UnityEngine;
 
+<<<<<<< Updated upstream
 public class PlayerHealthOld : MonoBehaviour
+=======
+public class PlayerHealth02 : MonoBehaviour
+>>>>>>> Stashed changes
 {
     public int maxHealth = 3;
     public int currentHealth;
