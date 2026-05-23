@@ -41254,18 +41254,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6308612557961594179, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: flashSpeed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6308612557961594179, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: secondFlashSpeed
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 6308612557961594179, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: timeBetweenFlashes
-      value: 0.3
-      objectReference: {fileID: 0}
     - target: {fileID: 7866744332092305658, guid: 4fdf92531617eb149882326568071636, type: 3}
       propertyPath: canvasToDisableWhileHolding
       value: 

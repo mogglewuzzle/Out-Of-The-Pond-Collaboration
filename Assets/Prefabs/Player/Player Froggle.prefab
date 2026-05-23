@@ -1373,7 +1373,7 @@ Transform:
   m_GameObject: {fileID: 5492785760826383329}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 4.19, z: -0.81}
+  m_LocalPosition: {x: 0, y: 4.19, z: -4.04}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -2641,7 +2641,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player_DialogueInteract
   interactOrigin: {fileID: 537422164701358495}
   interactAction: {fileID: 1781555164194001046, guid: 2c0a613ac8df67244af6c707f73b1ad3, type: 3}
-  interactRange: 4
+  interactRange: 7
   castRadius: 3
   interactMask:
     serializedVersion: 2
@@ -2705,12 +2705,12 @@ MonoBehaviour:
   flashingChildName: Cube
   foundFlashingRenderer: {fileID: 0}
   flashColor: {r: 1, g: 0, b: 0, a: 0.58431375}
-  flashSpeed: 3
-  timeBetweenFlashes: 0
+  flashSpeed: 2
+  timeBetweenFlashes: 0.3
   useSecondLowHealthFlash: 1
   secondLowHealthThreshold: 0
   secondFlashColor: {r: 1, g: 0, b: 0, a: 0.12156863}
-  secondFlashSpeed: 3
+  secondFlashSpeed: 6
   secondTimeBetweenFlashes: 0
   foundFlashingMaterial: {fileID: 0}
 --- !u!143 &8770818217352162704

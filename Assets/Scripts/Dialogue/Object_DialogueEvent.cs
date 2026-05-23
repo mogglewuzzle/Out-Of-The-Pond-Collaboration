@@ -23,7 +23,14 @@ public class Object_DialogueEvent : MonoBehaviour
     [SerializeField] private float unityEventDelay;
     [SerializeField] private UnityEvent onEventRun;
 
+    [Header("Scene Change")]
+    [SerializeField] private bool changeScene;
+    [Tooltip("Scene name to load through Systems_SceneManager. The scene must be in Build Settings.")]
+    [SerializeField] private string sceneName;
+    [SerializeField] private float sceneChangeDelay;
+
     private Coroutine delayedUnityEventRoutine;
+    private Coroutine delayedSceneChangeRoutine;
 
     public string EventId => eventId;
 
@@ -81,10 +88,22 @@ public class Object_DialogueEvent : MonoBehaviour
         if (unityEventDelay > 0f)
         {
             delayedUnityEventRoutine = StartCoroutine(RunUnityEventAfterDelay());
-            return;
+        }
+        else
+        {
+            RunUnityEvent();
         }
 
-        RunUnityEvent();
+        if (!changeScene)
+            return;
+
+        if (delayedSceneChangeRoutine != null)
+            StopCoroutine(delayedSceneChangeRoutine);
+
+        if (sceneChangeDelay > 0f)
+            delayedSceneChangeRoutine = StartCoroutine(ChangeSceneAfterDelay());
+        else
+            ChangeScene();
     }
 
     private IEnumerator RunUnityEventAfterDelay()
@@ -97,6 +116,35 @@ public class Object_DialogueEvent : MonoBehaviour
     {
         delayedUnityEventRoutine = null;
         onEventRun?.Invoke();
+    }
+
+    private IEnumerator ChangeSceneAfterDelay()
+    {
+        yield return new WaitForSeconds(sceneChangeDelay);
+        ChangeScene();
+    }
+
+    private void ChangeScene()
+    {
+        delayedSceneChangeRoutine = null;
+
+        if (string.IsNullOrWhiteSpace(sceneName))
+        {
+            Debug.LogWarning($"{nameof(Object_DialogueEvent)} on {name} cannot change scene: Scene Name is empty.", this);
+            return;
+        }
+
+        Systems_SceneManager sceneManager = Systems_SceneManager.Instance;
+        if (sceneManager == null)
+            sceneManager = FindFirstObjectByType<Systems_SceneManager>();
+
+        if (sceneManager == null)
+        {
+            Debug.LogWarning($"{nameof(Object_DialogueEvent)} on {name} cannot change scene to '{sceneName}': no {nameof(Systems_SceneManager)} found.", this);
+            return;
+        }
+
+        sceneManager.LoadScene(sceneName);
     }
 
     private static void SetObjectsActive(List<GameObject> objects, bool activeState)
@@ -114,5 +162,6 @@ public class Object_DialogueEvent : MonoBehaviour
     private void OnValidate()
     {
         unityEventDelay = Mathf.Max(0f, unityEventDelay);
+        sceneChangeDelay = Mathf.Max(0f, sceneChangeDelay);
     }
 }

@@ -2170,11 +2170,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4810738825931416388, guid: 6d7304e4e011b4e45a7015a88b368161, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.7
+      value: -5.7
       objectReference: {fileID: 0}
     - target: {fileID: 4810738825931416388, guid: 6d7304e4e011b4e45a7015a88b368161, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 29.71
+      value: 29.7
       objectReference: {fileID: 0}
     - target: {fileID: 4810738825931416388, guid: 6d7304e4e011b4e45a7015a88b368161, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3795,13 +3795,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e552a5b1ee8d41e4fb76ba858b5fb2c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Object_Hazard
-  respawnManager: {fileID: 0}
-  respawnPointName: 
-  respawnMode: 0
-  respawnPrefab: {fileID: 8359410263486921697, guid: 4fdf92531617eb149882326568071636, type: 3}
-  useRespawnPointRotation: 1
-  affectedTags:
-  - Player
 --- !u!114 &202822047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12322,6 +12315,68 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6441307268419099198, guid: b3b1c669f4bbc8e44af45a5707a59652, type: 3}
+--- !u!1001 &721207190
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1314359219}
+    m_Modifications:
+    - target: {fileID: 2717654220966566416, guid: 6d7304e4e011b4e45a7015a88b368161, type: 3}
+      propertyPath: m_Name
+      value: Apple (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4810738825931416388, guid: 6d7304e4e011b4e45a7015a88b368161, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -5.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4810738825931416388, guid: 6d7304e4e011b4e45a7015a88b368161, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4810738825931416388, guid: 6d7304e4e011b4e45a7015a88b368161, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4810738825931416388, guid: 6d7304e4e011b4e45a7015a88b368161, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4810738825931416388, guid: 6d7304e4e011b4e45a7015a88b368161, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4810738825931416388, guid: 6d7304e4e011b4e45a7015a88b368161, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4810738825931416388, guid: 6d7304e4e011b4e45a7015a88b368161, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4810738825931416388, guid: 6d7304e4e011b4e45a7015a88b368161, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4810738825931416388, guid: 6d7304e4e011b4e45a7015a88b368161, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4810738825931416388, guid: 6d7304e4e011b4e45a7015a88b368161, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6d7304e4e011b4e45a7015a88b368161, type: 3}
+--- !u!4 &721207191 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4810738825931416388, guid: 6d7304e4e011b4e45a7015a88b368161, type: 3}
+  m_PrefabInstance: {fileID: 721207190}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &726313337
 GameObject:
   m_ObjectHideFlags: 0
@@ -14768,6 +14823,9 @@ MonoBehaviour:
   onEventRun:
     m_PersistentCalls:
       m_Calls: []
+  changeScene: 0
+  sceneName: 
+  sceneChangeDelay: 0
 --- !u!1001 &887735983
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21310,22 +21368,13 @@ MonoBehaviour:
   eventId: dialogue_switchscene
   objectsToActivate: []
   objectsToDeactivate: []
-  unityEventDelay: 3
+  unityEventDelay: 0
   onEventRun:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3557568509156911714}
-        m_TargetAssemblyTypeName: Systems_SceneManager, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Level 00 - Village Night
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+  changeScene: 1
+  sceneName: Level 00 - Village Night
+  sceneChangeDelay: 3
 --- !u!4 &1303019673
 Transform:
   m_ObjectHideFlags: 0
@@ -21875,6 +21924,7 @@ Transform:
   - {fileID: 365841071}
   - {fileID: 1752708774}
   - {fileID: 134896633}
+  - {fileID: 721207191}
   - {fileID: 940412552}
   - {fileID: 1183652131}
   m_Father: {fileID: 0}
@@ -23453,7 +23503,7 @@ MonoBehaviour:
   persistAcrossScenes: 0
   thresholds:
   - itemTag: Consumable
-    requiredCount: 4
+    requiredCount: 5
     onlyTriggerOnce: 1
     objectsToActivate:
     - {fileID: 1255090475}
@@ -28873,6 +28923,9 @@ MonoBehaviour:
   onEventRun:
     m_PersistentCalls:
       m_Calls: []
+  changeScene: 0
+  sceneName: 
+  sceneChangeDelay: 0
 --- !u!1 &1769160060
 GameObject:
   m_ObjectHideFlags: 0
@@ -30835,11 +30888,6 @@ MonoBehaviour:
     finalChoice: 1
     runDialogueEvent: 0
     dialogueEventId: 
---- !u!223 &1865080563 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 3104461775926059287, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
-  m_PrefabInstance: {fileID: 673461475}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1870164291
 GameObject:
   m_ObjectHideFlags: 0
@@ -33291,10 +33339,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7866744332092305658, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: canvasToDisableWhileHolding
-      value: 
-      objectReference: {fileID: 1865080563}
     - target: {fileID: 8359410263486921697, guid: 4fdf92531617eb149882326568071636, type: 3}
       propertyPath: m_Name
       value: Player Froggle
@@ -37827,17 +37871,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a050a2bf1db28e04f932582362f0155d, type: 3}
---- !u!114 &3557568509156911714 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7638100157412610227, guid: a050a2bf1db28e04f932582362f0155d, type: 3}
-  m_PrefabInstance: {fileID: 3557568509156911713}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b5a26f7e2ef4f5b8e7b7e21bd857c18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Systems_SceneManager
 --- !u!4 &3584376211248231864
 Transform:
   m_ObjectHideFlags: 0
