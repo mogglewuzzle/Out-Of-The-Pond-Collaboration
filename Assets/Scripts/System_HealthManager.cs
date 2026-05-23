@@ -29,6 +29,8 @@ public class System_HealthManager : MonoBehaviour
     [SerializeField] private GameObject playerPrefab;
     [Tooltip("Where the new player prefab spawns.")]
     [SerializeField] private Transform respawnPoint;
+    [Tooltip("Seconds to wait after health reaches 0 before destroying the current player.")]
+    [SerializeField] private float destroyDelayAfterDeath = 0f;
     [SerializeField] private float respawnDelay = 1f;
 
     private bool isRespawning;
@@ -80,6 +82,9 @@ public class System_HealthManager : MonoBehaviour
         foundPlayer = null;
         foundPlayerHealth = null;
         currentHealth = 0;
+
+        if (destroyDelayAfterDeath > 0f)
+            yield return new WaitForSeconds(destroyDelayAfterDeath);
 
         if (oldPlayer != null)
             Destroy(oldPlayer);

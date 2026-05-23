@@ -2704,9 +2704,14 @@ MonoBehaviour:
   flashingRenderer: {fileID: 0}
   flashingChildName: Cube
   foundFlashingRenderer: {fileID: 0}
-  flashColor: {r: 1, g: 0, b: 0, a: 1}
-  flashSpeed: 5
-  timeBetweenFlashes: 0.3
+  flashColor: {r: 1, g: 0, b: 0, a: 0.58431375}
+  flashSpeed: 3
+  timeBetweenFlashes: 0
+  useSecondLowHealthFlash: 1
+  secondLowHealthThreshold: 0
+  secondFlashColor: {r: 1, g: 0, b: 0, a: 0.12156863}
+  secondFlashSpeed: 3
+  secondTimeBetweenFlashes: 0
   foundFlashingMaterial: {fileID: 0}
 --- !u!143 &8770818217352162704
 CharacterController:
@@ -2744,12 +2749,24 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d825dbe524c72a14e9fe05fc4fc518ae, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerKnockbackWithDisable
-  damagingTag: Enemy
-  horizontalForce: 5
-  verticalForce: 3
-  cooldown: 1
-  componentsToDisable: []
+  m_EditorClassIdentifier: Assembly-CSharp::Player_Knockback
+  horizontalForce: 10
+  verticalForce: 10
+  knockbackDuration: 0.75
+  knockbacks:
+  - triggeringTag: Enemy
+    horizontalForce: 30
+    verticalForce: 10
+    duration: 0.5
+  - triggeringTag: Hazard
+    horizontalForce: 10
+    verticalForce: 30
+    duration: 1
+  usePlayerBackward: 1
+  customHorizontalDirection: {x: 0, y: 0, z: -1}
+  disableMovementDuringKnockback: 1
+  foundRigidbody: {fileID: 0}
+  foundMovementController: {fileID: 0}
 --- !u!114 &8413346615566233139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2770,6 +2787,8 @@ MonoBehaviour:
   moveEffectsToEmitPoint: 1
   restartEffectsBeforePlaying: 1
   logParticleDebug: 0
+  healthDropEffectInstance: {fileID: 0}
+  zeroHealthEffectInstance: {fileID: 0}
 --- !u!1 &8654065101012283222
 GameObject:
   m_ObjectHideFlags: 0

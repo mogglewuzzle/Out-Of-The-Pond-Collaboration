@@ -48,11 +48,25 @@ public class Player_Health : MonoBehaviour
     [Tooltip("Seconds to wait between flashes.")]
     [SerializeField] private float timeBetweenFlashes = 0.25f;
 
+    [Header("Second Low Health Flash")]
+    [SerializeField] private bool useSecondLowHealthFlash = true;
+    [Tooltip("Lower health value that switches to Second Flash Color.")]
+    [SerializeField] private int secondLowHealthThreshold = 1;
+    [SerializeField] private Color secondFlashColor = new Color(0.5f, 0f, 1f, 1f);
+    [Tooltip("How quickly the material blends to and from the second flash colour.")]
+    [SerializeField] private float secondFlashSpeed = 8f;
+    [Tooltip("Seconds to wait between second-threshold flashes.")]
+    [SerializeField] private float secondTimeBetweenFlashes = 0.25f;
+
     private Coroutine recoveryCoroutine;
     private Coroutine flashCoroutine;
     private Material flashingMaterial;
     private MaterialPropertyBlock flashingPropertyBlock;
     private Color originalFlashColor;
+    private Color activeLowHealthFlashColor;
+    private float activeLowHealthFlashSpeed;
+    private float activeLowHealthTimeBetweenFlashes;
+    private bool hasActiveLowHealthFlashColor;
     [Tooltip("Runtime display only. Material instance being flashed.")]
     [SerializeField] private Material foundFlashingMaterial;
     private int baseColorPropertyId;
@@ -337,7 +351,7 @@ public class Player_Health : MonoBehaviour
 
     private void UpdateLowHealthFlash()
     {
-        if (!flashAtLowHealth || currentHealth <= 0 || currentHealth > lowHealthThreshold)
+        if (!flashAtLowHealth || !ShouldRunLowHealthFlash())
         {
             StopLowHealthFlash();
             return;
@@ -346,29 +360,47 @@ public class Player_Health : MonoBehaviour
         if (flashingMaterial == null)
             ResolveFlashingMaterial();
 
-        if (flashingMaterial != null && flashCoroutine == null)
+        if (flashingMaterial == null)
+            return;
+
+        LowHealthFlashSettings desiredFlashSettings = GetActiveLowHealthFlashSettings();
+        if (flashCoroutine != null && hasActiveLowHealthFlashColor && !ActiveFlashSettingsMatch(desiredFlashSettings))
+        {
+            StopCoroutine(flashCoroutine);
+            flashCoroutine = null;
+            SetMaterialColor(originalFlashColor);
+        }
+
+        if (flashCoroutine == null)
+        {
+            activeLowHealthFlashColor = desiredFlashSettings.color;
+            activeLowHealthFlashSpeed = desiredFlashSettings.speed;
+            activeLowHealthTimeBetweenFlashes = desiredFlashSettings.timeBetweenFlashes;
+            hasActiveLowHealthFlashColor = true;
             flashCoroutine = StartCoroutine(FlashLowHealthMaterial());
+        }
     }
 
     private IEnumerator FlashLowHealthMaterial()
     {
-        while (currentHealth > 0 && currentHealth <= lowHealthThreshold)
+        while (ShouldRunLowHealthFlash())
         {
-            yield return LerpFlashColor(originalFlashColor, flashColor);
-            yield return LerpFlashColor(flashColor, originalFlashColor);
+            yield return LerpFlashColor(originalFlashColor, activeLowHealthFlashColor);
+            yield return LerpFlashColor(activeLowHealthFlashColor, originalFlashColor);
 
-            if (timeBetweenFlashes > 0f)
-                yield return new WaitForSeconds(timeBetweenFlashes);
+            if (activeLowHealthTimeBetweenFlashes > 0f)
+                yield return new WaitForSeconds(activeLowHealthTimeBetweenFlashes);
         }
 
         SetMaterialColor(originalFlashColor);
         flashCoroutine = null;
+        hasActiveLowHealthFlashColor = false;
     }
 
     private IEnumerator LerpFlashColor(Color from, Color to)
     {
         float elapsed = 0f;
-        float duration = flashSpeed > 0f ? 1f / flashSpeed : 0f;
+        float duration = activeLowHealthFlashSpeed > 0f ? 1f / activeLowHealthFlashSpeed : 0f;
 
         if (duration <= 0f)
         {
@@ -386,6 +418,46 @@ public class Player_Health : MonoBehaviour
         SetMaterialColor(to);
     }
 
+    private bool ShouldRunLowHealthFlash()
+    {
+        if (currentHealth > lowHealthThreshold)
+            return false;
+
+        if (currentHealth > 0)
+            return true;
+
+        return lowHealthThreshold <= 0 || (useSecondLowHealthFlash && secondLowHealthThreshold <= 0);
+    }
+
+    private LowHealthFlashSettings GetActiveLowHealthFlashSettings()
+    {
+        if (useSecondLowHealthFlash && currentHealth <= secondLowHealthThreshold)
+            return new LowHealthFlashSettings(secondFlashColor, secondFlashSpeed, secondTimeBetweenFlashes);
+
+        return new LowHealthFlashSettings(flashColor, flashSpeed, timeBetweenFlashes);
+    }
+
+    private bool ActiveFlashSettingsMatch(LowHealthFlashSettings settings)
+    {
+        return activeLowHealthFlashColor == settings.color &&
+            Mathf.Approximately(activeLowHealthFlashSpeed, settings.speed) &&
+            Mathf.Approximately(activeLowHealthTimeBetweenFlashes, settings.timeBetweenFlashes);
+    }
+
+    private struct LowHealthFlashSettings
+    {
+        public readonly Color color;
+        public readonly float speed;
+        public readonly float timeBetweenFlashes;
+
+        public LowHealthFlashSettings(Color color, float speed, float timeBetweenFlashes)
+        {
+            this.color = color;
+            this.speed = speed;
+            this.timeBetweenFlashes = timeBetweenFlashes;
+        }
+    }
+
     private void StopLowHealthFlash()
     {
         if (flashCoroutine != null)
@@ -396,6 +468,8 @@ public class Player_Health : MonoBehaviour
 
         if (flashingMaterial != null)
             SetMaterialColor(originalFlashColor);
+
+        hasActiveLowHealthFlashColor = false;
     }
 
     private Color GetMaterialColor()
