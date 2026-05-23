@@ -8,11 +8,7 @@ public class HazardDamage : MonoBehaviour
     {
         Debug.Log("Something entered hazard: " + other.gameObject.name);
 
-<<<<<<< Updated upstream
-        PlayerHealthOld health = other.GetComponent<PlayerHealthOld>();
-=======
         PlayerHealth02 health = other.GetComponent<PlayerHealth02>();
->>>>>>> Stashed changes
 
         if (health != null)
         {
