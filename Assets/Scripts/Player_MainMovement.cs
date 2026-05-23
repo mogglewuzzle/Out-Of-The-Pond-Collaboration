@@ -7,7 +7,7 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float sprintAcceleration = 0.3f;
     [Tooltip("Horizontal movement multiplier while the player is not grounded.")]
-    [SerializeField, Range(0f, 1f)] private float airborneMovementMultiplier = 0.6f;
+    [SerializeField, Range(0f, 5f)] private float airborneMovementMultiplier = 0.6f;
 
     [Header("Gravity")]
     [Tooltip("Extra gravity applied any time the player is not grounded. 0 means no extra airborne gravity.")]
