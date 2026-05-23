@@ -184,7 +184,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6fb210b551237748ae2ca3add3dc1fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DestroyOnCollision
-  targetTag: Player
 --- !u!64 &65049469
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -33648,15 +33647,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e2958f70fff7b14481a1798236e7c9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PrefabSpawner
-  prefabToSpawn: {fileID: 5913841582815511968, guid: 00e7fcedcc4be144ab1481698934a670, type: 3}
-  spawnPoint1: {fileID: 1627148765}
-  spawnPoint2: {fileID: 645011544}
-  spawnPoint3: {fileID: 1125486597}
-  randomizeSpawnPoint: 1
-  startDelay: 2
-  spawnInterval: 3
-  maxSpawnCount: 3
-  autoSpawn: 1
 --- !u!4 &697441598
 Transform:
   m_ObjectHideFlags: 0
@@ -41262,14 +41252,6 @@ PrefabInstance:
     - target: {fileID: 5864291331722570914, guid: 4fdf92531617eb149882326568071636, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6308612557961594179, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: currentHealth
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6308612557961594179, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: startingHealth
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7866744332092305658, guid: 4fdf92531617eb149882326568071636, type: 3}
       propertyPath: canvasToDisableWhileHolding

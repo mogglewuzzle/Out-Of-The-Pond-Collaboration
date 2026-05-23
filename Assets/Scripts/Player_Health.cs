@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Player_Health : MonoBehaviour
@@ -61,6 +62,8 @@ public class Player_Health : MonoBehaviour
 
     public int CurrentHealth => currentHealth;
     public int StartingHealth => startingHealth;
+    public event Action<int, int> HealthChanged;
+    public event Action<int, int> HealthDropped;
 
     private void Awake()
     {
@@ -104,11 +107,13 @@ public class Player_Health : MonoBehaviour
         if (amount <= 0 || currentHealth <= 0)
             return;
 
+        int previousHealth = currentHealth;
         currentHealth -= amount;
 
         if (clampToZero && currentHealth < 0)
             currentHealth = 0;
 
+        NotifyHealthChanged(previousHealth, currentHealth);
         RestartRecoveryTimer();
         UpdateLowHealthFlash();
 
@@ -116,7 +121,9 @@ public class Player_Health : MonoBehaviour
 
     public void RestoreHealth()
     {
+        int previousHealth = currentHealth;
         currentHealth = startingHealth;
+        NotifyHealthChanged(previousHealth, currentHealth);
         StopRecoveryTimer();
         UpdateLowHealthFlash();
     }
@@ -137,6 +144,17 @@ public class Player_Health : MonoBehaviour
     {
         currentHealth = startingHealth;
         hasInitialized = true;
+    }
+
+    private void NotifyHealthChanged(int previousHealth, int newHealth)
+    {
+        if (newHealth == previousHealth)
+            return;
+
+        HealthChanged?.Invoke(previousHealth, newHealth);
+
+        if (newHealth < previousHealth)
+            HealthDropped?.Invoke(previousHealth, newHealth);
     }
 
     private void TryTakeCollisionDamage(GameObject other)

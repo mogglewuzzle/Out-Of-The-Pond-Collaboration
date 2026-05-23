@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6499494292433985267}
   - component: {fileID: 5254699574748641600}
   m_Layer: 0
-  m_Name: Blood Particles (1)
+  m_Name: Blood Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,8 +26,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5428330485025814268}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 142.80315, y: 6.873099, z: -4.6944747}
+  m_LocalRotation: {x: 2.3277377e-10, y: -2.9558574e-11, z: -5.6843412e-14, w: 1}
+  m_LocalPosition: {x: 91.82218, y: 6.1465425, z: -8.232584}
   m_LocalScale: {x: 0.19999999, y: 0.2, z: 0.20000003}
   m_ConstrainProportionsScale: 0
   m_Children: []

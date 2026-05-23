@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEngine.AI;
-using System.Collections;
 
 public class CharacterFollower : MonoBehaviour
 {
     [Header("Target Settings")]
     public string targetTag = "Player"; // Tag to follow
-    private Transform target;
+    [Tooltip("Runtime display only. The follow target currently found by Target Tag.")]
+    [SerializeField] private Transform foundFollowTarget;
 
     private NavMeshAgent agent;
 
@@ -43,33 +43,42 @@ public class CharacterFollower : MonoBehaviour
     void Start()
     {
         lastTargetPosition = Vector3.zero;
-        StartCoroutine(FindTargetRoutine());
     }
 
-    IEnumerator FindTargetRoutine()
+    bool TryFindTarget()
     {
-        while (target == null)
+        if (string.IsNullOrWhiteSpace(targetTag))
+            return false;
+
+        GameObject targetObj;
+        try
         {
-            GameObject targetObj = GameObject.FindGameObjectWithTag(targetTag);
-            if (targetObj != null)
-            {
-                target = targetObj.transform;
-                lastTargetPosition = target.position;
-                yield break;
-            }
-            yield return null;
+            targetObj = GameObject.FindGameObjectWithTag(targetTag);
         }
+        catch (UnityException)
+        {
+            Debug.LogWarning($"{nameof(CharacterFollower)} on {name} cannot find follow target: tag '{targetTag}' is not defined.", this);
+            return false;
+        }
+
+        if (targetObj == null)
+            return false;
+
+        foundFollowTarget = targetObj.transform;
+        lastTargetPosition = foundFollowTarget.position;
+        return true;
     }
 
     void Update()
     {
-        if (target == null) return;
+        if (foundFollowTarget == null && !TryFindTarget())
+            return;
 
-        Vector3 destination = target.position;
+        Vector3 destination = foundFollowTarget.position;
 
         if (predictTargetMovement)
         {
-            Vector3 targetVelocity = (target.position - lastTargetPosition) / Mathf.Max(Time.deltaTime, 0.0001f);
+            Vector3 targetVelocity = (foundFollowTarget.position - lastTargetPosition) / Mathf.Max(Time.deltaTime, 0.0001f);
             destination += targetVelocity * predictionTime;
         }
 
@@ -78,7 +87,7 @@ public class CharacterFollower : MonoBehaviour
             agent.SetDestination(destination);
         }
 
-        lastTargetPosition = target.position;
+        lastTargetPosition = foundFollowTarget.position;
 
         // Smooth rotation
         if (smoothRotation && agent.velocity.sqrMagnitude > 0.01f)
