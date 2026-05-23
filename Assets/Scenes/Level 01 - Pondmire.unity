@@ -12099,8 +12099,6 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
-<<<<<<< Updated upstream
-=======
 --- !u!1 &167926554
 GameObject:
   m_ObjectHideFlags: 0
@@ -12238,7 +12236,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 167926554}
   m_CullTransparentMesh: 1
->>>>>>> Stashed changes
 --- !u!1 &176731977
 GameObject:
   m_ObjectHideFlags: 0
@@ -33206,8 +33203,6 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
-<<<<<<< Updated upstream
-=======
 --- !u!1 &626562247
 GameObject:
   m_ObjectHideFlags: 0
@@ -33286,7 +33281,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 626562247}
   m_CullTransparentMesh: 1
->>>>>>> Stashed changes
 --- !u!1 &640846642
 GameObject:
   m_ObjectHideFlags: 0
@@ -33611,10 +33605,7 @@ GameObject:
   - component: {fileID: 697441598}
   - component: {fileID: 697441597}
   - component: {fileID: 697441596}
-<<<<<<< Updated upstream
-=======
   - component: {fileID: 697441599}
->>>>>>> Stashed changes
   m_Layer: 0
   m_Name: Level Management
   m_TagString: Untagged
@@ -33633,16 +33624,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fd371e229c5baad4aadb33ac242e5db3, type: 3}
   m_Name: 
-<<<<<<< Updated upstream
-  m_EditorClassIdentifier: Assembly-CSharp::DeathWatcher
-  target: {fileID: 698261379}
-  healthScript: {fileID: 0}
-  deathEffectPrefab: {fileID: 5428330485025814268, guid: e94615082ca26ae469dc855139be3439, type: 3}
-  objectToActivate: {fileID: 0}
-  heightAboveGround: 10
-  destroyDelay: 0.3
-  activateDelay: 1
-=======
   m_EditorClassIdentifier: Assembly-CSharp::System_HealthManager
   playerTag: Player
   foundPlayer: {fileID: 0}
@@ -33655,7 +33636,6 @@ MonoBehaviour:
   playerPrefab: {fileID: 8359410263486921697, guid: 4fdf92531617eb149882326568071636, type: 3}
   respawnPoint: {fileID: 1794955256}
   respawnDelay: 1
->>>>>>> Stashed changes
 --- !u!114 &697441597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33693,10 +33673,6 @@ Transform:
   - {fileID: 1627148765}
   - {fileID: 645011544}
   - {fileID: 1125486597}
-<<<<<<< Updated upstream
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-=======
   - {fileID: 1794955256}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -33720,7 +33696,6 @@ MonoBehaviour:
   respawnPoints:
   - pointName: SpawnPoint_00
     point: {fileID: 1794955256}
->>>>>>> Stashed changes
 --- !u!1 &698261379 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8359410263486921697, guid: 4fdf92531617eb149882326568071636, type: 3}
@@ -35527,8 +35502,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1537624445}
   m_SourcePrefab: {fileID: 100100000, guid: ab0999330a250b842b83510f9cbbdf00, type: 3}
-<<<<<<< Updated upstream
-=======
 --- !u!1 &922204291
 GameObject:
   m_ObjectHideFlags: 0
@@ -35604,7 +35577,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 922204291}
   m_CullTransparentMesh: 1
->>>>>>> Stashed changes
 --- !u!20 &942844935 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 4758979897780364573, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
@@ -35827,13 +35799,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cat Black AI (1)
       objectReference: {fileID: 0}
-<<<<<<< Updated upstream
-=======
     - target: {fileID: 5913841582815511968, guid: 00e7fcedcc4be144ab1481698934a670, type: 3}
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
->>>>>>> Stashed changes
     - target: {fileID: 6438457769746456346, guid: 00e7fcedcc4be144ab1481698934a670, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -36283,8 +36252,6 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
-<<<<<<< Updated upstream
-=======
 --- !u!1 &1206617322
 GameObject:
   m_ObjectHideFlags: 0
@@ -36466,7 +36433,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
->>>>>>> Stashed changes
 --- !u!1001 &1278519952
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36529,8 +36495,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7809022974092672570, guid: f0a722db63d49b749b6fd46e62f28577, type: 3}
   m_PrefabInstance: {fileID: 1278519952}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< Updated upstream
-=======
 --- !u!1 &1288904500
 GameObject:
   m_ObjectHideFlags: 0
@@ -36668,7 +36632,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1288904500}
   m_CullTransparentMesh: 1
->>>>>>> Stashed changes
 --- !u!43 &1293708079
 Mesh:
   m_ObjectHideFlags: 0
@@ -37285,11 +37248,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-<<<<<<< Updated upstream
-  m_NavMeshData: {fileID: 23800000, guid: b11f644eb62dfe4488da78437fd7b131, type: 2}
-=======
   m_NavMeshData: {fileID: 23800000, guid: 75fce3cbc0000b04d9c53084b6dc1aee, type: 2}
->>>>>>> Stashed changes
   m_BuildHeightMesh: 0
 --- !u!4 &1416193953
 Transform:
@@ -37896,8 +37855,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1627148764}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
-<<<<<<< Updated upstream
-=======
 --- !u!1 &1636478719
 GameObject:
   m_ObjectHideFlags: 0
@@ -38035,7 +37992,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1636478719}
   m_CullTransparentMesh: 1
->>>>>>> Stashed changes
 --- !u!1001 &1638636615
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -41957,28 +41913,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< Updated upstream
---- !u!114 &2114385920
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2114385918}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e552a5b1ee8d41e4fb76ba858b5fb2c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Object_Hazard
-  respawnManager: {fileID: 0}
-  respawnPointName: SpawnPoint_00
-  respawnMode: 0
-  respawnPrefab: {fileID: 8359410263486921697, guid: 4fdf92531617eb149882326568071636, type: 3}
-  useRespawnPointRotation: 1
-  affectedTags:
-  - Player
-=======
->>>>>>> Stashed changes
 --- !u!64 &2114385921
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -43423,15 +43357,10 @@ SceneRoots:
   - {fileID: 2029340823}
   - {fileID: 832346130}
   - {fileID: 697441598}
-<<<<<<< Updated upstream
-  - {fileID: 2013081882}
-  - {fileID: 308475972}
-=======
   - {fileID: 1275939145}
   - {fileID: 2013081882}
   - {fileID: 308475972}
   - {fileID: 1678782283}
->>>>>>> Stashed changes
   - {fileID: 1549431507}
   - {fileID: 1068322725}
   - {fileID: 349220357}
@@ -43439,10 +43368,4 @@ SceneRoots:
   - {fileID: 317020702}
   - {fileID: 1505814954}
   - {fileID: 2114385919}
-<<<<<<< Updated upstream
-  - {fileID: 1794955256}
   - {fileID: 1416193953}
-  - {fileID: 1678782283}
-=======
-  - {fileID: 1416193953}
->>>>>>> Stashed changes
