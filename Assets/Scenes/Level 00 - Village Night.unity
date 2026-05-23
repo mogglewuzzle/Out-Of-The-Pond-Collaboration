@@ -2463,6 +2463,15 @@ MonoBehaviour:
     finalChoice: 0
     runDialogueEvent: 0
     dialogueEventId: 
+  - choiceText: I want to leave
+    playerResponseText: 'Is there any way out of the village?  '
+    nextNode: {fileID: 949709416}
+    active: 1
+    deactivateAfterChosen: 0
+    goodbyeChoice: 0
+    finalChoice: 0
+    runDialogueEvent: 0
+    dialogueEventId: 
 --- !u!1001 &172700076
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7234,6 +7243,7 @@ Transform:
   m_Children:
   - {fileID: 783655776}
   - {fileID: 1878618727}
+  - {fileID: 1998314147}
   m_Father: {fileID: 228303182}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &495180111
@@ -8466,6 +8476,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 169812484}
+  - {fileID: 949709415}
   - {fileID: 829585084}
   - {fileID: 655466972}
   m_Father: {fileID: 228303182}
@@ -10405,6 +10416,16 @@ MonoBehaviour:
     finalChoice: 1
     runDialogueEvent: 0
     dialogueEventId: 
+  - choiceText: Another way out
+    playerResponseText: 'I''ll try my luck with the gate guard then. Maybe he is
+      more decent! Goodbye sir!  '
+    nextNode: {fileID: 0}
+    active: 1
+    deactivateAfterChosen: 0
+    goodbyeChoice: 1
+    finalChoice: 0
+    runDialogueEvent: 0
+    dialogueEventId: 
 --- !u!1 &696977006
 GameObject:
   m_ObjectHideFlags: 0
@@ -11946,6 +11967,15 @@ MonoBehaviour:
     playerResponseText: 'Do you happen to know why the Elderfrog is so grumpy these
       days? '
     nextNode: {fileID: 1878618728}
+    active: 1
+    deactivateAfterChosen: 0
+    goodbyeChoice: 0
+    finalChoice: 0
+    runDialogueEvent: 0
+    dialogueEventId: 
+  - choiceText: I want to leave
+    playerResponseText: 'Is there any way out of the village?  '
+    nextNode: {fileID: 1998314148}
     active: 1
     deactivateAfterChosen: 0
     goodbyeChoice: 0
@@ -14414,6 +14444,74 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 4758979897780364573, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
   m_PrefabInstance: {fileID: 673461475}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &949709414
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 949709415}
+  - component: {fileID: 949709416}
+  m_Layer: 0
+  m_Name: Leave
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &949709415
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949709414}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 595214892}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &949709416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949709414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eed38e452d87c7428f4c86506a4d752, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dialogue_Node
+  dialogueText: 'Well, usually the Elderfrog is the only one who can give you permission
+    to leave. But you might want to try talking nicely to the gate guard too. *winks
+    at you and growls* '
+  choices:
+  - choiceText: Wink back
+    playerResponseText: I like your style Fisherfrog. *you embellish a nod and wink
+      at the old boy excitedly* Goodbye!
+    nextNode: {fileID: 0}
+    active: 1
+    deactivateAfterChosen: 0
+    goodbyeChoice: 1
+    finalChoice: 0
+    runDialogueEvent: 0
+    dialogueEventId: 
+  - choiceText: Gross
+    playerResponseText: You disgust me Fisherfrog! Goodbye! *As you leave,  you pause...
+      then turn and lightly wink and nod at the old boy* Fisherfrog approves.
+    nextNode: {fileID: 0}
+    active: 1
+    deactivateAfterChosen: 0
+    goodbyeChoice: 1
+    finalChoice: 0
+    runDialogueEvent: 0
+    dialogueEventId: 
 --- !u!1 &952864495
 GameObject:
   m_ObjectHideFlags: 0
@@ -26956,6 +27054,16 @@ MonoBehaviour:
     finalChoice: 1
     runDialogueEvent: 0
     dialogueEventId: 
+  - choiceText: Another way out
+    playerResponseText: '*you whisper to yourself* Maybe someone else knows how I
+      can get out...  '
+    nextNode: {fileID: 0}
+    active: 1
+    deactivateAfterChosen: 0
+    goodbyeChoice: 1
+    finalChoice: 0
+    runDialogueEvent: 0
+    dialogueEventId: 
 --- !u!1 &1809523898 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8768101946405918451, guid: 685f87eda9dbe3c4daffcd5c911db5c2, type: 3}
@@ -29567,6 +29675,62 @@ MonoBehaviour:
   changeScene: 0
   sceneName: 
   sceneChangeDelay: 0
+--- !u!1 &1998314146
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1998314147}
+  - component: {fileID: 1998314148}
+  m_Layer: 0
+  m_Name: Leave
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1998314147
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1998314146}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 495180110}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1998314148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1998314146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eed38e452d87c7428f4c86506a4d752, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dialogue_Node
+  dialogueText: 'Well, usually the Elderfrog is the only one who can give you permission
+    to leave. But you could also try talking nicely to the gate guard.  '
+  choices:
+  - choiceText: Thank you
+    playerResponseText: Good idea Motherfrog! I'll try that. Goodbye
+    nextNode: {fileID: 0}
+    active: 1
+    deactivateAfterChosen: 0
+    goodbyeChoice: 1
+    finalChoice: 0
+    runDialogueEvent: 0
+    dialogueEventId: 
 --- !u!1001 &2003914411
 PrefabInstance:
   m_ObjectHideFlags: 0
