@@ -4,7 +4,7 @@ using UnityEngine.AI;
 public class CharacterFollower : MonoBehaviour
 {
     [Header("Target Settings")]
-    public string targetTag = "Player"; // Tag to follow
+    public string targetTag = "Player";
     [Tooltip("Runtime display only. The follow target currently found by Target Tag.")]
     [SerializeField] private Transform foundFollowTarget;
 
@@ -12,15 +12,20 @@ public class CharacterFollower : MonoBehaviour
 
     [Header("Follow Settings")]
     public float followDistance = 2f;
-    public float minSpeed = 2f;         // Minimum move speed
-    public float maxSpeed = 5f;         // Maximum move speed
-    public bool randomizeSpeedOnStart = true; // Randomize speed at start
+    public float minSpeed = 2f;
+    public float maxSpeed = 5f;
+    public bool randomizeSpeedOnStart = true;
     public bool predictTargetMovement = false;
     public float predictionTime = 0.5f;
 
     [Header("Rotation Settings")]
     public bool smoothRotation = true;
     public float rotationSpeed = 5f;
+
+    // ── Dialogue pause ────────────────────────────────────────────────────────
+    [Header("Dialogue")]
+    [Tooltip("When enabled, the enemy stops chasing while the player is in dialogue.")]
+    public bool pauseDuringDialogue = true;
 
     private Vector3 lastTargetPosition;
 
@@ -34,10 +39,9 @@ public class CharacterFollower : MonoBehaviour
             return;
         }
 
-        // Set initial speed
         agent.speed = randomizeSpeedOnStart ? Random.Range(minSpeed, maxSpeed) : minSpeed;
         agent.stoppingDistance = followDistance;
-        agent.updateRotation = false; // We'll handle rotation manually
+        agent.updateRotation = false;
     }
 
     void Start()
@@ -74,6 +78,15 @@ public class CharacterFollower : MonoBehaviour
         if (foundFollowTarget == null && !TryFindTarget())
             return;
 
+        // ── Pause during dialogue ─────────────────────────────────────────────
+        if (pauseDuringDialogue && IsPlayerInDialogue())
+        {
+            // Stop the agent in place without disabling it
+            if (agent.isOnNavMesh)
+                agent.SetDestination(transform.position);
+            return;
+        }
+
         Vector3 destination = foundFollowTarget.position;
 
         if (predictTargetMovement)
@@ -83,13 +96,10 @@ public class CharacterFollower : MonoBehaviour
         }
 
         if (agent.isOnNavMesh)
-        {
             agent.SetDestination(destination);
-        }
 
         lastTargetPosition = foundFollowTarget.position;
 
-        // Smooth rotation
         if (smoothRotation && agent.velocity.sqrMagnitude > 0.01f)
         {
             Vector3 lookDir = agent.velocity.normalized;
@@ -98,12 +108,15 @@ public class CharacterFollower : MonoBehaviour
         }
     }
 
-    // Optional: Call this to randomize speed at runtime
+    private bool IsPlayerInDialogue()
+    {
+        // Uses Dialogue_Manager singleton — returns false safely if no manager exists
+        return Dialogue_Manager.Instance != null && Dialogue_Manager.Instance.IsDialogueActive;
+    }
+
     public void RandomizeSpeed()
     {
         if (agent != null)
-        {
             agent.speed = Random.Range(minSpeed, maxSpeed);
-        }
     }
 }
