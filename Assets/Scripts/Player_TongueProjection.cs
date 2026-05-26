@@ -6,6 +6,9 @@ public class PlayerTongueProjection : MonoBehaviour
     [SerializeField] private Transform tongueOrigin;
     [SerializeField] private LineRenderer lineRenderer;
 
+    [Header("Combat")]
+    [SerializeField] private int tongueDamage = 1;
+
     [Header("Screen Center Fire Point")]
     [Tooltip("When enabled, the tongue starts from the camera's screen-center ray and fires straight through the crosshair.")]
     [SerializeField] private bool useScreenCenterFirePoint = true;
@@ -351,6 +354,22 @@ public class PlayerTongueProjection : MonoBehaviour
             }
             else
             {
+                Debug.Log("Tongue hit: " + hit.collider.gameObject.name + 
+              " | tag: " + hit.collider.tag + 
+              " | layer: " + LayerMask.LayerToName(hit.collider.gameObject.layer));
+
+                Enemy_Health enemyHealth = hit.collider.GetComponentInParent<Enemy_Health>();
+                if (enemyHealth != null)
+                {
+                    enemyHealth.TakeDamage(tongueDamage);
+                    Debug.Log("Enemy damaged! Health left: " + enemyHealth.CurrentHealth);
+                }
+                else
+                {
+                    Debug.Log("No Enemy_Health found on: " + hit.collider.gameObject.name);
+                }
+                    
+
                 BeginHook(surfaceHookDuration);
             }
 
