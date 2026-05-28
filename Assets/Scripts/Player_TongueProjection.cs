@@ -48,6 +48,8 @@ public class PlayerTongueProjection : MonoBehaviour
     [SerializeField] private float tipRadius = 0.1f;
     [SerializeField] private LayerMask collidableLayers = ~0;
     [SerializeField] private LayerMask tongueLayerMask;
+    [Tooltip("Layers that the tongue projection should pass through without stopping. Useful for dialogue trigger volumes that should not block tongue hits.")]
+    [SerializeField] private LayerMask tongueProjectionExcludeLayers;
 
     [Header("Tags")]
     [SerializeField] private string AttractPointTag = "AttractPoint";
@@ -324,7 +326,7 @@ public class PlayerTongueProjection : MonoBehaviour
         Vector3 step = tipPosition - prev;
         float stepDist = step.magnitude;
 
-        if (Physics.SphereCast(prev, tipRadius, step.normalized, out RaycastHit hit, stepDist, collidableLayers & ~tongueLayerMask))
+        if (Physics.SphereCast(prev, tipRadius, step.normalized, out RaycastHit hit, stepDist, GetTongueProjectionLayerMask()))
         {
             tipPosition = hit.point;
 
@@ -393,6 +395,11 @@ public class PlayerTongueProjection : MonoBehaviour
 
         hookTimer = duration;
         state = State.Hooked;
+    }
+
+    private LayerMask GetTongueProjectionLayerMask()
+    {
+        return collidableLayers & ~tongueLayerMask & ~tongueProjectionExcludeLayers;
     }
 
     private void TickHooked()
