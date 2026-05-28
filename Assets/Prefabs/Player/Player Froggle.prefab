@@ -2450,8 +2450,8 @@ MonoBehaviour:
   maxDistanceHookDuration: 0.15
   surfaceHookDuration: 0.1
   extendSpeed: 100
-  retractSpeed: 25
-  maxRange: 30
+  retractSpeed: 110
+  maxRange: 50
   tipRadius: 0.1
   collidableLayers:
     serializedVersion: 2
