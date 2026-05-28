@@ -192,6 +192,9 @@ public class Dialogue_Manager : MonoBehaviour
         if (!useNpcCameraOnlyAfterPlayerSpeaks)
             ApplyNpcDialogueCameraPriority();
 
+        if (Audio_OtherEffects.Instance != null)
+            Audio_OtherEffects.Instance.PlayDialogueStart();
+
         onDialogueStarted?.Invoke();
         ShowNode(startingNode);
     }
@@ -236,6 +239,9 @@ public class Dialogue_Manager : MonoBehaviour
 
         StopPlayerDialogueReposition();
         UnlockPlayer();
+        if (Audio_OtherEffects.Instance != null)
+            Audio_OtherEffects.Instance.PlayDialogueEnd();
+
         onDialogueEnded?.Invoke();
     }
 

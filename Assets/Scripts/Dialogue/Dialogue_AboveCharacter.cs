@@ -77,6 +77,12 @@ public class Dialogue_AboveCharacter : MonoBehaviour
     [SerializeField] private bool checkParentTags = true;
     [SerializeField] private List<TaggedDialogueEntry> taggedDialogueEntries = new List<TaggedDialogueEntry>();
 
+    [Header("Audio")]
+    [SerializeField] private bool playTongueHitSound = true;
+    [SerializeField] private string tongueTriggerTag = "Tongue";
+    [SerializeField] private bool playObjectHitSound = true;
+    [SerializeField] private string objectHitTriggerTag = "GrabPoint";
+
     [Header("Completed Dialogue")]
     [SerializeField] private bool randomiseCompletedDialogue;
     [SerializeField] private string completedFirstText;
@@ -125,6 +131,7 @@ public class Dialogue_AboveCharacter : MonoBehaviour
         if (entry == null)
             return;
 
+        PlayHitSoundIfNeeded(other);
         ShowDialogue(entry.GetNextText());
     }
 
@@ -179,6 +186,26 @@ public class Dialogue_AboveCharacter : MonoBehaviour
         }
 
         return false;
+    }
+
+    private void PlayHitSoundIfNeeded(Collider other)
+    {
+        if (Audio_OtherEffects.Instance == null)
+            return;
+
+        if (playTongueHitSound && ObjectHasAudioTag(other, tongueTriggerTag))
+            Audio_OtherEffects.Instance.PlayTongueHitCharacter();
+
+        if (playObjectHitSound && ObjectHasAudioTag(other, objectHitTriggerTag))
+            Audio_OtherEffects.Instance.PlayObjectHitCharacter();
+    }
+
+    private bool ObjectHasAudioTag(Collider other, string targetTag)
+    {
+        if (string.IsNullOrWhiteSpace(targetTag))
+            return false;
+
+        return ObjectHasTag(other, targetTag.Trim());
     }
 
     private GameObject GetTriggeringObject(Collider other)

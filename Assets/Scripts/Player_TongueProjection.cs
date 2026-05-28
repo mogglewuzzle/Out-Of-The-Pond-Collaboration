@@ -364,6 +364,9 @@ public class PlayerTongueProjection : MonoBehaviour
                 if (enemyHealth != null)
                 {
                     enemyHealth.TakeDamage(tongueDamage);
+                    if (Audio_OtherEffects.Instance != null)
+                        Audio_OtherEffects.Instance.PlayTongueHitCharacter();
+
                     Debug.Log("Enemy damaged! Health left: " + enemyHealth.CurrentHealth);
                 }
                 else

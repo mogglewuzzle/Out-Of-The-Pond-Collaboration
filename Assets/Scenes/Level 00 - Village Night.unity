@@ -2589,6 +2589,10 @@ MonoBehaviour:
     firstText: Oh wow!
     secondText: 
     thirdText: 
+  playTongueHitSound: 1
+  tongueTriggerTag: Tongue
+  playObjectHitSound: 1
+  objectHitTriggerTag: GrabPoint
   randomiseCompletedDialogue: 1
   completedFirstText: Stay away from deep water!
   completedSecondText: 
@@ -6687,6 +6691,10 @@ MonoBehaviour:
     firstText: Oh wow!
     secondText: 
     thirdText: 
+  playTongueHitSound: 1
+  tongueTriggerTag: Tongue
+  playObjectHitSound: 1
+  objectHitTriggerTag: GrabPoint
   randomiseCompletedDialogue: 1
   completedFirstText: Stay away from deep water!
   completedSecondText: Be more careful Froggle!
@@ -10402,6 +10410,10 @@ MonoBehaviour:
     firstText: Oh wow!
     secondText: 
     thirdText: 
+  playTongueHitSound: 1
+  tongueTriggerTag: Tongue
+  playObjectHitSound: 1
+  objectHitTriggerTag: GrabPoint
   randomiseCompletedDialogue: 1
   completedFirstText: 'I almost got one! '
   completedSecondText: 'I got a bite! '
@@ -22015,6 +22027,10 @@ MonoBehaviour:
     firstText: Oh wow!
     secondText: 
     thirdText: 
+  playTongueHitSound: 1
+  tongueTriggerTag: Tongue
+  playObjectHitSound: 1
+  objectHitTriggerTag: GrabPoint
   randomiseCompletedDialogue: 1
   completedFirstText: Stay away from deep water!
   completedSecondText: Be more careful Froggle!
@@ -22255,6 +22271,10 @@ MonoBehaviour:
     firstText: Oh wow!
     secondText: 
     thirdText: 
+  playTongueHitSound: 1
+  tongueTriggerTag: Tongue
+  playObjectHitSound: 1
+  objectHitTriggerTag: GrabPoint
   randomiseCompletedDialogue: 1
   completedFirstText: 'I''m busy on duty. '
   completedSecondText: Can't talk right now Froggle.
@@ -24466,6 +24486,10 @@ MonoBehaviour:
     firstText: Oh wow!
     secondText: 
     thirdText: 
+  playTongueHitSound: 1
+  tongueTriggerTag: Tongue
+  playObjectHitSound: 1
+  objectHitTriggerTag: GrabPoint
   randomiseCompletedDialogue: 1
   completedFirstText: Collect the last 5 apples!
   completedSecondText: Let's talk after the hunt!
@@ -24985,6 +25009,10 @@ MonoBehaviour:
     firstText: Oh wow!
     secondText: 
     thirdText: 
+  playTongueHitSound: 1
+  tongueTriggerTag: Tongue
+  playObjectHitSound: 1
+  objectHitTriggerTag: GrabPoint
   randomiseCompletedDialogue: 1
   completedFirstText: 'I almost got one! '
   completedSecondText: 'I got a bite! '
@@ -26332,7 +26360,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 9}
+  m_AnchoredPosition: {x: 0, y: 13.18}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1794121711
@@ -32119,6 +32147,10 @@ MonoBehaviour:
     firstText: Oh wow!
     secondText: 
     thirdText: 
+  playTongueHitSound: 1
+  tongueTriggerTag: Tongue
+  playObjectHitSound: 1
+  objectHitTriggerTag: GrabPoint
   randomiseCompletedDialogue: 1
   completedFirstText: 'My sweet Froggle! '
   completedSecondText: 'Don''t stay out too late! '
@@ -37117,6 +37149,10 @@ MonoBehaviour:
     firstText: Oh wow!
     secondText: 
     thirdText: 
+  playTongueHitSound: 1
+  tongueTriggerTag: Tongue
+  playObjectHitSound: 1
+  objectHitTriggerTag: GrabPoint
   randomiseCompletedDialogue: 1
   completedFirstText: No time to talk
   completedSecondText: I'm busy right now

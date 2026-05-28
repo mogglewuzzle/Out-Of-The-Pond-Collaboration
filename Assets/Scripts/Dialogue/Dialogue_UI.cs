@@ -374,6 +374,8 @@ public class Dialogue_UI : MonoBehaviour
         typing = true;
         speedUpTyping = false;
         targetText.text = string.Empty;
+        if (Audio_OtherEffects.Instance != null)
+            Audio_OtherEffects.Instance.BeginDialogueTyping(speedUpTyping);
 
         if (typeStartDelay > 0f)
             yield return new WaitForSecondsRealtime(typeStartDelay);
@@ -385,6 +387,9 @@ public class Dialogue_UI : MonoBehaviour
             targetText.text = text.Substring(0, i + 1);
 
             float multiplier = speedUpTyping ? interactSpeedMultiplier : 1f;
+            if (Audio_OtherEffects.Instance != null)
+                Audio_OtherEffects.Instance.SetDialogueTypingSpeedUp(speedUpTyping);
+
             float delay = characterDelay / Mathf.Max(1f, multiplier);
             yield return new WaitForSecondsRealtime(delay);
         }
@@ -404,6 +409,8 @@ public class Dialogue_UI : MonoBehaviour
         speedUpTyping = false;
         pendingAfterTyping = null;
         pendingPlayerLineContinue = null;
+        if (Audio_OtherEffects.Instance != null)
+            Audio_OtherEffects.Instance.StopDialogueTyping();
     }
 
     private void CompleteTyping()
@@ -411,6 +418,8 @@ public class Dialogue_UI : MonoBehaviour
         typing = false;
         speedUpTyping = false;
         typeRoutine = null;
+        if (Audio_OtherEffects.Instance != null)
+            Audio_OtherEffects.Instance.StopDialogueTyping();
 
         Action afterTyping = pendingAfterTyping;
         pendingAfterTyping = null;
