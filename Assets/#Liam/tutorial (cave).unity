@@ -22040,6 +22040,67 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!1001 &506869261
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4781632058954565030, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -44.55877
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781632058954565030, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781632058954565030, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 70.66415
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781632058954565030, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781632058954565030, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781632058954565030, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781632058954565030, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781632058954565030, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781632058954565030, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781632058954565030, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5464565044234272630, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
+      propertyPath: musicTrack
+      value: 
+      objectReference: {fileID: 8300000, guid: 1a4e126533cf47e4dbaa50188277fdbc, type: 3}
+    - target: {fileID: 8574385411146747673, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
+      propertyPath: m_Name
+      value: Audio Manager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
 --- !u!1001 &527663795
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39383,6 +39444,10 @@ MonoBehaviour:
     firstText: Oh wow!
     secondText: 
     thirdText: 
+  playTongueHitSound: 1
+  tongueTriggerTag: Tongue
+  playObjectHitSound: 1
+  objectHitTriggerTag: GrabPoint
   randomiseCompletedDialogue: 1
   completedFirstText: Im a sign!
   completedSecondText: Good luck!
@@ -40100,6 +40165,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 673461475}
   - {fileID: 3557568509156911713}
+  - {fileID: 506869261}
   - {fileID: 228303182}
   - {fileID: 2029340823}
   - {fileID: 832346130}

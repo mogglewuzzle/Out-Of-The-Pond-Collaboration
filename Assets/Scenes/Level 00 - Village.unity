@@ -35766,14 +35766,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2198572568974493875, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
-      propertyPath: objectHitCharacterClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 9d243c4afcb33844b8d7684709bcdaac, type: 3}
-    - target: {fileID: 2198572568974493875, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
-      propertyPath: tongueHitCharacterClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 9d243c4afcb33844b8d7684709bcdaac, type: 3}
     - target: {fileID: 4781632058954565030, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

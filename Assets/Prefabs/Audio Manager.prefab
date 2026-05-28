@@ -899,6 +899,6 @@ MonoBehaviour:
   dialogueTypingStartDelay: 0
   normalTypingPitch: 1
   spedUpTypingPitch: 1.5
-  tongueHitCharacterClip: {fileID: 8300000, guid: 43baaec2a4eed0844a018541bfca98f0, type: 3}
-  objectHitCharacterClip: {fileID: 0}
+  tongueHitCharacterClip: {fileID: 8300000, guid: 9d243c4afcb33844b8d7684709bcdaac, type: 3}
+  objectHitCharacterClip: {fileID: 8300000, guid: 9d243c4afcb33844b8d7684709bcdaac, type: 3}
   persistAcrossScenes: 1
