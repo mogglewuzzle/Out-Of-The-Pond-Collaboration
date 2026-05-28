@@ -2295,7 +2295,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCameraController
   aimPivot: {fileID: 8709792742642679742}
   pitchSpeed: 60
-  pitchMax: 40
+  pitchMax: 55
   pitchMin: 30
   invertPitch: 0
   aimPitchMultiplier: 0.5
@@ -2303,7 +2303,7 @@ MonoBehaviour:
   freeLookPivot: {fileID: 1146856190868469532}
   freeLookPitchSpeed: 80
   freeLookPitchMultiplier: 1
-  freeLookPitchMax: 30
+  freeLookPitchMax: 55
   freeLookPitchMin: 30
   invertFreeLookPitch: 0
   freeLookPitchRecenter: 0
@@ -2365,11 +2365,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bad821148a3eef9478dceb00098b2bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovementController
-  moveSpeed: 5
+  moveSpeed: 10
   sprintAcceleration: 0.3
   airborneMovementMultiplier: 1
-  airborneGravityMultiplier: 1
-  fallGravityMultiplier: 3
+  airborneGravityMultiplier: 0.75
+  fallGravityMultiplier: 0.8
   feetPoint: {fileID: 3431637087839159340}
   groundCheckDistance: 0.5
   groundCheckRadius: 2
@@ -2392,7 +2392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74d46aaee174fd24b8f899f1576990e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerJumpController
-  jumpForce: 15
+  jumpForce: 20
   coyoteTime: 0.15
   jumpBufferTime: 0.15
 --- !u!114 &3217419412627563550
@@ -2436,6 +2436,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerTongueProject
   tongueOrigin: {fileID: 3085156451193525150}
   lineRenderer: {fileID: 7967057991447379198}
+  tongueDamage: 1
   useScreenCenterFirePoint: 1
   screenCenterFirePoint: {fileID: 0}
   screenCenterFirePointDistance: 5
@@ -2448,7 +2449,7 @@ MonoBehaviour:
   destroyTongueBulletOnRetract: 1
   maxDistanceHookDuration: 0.15
   surfaceHookDuration: 0.1
-  extendSpeed: 30
+  extendSpeed: 100
   retractSpeed: 25
   maxRange: 30
   tipRadius: 0.1
