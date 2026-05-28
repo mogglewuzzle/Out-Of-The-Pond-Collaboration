@@ -2376,7 +2376,7 @@ MonoBehaviour:
   groundCheckOriginOffset: 0.35
   groundMask:
     serializedVersion: 2
-    m_Bits: 3146863
+    m_Bits: 1076888687
   debugGroundCheck: 1
   debugRayLength: 20
   cameraTransform: {fileID: 0}
@@ -2455,7 +2455,7 @@ MonoBehaviour:
   tipRadius: 0.67
   collidableLayers:
     serializedVersion: 2
-    m_Bits: 2150630648
+    m_Bits: 2184185080
   tongueLayerMask:
     serializedVersion: 2
     m_Bits: 1024

@@ -55,6 +55,10 @@ public class Dialogue_Manager : MonoBehaviour
     [SerializeField] private bool useCancelInputToEndDialogue = true;
     [SerializeField] private InputActionReference cancelDialogueAction;
 
+    [Header("Restart Guard")]
+    [Tooltip("Prevents the same input that closes dialogue from immediately starting it again.")]
+    [SerializeField] private float restartDialogueCooldown = 0.2f;
+
     [Header("Events")]
     [SerializeField] private UnityEvent onDialogueStarted;
     [SerializeField] private UnityEvent onDialogueEnded;
@@ -62,6 +66,7 @@ public class Dialogue_Manager : MonoBehaviour
     public Dialogue_Node CurrentNode { get; private set; }
     public GameObject CurrentSpeakerObject { get; private set; }
     public bool IsDialogueActive => CurrentNode != null || pendingNodeAfterPlayerResponse != null || showingPlayerResponse;
+    public bool CanStartDialogue => !IsDialogueActive && Time.unscaledTime >= nextAllowedDialogueStartTime;
 
     private Dialogue_Source currentDialogueSource;
     private Dialogue_Node pendingNodeAfterPlayerResponse;
@@ -86,6 +91,7 @@ public class Dialogue_Manager : MonoBehaviour
     private bool cancelDialogueActionEnabledByManager;
     private bool endAfterPlayerResponse;
     private bool showingPlayerResponse;
+    private float nextAllowedDialogueStartTime;
 
     private void Awake()
     {
@@ -228,6 +234,7 @@ public class Dialogue_Manager : MonoBehaviour
         pendingNodeAfterPlayerResponse = null;
         endAfterPlayerResponse = false;
         showingPlayerResponse = false;
+        nextAllowedDialogueStartTime = Time.unscaledTime + Mathf.Max(0f, restartDialogueCooldown);
 
         RestorePlayerDialogueCameraPriority();
         RestoreNpcDialogueCameraPriority();

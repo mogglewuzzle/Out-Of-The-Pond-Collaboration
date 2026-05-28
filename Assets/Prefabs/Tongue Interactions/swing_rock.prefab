@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4423462653304916334}
   - component: {fileID: 6584599006034673901}
   - component: {fileID: 183724400212641539}
-  m_Layer: 0
+  m_Layer: 25
   m_Name: swing_rock
   m_TagString: SwingPoint
   m_Icon: {fileID: 0}

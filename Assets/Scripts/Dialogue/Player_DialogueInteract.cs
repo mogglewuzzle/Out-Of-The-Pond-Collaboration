@@ -50,7 +50,7 @@ public class Player_DialogueInteract : MonoBehaviour
         if (!WasInteractPressedThisFrame())
             return;
 
-        if (Dialogue_Manager.Instance != null && Dialogue_Manager.Instance.IsDialogueActive)
+        if (Dialogue_Manager.Instance != null && !Dialogue_Manager.Instance.CanStartDialogue)
             return;
 
         Dialogue_Source source = FindDialogueSource();

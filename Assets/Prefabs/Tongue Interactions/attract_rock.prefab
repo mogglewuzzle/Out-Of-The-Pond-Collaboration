@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5285317398507278081}
   - component: {fileID: 5714668765187556863}
   - component: {fileID: 6782041106803598705}
-  m_Layer: 0
+  m_Layer: 25
   m_Name: attract_rock
   m_TagString: AttractPoint
   m_Icon: {fileID: 0}

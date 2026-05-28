@@ -12376,6 +12376,7 @@ MonoBehaviour:
   useInteractToSubmitSelectedButton: 1
   useCancelInputToEndDialogue: 1
   cancelDialogueAction: {fileID: -3262024689391425319, guid: 2c0a613ac8df67244af6c707f73b1ad3, type: 3}
+  restartDialogueCooldown: 0.2
   onDialogueStarted:
     m_PersistentCalls:
       m_Calls: []
@@ -38414,7 +38415,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1524190655188326682, guid: 4fdf92531617eb149882326568071636, type: 3}
       propertyPath: collidableLayers.m_Bits
-      value: 2150630649
+      value: 2184185081
       objectReference: {fileID: 0}
     - target: {fileID: 2945388515790302031, guid: 4fdf92531617eb149882326568071636, type: 3}
       propertyPath: pullSpeed
@@ -40050,10 +40051,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 349220357}
     m_Modifications:
     - target: {fileID: 2856667179600185825, guid: 96f568e1947e21040b67f9cfc961bbb7, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 196.20001
-      objectReference: {fileID: 0}
-    - target: {fileID: 2856667179600185825, guid: 96f568e1947e21040b67f9cfc961bbb7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -47
       objectReference: {fileID: 0}
@@ -40097,10 +40094,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: attract_rock
       objectReference: {fileID: 0}
-    - target: {fileID: 5714668765187556863, guid: 96f568e1947e21040b67f9cfc961bbb7, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 8f802c217d4d214478d8d777f761a9cc, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

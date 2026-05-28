@@ -828,7 +828,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Audio_GameMusic
   musicSource: {fileID: 3977406717922800178}
   ambientSource: {fileID: 7601045749442804015}
-  musicTrack: {fileID: 8300000, guid: d3e1c29696420bb4895f43e00d74ed34, type: 3}
+  musicTrack: {fileID: 8300000, guid: 97269fab0b164a74aa5aced5c9b3305c, type: 3}
   playMusicOnStart: 1
   loopMusic: 1
   fadeInDuration: 1
@@ -841,7 +841,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0409b4092612aed439eb949b041cf58b, type: 3}
   playAmbientOnStart: 1
   loopAmbient: 1
-  randomizeAmbientTrack: 0
+  randomizeAmbientTrack: 1
   ambientVolume: 1
   persistAcrossGameScenes: 1
   gameSceneNames: []
@@ -869,7 +869,7 @@ MonoBehaviour:
   sprintPressedClip: {fileID: 8300000, guid: 0d6b103fb4656784c89b5e1cbb8bd8c6, type: 3}
   sprintPressedPitch: 2
   tonguePressedClip: {fileID: 8300000, guid: 8ea5e49262e93da49aa018b5bbe8cdbd, type: 3}
-  interactPressedClip: {fileID: 8300000, guid: ca2a3b0925cf3b64aaf06dfc4bc92628, type: 3}
+  interactPressedClip: {fileID: 0}
   pickupPressedClip: {fileID: 8300000, guid: 46a59835e4df6f7409065df34ab180d0, type: 3}
   throwPressedClip: {fileID: 8300000, guid: da478f5a3cc8857498b743424a5b0585, type: 3}
   consumePressedClip: {fileID: 8300000, guid: acaef429fb9e9f547a546e2e02913476, type: 3}
@@ -901,4 +901,4 @@ MonoBehaviour:
   spedUpTypingPitch: 1.5
   tongueHitCharacterClip: {fileID: 8300000, guid: 9d243c4afcb33844b8d7684709bcdaac, type: 3}
   objectHitCharacterClip: {fileID: 8300000, guid: 9d243c4afcb33844b8d7684709bcdaac, type: 3}
-  persistAcrossScenes: 1
+  persistAcrossScenes: 0
