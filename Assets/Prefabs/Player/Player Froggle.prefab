@@ -2084,7 +2084,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8359410263486921697}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 0.75
   m_LinearDamping: 0.5
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -2365,7 +2365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bad821148a3eef9478dceb00098b2bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovementController
-  moveSpeed: 10
+  moveSpeed: 15
   sprintAcceleration: 0.3
   airborneMovementMultiplier: 1
   airborneGravityMultiplier: 0.75
@@ -2449,16 +2449,19 @@ MonoBehaviour:
   destroyTongueBulletOnRetract: 1
   maxDistanceHookDuration: 0.15
   surfaceHookDuration: 0.1
-  extendSpeed: 100
-  retractSpeed: 110
-  maxRange: 50
-  tipRadius: 0.1
+  extendSpeed: 70
+  retractSpeed: 60
+  maxRange: 45
+  tipRadius: 0.67
   collidableLayers:
     serializedVersion: 2
-    m_Bits: 3147003
+    m_Bits: 2150630648
   tongueLayerMask:
     serializedVersion: 2
     m_Bits: 1024
+  tongueProjectionExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 64
   AttractPointTag: AttractPoint
   GrabPointTags:
   - GrabPoint
@@ -2499,13 +2502,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 706d33cbbffbd984ab624d3ac77c7dd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player_TongueSwing
-  swingGravityMultiplier: 3
-  swingHorizontalAcceleration: 20
+  swingGravityMultiplier: 10
+  swingHorizontalAcceleration: 50
   swingGroundDelay: 0.15
   swingStartupPullForce: 20
   swingStartupForwardPullForce: 0
   swingMinGroundDistance: 1.5
-  maxSwingRopeLength: 25
+  maxSwingRopeLength: 35
   changeLayerDuringSwingStartup: 1
   swingStartupLayer:
     serializedVersion: 2
