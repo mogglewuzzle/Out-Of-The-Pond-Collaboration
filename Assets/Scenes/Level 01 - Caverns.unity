@@ -32819,7 +32819,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 697441598}
-  - component: {fileID: 697441597}
   - component: {fileID: 697441596}
   - component: {fileID: 697441599}
   m_Layer: 0
@@ -32849,22 +32848,14 @@ MonoBehaviour:
   currentLives: 0
   livesText: {fileID: 167926556}
   showLivesLabel: 0
+  useSystemsRespawnManager: 0
   playerPrefab: {fileID: 8359410263486921697, guid: 4fdf92531617eb149882326568071636, type: 3}
   respawnPoint: {fileID: 1794955256}
+  respawnPointName: SpawnPoint_00
+  respawnMode: 0
+  useRespawnPointRotation: 1
   destroyDelayAfterDeath: 1
   respawnDelay: 2
---- !u!114 &697441597
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 697441595}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e2958f70fff7b14481a1798236e7c9d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PrefabSpawner
 --- !u!4 &697441598
 Transform:
   m_ObjectHideFlags: 0

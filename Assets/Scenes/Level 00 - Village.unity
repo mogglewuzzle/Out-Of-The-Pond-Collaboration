@@ -19818,6 +19818,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1064258037}
   - component: {fileID: 1064258038}
+  - component: {fileID: 1064258039}
   m_Layer: 0
   m_Name: Respawn Points
   m_TagString: Untagged
@@ -19877,6 +19878,34 @@ MonoBehaviour:
     point: {fileID: 1692483278}
   - pointName: Bridge05
     point: {fileID: 348864649}
+--- !u!114 &1064258039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1064258036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd371e229c5baad4aadb33ac242e5db3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::System_HealthManager
+  playerTag: Player
+  foundPlayer: {fileID: 0}
+  foundPlayerHealth: {fileID: 0}
+  currentHealth: 0
+  startingLives: 9999
+  currentLives: 0
+  livesText: {fileID: 0}
+  showLivesLabel: 0
+  useSystemsRespawnManager: 1
+  playerPrefab: {fileID: 8359410263486921697, guid: 4fdf92531617eb149882326568071636, type: 3}
+  respawnPoint: {fileID: 0}
+  respawnPointName: SpawnPoint_00
+  respawnMode: 0
+  useRespawnPointRotation: 1
+  destroyDelayAfterDeath: 1
+  respawnDelay: 2
 --- !u!1001 &1069902379
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -11407,7 +11407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0f5fb3d875848b0a807314d877e86d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Object_SceneTransitionTrigger
-  sceneName: Level 01 - Pondmire
+  sceneName: Level 01 - Caverns
   useSceneBuildIndex: 0
   sceneBuildIndex: 0
   requiredTag: Player
@@ -11500,8 +11500,8 @@ Transform:
   m_GameObject: {fileID: 709667800}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.8890171, z: 0, w: 0.45787397}
-  m_LocalPosition: {x: 70, y: 35.8, z: 134.9}
-  m_LocalScale: {x: 1, y: 27, z: 20}
+  m_LocalPosition: {x: 74.2, y: 35.8, z: 140.8}
+  m_LocalScale: {x: 4.59, y: 27, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -17168,6 +17168,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1064258037}
   - component: {fileID: 1064258038}
+  - component: {fileID: 1064258039}
   m_Layer: 0
   m_Name: Respawn Points
   m_TagString: Untagged
@@ -17227,6 +17228,34 @@ MonoBehaviour:
     point: {fileID: 1692483278}
   - pointName: Bridge05
     point: {fileID: 348864649}
+--- !u!114 &1064258039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1064258036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd371e229c5baad4aadb33ac242e5db3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::System_HealthManager
+  playerTag: Player
+  foundPlayer: {fileID: 0}
+  foundPlayerHealth: {fileID: 0}
+  currentHealth: 0
+  startingLives: 9999
+  currentLives: 0
+  livesText: {fileID: 0}
+  showLivesLabel: 0
+  useSystemsRespawnManager: 1
+  playerPrefab: {fileID: 8359410263486921697, guid: 4fdf92531617eb149882326568071636, type: 3}
+  respawnPoint: {fileID: 0}
+  respawnPointName: SpawnPoint_00
+  respawnMode: 0
+  useRespawnPointRotation: 1
+  destroyDelayAfterDeath: 1
+  respawnDelay: 2
 --- !u!1001 &1069902379
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42089,7 +42118,6 @@ SceneRoots:
   - {fileID: 1756592753}
   - {fileID: 543450652212300965}
   - {fileID: 710583311}
-  - {fileID: 709667805}
   - {fileID: 652832050}
   - {fileID: 2010044426}
   - {fileID: 588431674}
@@ -42097,3 +42125,4 @@ SceneRoots:
   - {fileID: 587929297}
   - {fileID: 2027539004}
   - {fileID: 1073016805}
+  - {fileID: 709667805}
