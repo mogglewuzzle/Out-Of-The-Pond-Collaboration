@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Systems_RespawnManager : MonoBehaviour
@@ -22,6 +23,8 @@ public class Systems_RespawnManager : MonoBehaviour
     }
 
     public static Systems_RespawnManager Instance { get; private set; }
+
+    public event Action<GameObject, GameObject> RespawnCompleted;
 
     [Header("Respawn Timing")]
     [SerializeField] private float respawnDelay = 1f;
@@ -59,7 +62,7 @@ public class Systems_RespawnManager : MonoBehaviour
             Instance = null;
     }
 
-    public void RequestRespawn(
+    public bool RequestRespawn(
         GameObject objectToRespawn,
         string respawnPointName,
         Systems_RespawnManager.RespawnMode respawnMode,
@@ -67,15 +70,15 @@ public class Systems_RespawnManager : MonoBehaviour
         bool useRespawnPointRotation)
     {
         if (objectToRespawn == null || respawningObjects.Contains(objectToRespawn))
-            return;
+            return false;
 
         if (!TryResolveRespawnPoint(objectToRespawn, respawnPointName, out Transform respawnPoint))
-            return;
+            return false;
 
         if (respawnMode == RespawnMode.InstantiatePrefab && respawnPrefab == null)
         {
             Debug.LogWarning($"{nameof(Systems_RespawnManager)} cannot respawn {objectToRespawn.name}: missing respawn prefab.", this);
-            return;
+            return false;
         }
 
         if (useFirstRespawnPointOnce && !hasUsedFirstRespawnPoint && respawnPoint == firstRespawnPoint)
@@ -84,6 +87,7 @@ public class Systems_RespawnManager : MonoBehaviour
         Vector3 requestPosition = objectToRespawn.transform.position;
         respawningObjects.Add(objectToRespawn);
         StartCoroutine(RespawnAfterDelay(objectToRespawn, respawnPoint, requestPosition, respawnMode, respawnPrefab, useRespawnPointRotation));
+        return true;
     }
 
     private bool TryResolveRespawnPoint(GameObject objectToRespawn, string respawnPointName, out Transform respawnPoint)
@@ -188,9 +192,10 @@ public class Systems_RespawnManager : MonoBehaviour
 
         if (respawnMode == RespawnMode.InstantiatePrefab)
         {
-            Instantiate(respawnPrefab, spawnPosition, spawnRotation);
+            GameObject respawnedObject = Instantiate(respawnPrefab, spawnPosition, spawnRotation);
             Destroy(objectToRespawn);
             respawningObjects.Remove(objectToRespawn);
+            RespawnCompleted?.Invoke(objectToRespawn, respawnedObject);
             yield break;
         }
 
@@ -200,12 +205,14 @@ public class Systems_RespawnManager : MonoBehaviour
             clone.SetActive(true);
             Destroy(objectToRespawn);
             respawningObjects.Remove(objectToRespawn);
+            RespawnCompleted?.Invoke(objectToRespawn, clone);
             yield break;
         }
 
         RespawnExistingObject(objectToRespawn, spawnPosition, spawnRotation);
         objectToRespawn.SetActive(true);
         respawningObjects.Remove(objectToRespawn);
+        RespawnCompleted?.Invoke(objectToRespawn, objectToRespawn);
     }
 
     private Vector3 GetSpawnPosition(Transform respawnPoint, Vector3 requestPosition)

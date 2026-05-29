@@ -3901,7 +3901,6 @@ GameObject:
   - component: {fileID: 202822042}
   - component: {fileID: 202822045}
   - component: {fileID: 202822040}
-  - component: {fileID: 202822046}
   - component: {fileID: 202822047}
   m_Layer: 0
   m_Name: Village Area Swamp
@@ -4019,18 +4018,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &202822046
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 202822039}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e552a5b1ee8d41e4fb76ba858b5fb2c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Object_Hazard
 --- !u!114 &202822047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4603,6 +4590,7 @@ MonoBehaviour:
   useInteractToSubmitSelectedButton: 1
   useCancelInputToEndDialogue: 1
   cancelDialogueAction: {fileID: -3262024689391425319, guid: 2c0a613ac8df67244af6c707f73b1ad3, type: 3}
+  restartDialogueCooldown: 0.2
   onDialogueStarted:
     m_PersistentCalls:
       m_Calls: []
@@ -9977,6 +9965,137 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1471531779}
   m_SourcePrefab: {fileID: 100100000, guid: 685f87eda9dbe3c4daffcd5c911db5c2, type: 3}
+--- !u!1 &522374808
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 522374813}
+  - component: {fileID: 522374812}
+  - component: {fileID: 522374811}
+  - component: {fileID: 522374810}
+  - component: {fileID: 522374809}
+  m_Layer: 0
+  m_Name: Exit Scene To Level 01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &522374809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522374808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0f5fb3d875848b0a807314d877e86d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Object_SceneTransitionTrigger
+  sceneName: Level 01 - Caverns
+  useSceneBuildIndex: 0
+  sceneBuildIndex: 0
+  requiredTag: Player
+  useTriggerEnter: 1
+  useCollisionEnter: 0
+--- !u!65 &522374810
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522374808}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &522374811
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522374808}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &522374812
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522374808}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &522374813
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522374808}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.88031185, z: 0, w: 0.47439554}
+  m_LocalPosition: {x: 77, y: 38.3, z: 148.2}
+  m_LocalScale: {x: 10.2, y: 27, z: 20}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 123.36, z: 0}
 --- !u!1 &523926265
 GameObject:
   m_ObjectHideFlags: 0
@@ -30968,7 +31087,7 @@ GameObject:
   - component: {fileID: 1747159233}
   - component: {fileID: 1747159232}
   m_Layer: 0
-  m_Name: Exit Scene Trigger
+  m_Name: Exit Scene To Tutorial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47857,3 +47976,4 @@ SceneRoots:
   - {fileID: 2939482162031571915}
   - {fileID: 526399311}
   - {fileID: 1747159236}
+  - {fileID: 522374813}

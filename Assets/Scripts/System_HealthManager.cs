@@ -25,12 +25,19 @@ public class System_HealthManager : MonoBehaviour
     [SerializeField] private bool showLivesLabel;
 
     [Header("Respawn")]
+    [Tooltip("When available, delegate player respawning to Systems_RespawnManager so scene respawn rules stay in one place.")]
+    [SerializeField] private bool useSystemsRespawnManager = true;
     [Tooltip("Prefab to instantiate after the current player is destroyed.")]
     [SerializeField] private GameObject playerPrefab;
     [Tooltip("Where the new player prefab spawns.")]
     [SerializeField] private Transform respawnPoint;
+    [Tooltip("Respawn point name to request from Systems_RespawnManager when it is not using closest-point mode.")]
+    [SerializeField] private string respawnPointName = "SpawnPoint_00";
+    [SerializeField] private Systems_RespawnManager.RespawnMode respawnMode = Systems_RespawnManager.RespawnMode.InstantiatePrefab;
+    [SerializeField] private bool useRespawnPointRotation = true;
     [Tooltip("Seconds to wait after health reaches 0 before destroying the current player.")]
     [SerializeField] private float destroyDelayAfterDeath = 0f;
+    [Tooltip("Fallback delay used only when Systems_RespawnManager is unavailable or cannot handle the respawn.")]
     [SerializeField] private float respawnDelay = 1f;
 
     private bool isRespawning;
@@ -86,6 +93,55 @@ public class System_HealthManager : MonoBehaviour
         if (destroyDelayAfterDeath > 0f)
             yield return new WaitForSeconds(destroyDelayAfterDeath);
 
+        if (useSystemsRespawnManager && Systems_RespawnManager.Instance != null)
+        {
+            yield return RespawnPlayerWithRespawnManager(oldPlayer);
+            yield break;
+        }
+
+        yield return RespawnPlayerDirectly(oldPlayer);
+    }
+
+    private IEnumerator RespawnPlayerWithRespawnManager(GameObject oldPlayer)
+    {
+        if (oldPlayer == null)
+        {
+            isRespawning = false;
+            yield break;
+        }
+
+        Systems_RespawnManager respawnManager = Systems_RespawnManager.Instance;
+        bool respawnComplete = false;
+        GameObject respawnedPlayer = null;
+
+        void HandleRespawnCompleted(GameObject originalObject, GameObject newObject)
+        {
+            if (originalObject != oldPlayer)
+                return;
+
+            respawnedPlayer = newObject;
+            respawnComplete = true;
+        }
+
+        respawnManager.RespawnCompleted += HandleRespawnCompleted;
+        bool requestStarted = respawnManager.RequestRespawn(oldPlayer, respawnPointName, respawnMode, playerPrefab, useRespawnPointRotation);
+
+        if (!requestStarted)
+        {
+            respawnManager.RespawnCompleted -= HandleRespawnCompleted;
+            yield return RespawnPlayerDirectly(oldPlayer);
+            yield break;
+        }
+
+        yield return new WaitUntil(() => respawnComplete);
+        respawnManager.RespawnCompleted -= HandleRespawnCompleted;
+
+        TrackRespawnedPlayer(respawnedPlayer);
+        isRespawning = false;
+    }
+
+    private IEnumerator RespawnPlayerDirectly(GameObject oldPlayer)
+    {
         if (oldPlayer != null)
             Destroy(oldPlayer);
 
@@ -102,18 +158,23 @@ public class System_HealthManager : MonoBehaviour
         Vector3 spawnPosition = respawnPoint != null ? respawnPoint.position : Vector3.zero;
         Quaternion spawnRotation = respawnPoint != null ? respawnPoint.rotation : Quaternion.identity;
 
-        foundPlayer = Instantiate(playerPrefab, spawnPosition, spawnRotation);
-        foundPlayerHealth = foundPlayer.GetComponent<Player_Health>();
+        TrackRespawnedPlayer(Instantiate(playerPrefab, spawnPosition, spawnRotation));
+        isRespawning = false;
+    }
+
+    private void TrackRespawnedPlayer(GameObject respawnedPlayer)
+    {
+        foundPlayer = respawnedPlayer;
+        foundPlayerHealth = foundPlayer != null ? foundPlayer.GetComponentInChildren<Player_Health>() : null;
 
         if (foundPlayerHealth == null)
         {
-            Debug.LogWarning($"{nameof(System_HealthManager)} on {name} instantiated player prefab '{playerPrefab.name}' but could not find {nameof(Player_Health)} on it or its children.", this);
-            isRespawning = false;
-            yield break;
+            string prefabName = playerPrefab != null ? playerPrefab.name : "unknown";
+            Debug.LogWarning($"{nameof(System_HealthManager)} on {name} respawned player prefab '{prefabName}' but could not find {nameof(Player_Health)} on it or its children.", this);
+            return;
         }
 
         SyncCurrentHealth();
-        isRespawning = false;
     }
 
     private void FindPlayer()

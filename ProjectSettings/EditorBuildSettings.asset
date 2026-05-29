@@ -18,7 +18,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Level 00 - Bedroom.unity
     guid: 05db1f63a5fac4e4296b511f3a93c634
   - enabled: 1
-    path: Assets/Scenes/Level 00 - Tutorial.unity
+    path: Assets/Scenes/Level 01 - Caverns.unity
     guid: 0bd028f8ec8c0ab40901f2fdd373822e
   - enabled: 1
     path: Assets/Scenes/Level 00 - Village.unity
@@ -27,7 +27,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Level 00 - Village Night.unity
     guid: 299be0ca2efe45843a2f7ecb2604828a
   - enabled: 1
-    path: Assets/Scenes/Level 01 - Pondmire.unity
+    path: Assets/Scenes/Level 02 - Meadows.unity
     guid: 06e226b81f771264787aed97d4e1678c
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: b1a1b0516ba21d649ba83eb4d20bc666, type: 2}
