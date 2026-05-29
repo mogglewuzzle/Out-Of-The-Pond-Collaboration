@@ -587,7 +587,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.4320859, z: -0, w: -0.90183246}
   m_LocalPosition: {x: 117.72, y: -2.6, z: 7.82}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1101488935083690351}
@@ -605,7 +605,7 @@ Animator:
   m_GameObject: {fileID: 6880103328942594013}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8ebf340cb67dc5f499c439debf941db8, type: 2}
+  m_Controller: {fileID: 9100000, guid: 09cf9001c5c3151499d5ecf86321f911, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 1
   m_ApplyRootMotion: 0
@@ -661,8 +661,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.6062166, y: 1.40163, z: 0.65704626}
-  m_Center: {x: 0.038419295, y: 0.7239397, z: -0.019922707}
+  m_Size: {x: 0.67689335, y: 1.40163, z: 0.88682914}
+  m_Center: {x: 0.003081192, y: 0.7239397, z: -0.042177796}
 --- !u!54 &1035234609130664538
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -726,12 +726,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharacterFollower
   targetTag: Player
   foundFollowTarget: {fileID: 0}
-  followDistance: 2
-  minSpeed: 2
-  maxSpeed: 20
+  followDistance: 0.1
+  minSpeed: 10
+  maxSpeed: 40
   randomizeSpeedOnStart: 1
-  predictTargetMovement: 1
+  predictTargetMovement: 0
   predictionTime: 0.5
+  followResumeBuffer: 0.5
+  allowOrbitAtFollowDistance: 0
+  orbitDuration: 10
+  orbitSpeed: 90
   smoothRotation: 1
   rotationSpeed: 5
   pauseDuringDialogue: 1

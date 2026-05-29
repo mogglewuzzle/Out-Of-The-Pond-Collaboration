@@ -20,6 +20,14 @@ public class System_HealthManager : MonoBehaviour
     [SerializeField] private int startingLives = 3;
     [SerializeField] private int currentLives;
 
+    [Header("Game Over Scene")]
+    [SerializeField] private bool loadSceneWhenLivesReachZero;
+    [Tooltip("Scene name to load when Current Lives reaches 0. The scene must be added to Build Settings.")]
+    [SerializeField] private string gameOverSceneName;
+    [Tooltip("If enabled, Game Over Scene Build Index is used instead of Game Over Scene Name.")]
+    [SerializeField] private bool useGameOverSceneBuildIndex;
+    [SerializeField] private int gameOverSceneBuildIndex;
+
     [Header("Lives UI")]
     [SerializeField] private TextMeshProUGUI livesText;
     [SerializeField] private bool showLivesLabel;
@@ -41,6 +49,7 @@ public class System_HealthManager : MonoBehaviour
     [SerializeField] private float respawnDelay = 1f;
 
     private bool isRespawning;
+    private bool gameOverSceneLoadRequested;
 
     private void Awake()
     {
@@ -227,11 +236,36 @@ public class System_HealthManager : MonoBehaviour
             currentLives--;
 
         UpdateLivesUI();
+        TryLoadGameOverScene();
     }
 
     private void UpdateLivesUI()
     {
         if (livesText != null)
             livesText.text = showLivesLabel ? $"Lives: {currentLives}" : currentLives.ToString();
+    }
+
+    private void TryLoadGameOverScene()
+    {
+        if (!loadSceneWhenLivesReachZero || gameOverSceneLoadRequested || currentLives > 0)
+            return;
+
+        Systems_SceneManager sceneManager = Systems_SceneManager.Instance;
+        if (sceneManager == null)
+        {
+            sceneManager = FindFirstObjectByType<Systems_SceneManager>();
+            if (sceneManager == null)
+            {
+                Debug.LogWarning($"{nameof(System_HealthManager)} on {name} cannot load game over scene: no {nameof(Systems_SceneManager)} found.", this);
+                return;
+            }
+        }
+
+        gameOverSceneLoadRequested = true;
+
+        if (useGameOverSceneBuildIndex)
+            sceneManager.LoadScene(gameOverSceneBuildIndex);
+        else
+            sceneManager.LoadScene(gameOverSceneName);
     }
 }

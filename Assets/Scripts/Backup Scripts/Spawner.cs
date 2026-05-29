@@ -5,6 +5,8 @@ public class PrefabSpawner : MonoBehaviour
 {
     [Header("Prefab")]
     public GameObject prefabToSpawn;
+    [Tooltip("Optional. If this list has entries, the spawner randomly picks one instead of always using Prefab To Spawn.")]
+    public List<GameObject> prefabsToSpawn = new List<GameObject>();
 
     [Header("Spawn Points (Assign up to 3)")]
     public Transform spawnPoint1;
@@ -63,7 +65,9 @@ public class PrefabSpawner : MonoBehaviour
 
     public void SpawnPrefab()
     {
-        if (prefabToSpawn == null)
+        GameObject selectedPrefab = GetPrefabToSpawn();
+
+        if (selectedPrefab == null)
         {
             Debug.LogWarning("No prefab assigned!");
             return;
@@ -77,7 +81,26 @@ public class PrefabSpawner : MonoBehaviour
             return;
         }
 
-        Instantiate(prefabToSpawn, chosenPoint.position, chosenPoint.rotation);
+        Instantiate(selectedPrefab, chosenPoint.position, chosenPoint.rotation);
+    }
+
+    GameObject GetPrefabToSpawn()
+    {
+        if (prefabsToSpawn == null || prefabsToSpawn.Count == 0)
+            return prefabToSpawn;
+
+        List<GameObject> validPrefabs = new List<GameObject>();
+        foreach (GameObject prefab in prefabsToSpawn)
+        {
+            if (prefab != null)
+                validPrefabs.Add(prefab);
+        }
+
+        if (validPrefabs.Count == 0)
+            return prefabToSpawn;
+
+        int index = Random.Range(0, validPrefabs.Count);
+        return validPrefabs[index];
     }
 
     Transform GetSpawnPoint()
