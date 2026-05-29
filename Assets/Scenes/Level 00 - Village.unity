@@ -19896,6 +19896,10 @@ MonoBehaviour:
   currentHealth: 0
   startingLives: 9999
   currentLives: 0
+  loadSceneWhenLivesReachZero: 0
+  gameOverSceneName: 
+  useGameOverSceneBuildIndex: 0
+  gameOverSceneBuildIndex: 0
   livesText: {fileID: 0}
   showLivesLabel: 0
   useSystemsRespawnManager: 1
