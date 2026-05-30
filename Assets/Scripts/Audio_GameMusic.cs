@@ -34,6 +34,8 @@ public class Audio_GameMusic : MonoBehaviour
     [SerializeField] private bool persistAcrossGameScenes = true;
     [Tooltip("If assigned, music only keeps playing in these scene names. Leave empty to allow every scene where this manager exists.")]
     [SerializeField] private List<string> gameSceneNames = new List<string>();
+    [Tooltip("When enabled, music continues uninterrupted when loading another allowed scene.")]
+    [SerializeField] private bool keepPlayingDuringAllowedSceneTransitions;
 
     private Coroutine musicFadeRoutine;
     private bool wasLoadingScene;
@@ -77,7 +79,13 @@ public class Audio_GameMusic : MonoBehaviour
     {
         bool loadingScene = Systems_SceneManager.Instance != null && Systems_SceneManager.Instance.IsLoadingScene;
         if (loadingScene && !wasLoadingScene)
-            FadeOutMusic();
+        {
+            string pendingSceneName = Systems_SceneManager.Instance.PendingSceneName;
+            if (!keepPlayingDuringAllowedSceneTransitions || !IsSceneAllowed(pendingSceneName))
+                FadeOutMusic();
+        }
+        else if (!loadingScene && wasLoadingScene && playMusicOnStart)
+            PlayMusicWithFadeIn();
 
         wasLoadingScene = loadingScene;
     }

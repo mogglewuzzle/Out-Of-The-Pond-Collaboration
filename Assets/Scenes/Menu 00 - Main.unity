@@ -701,68 +701,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7809022974092672570, guid: f0a722db63d49b749b6fd46e62f28577, type: 3}
   m_PrefabInstance: {fileID: 37108323}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &44073324
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1693979184}
-    m_Modifications:
-    - target: {fileID: 5864291331722570914, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -117.96948
-      objectReference: {fileID: 0}
-    - target: {fileID: 5864291331722570914, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 12.999981
-      objectReference: {fileID: 0}
-    - target: {fileID: 5864291331722570914, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 183.75537
-      objectReference: {fileID: 0}
-    - target: {fileID: 5864291331722570914, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.24446118
-      objectReference: {fileID: 0}
-    - target: {fileID: 5864291331722570914, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5864291331722570914, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.9696591
-      objectReference: {fileID: 0}
-    - target: {fileID: 5864291331722570914, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5864291331722570914, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5864291331722570914, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -208.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5864291331722570914, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8359410263486921697, guid: 4fdf92531617eb149882326568071636, type: 3}
-      propertyPath: m_Name
-      value: Player Froggle
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 4fdf92531617eb149882326568071636, type: 3}
---- !u!4 &44073325 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5864291331722570914, guid: 4fdf92531617eb149882326568071636, type: 3}
-  m_PrefabInstance: {fileID: 44073324}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &54251485
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35700,7 +35638,6 @@ Transform:
   - {fileID: 133528720}
   - {fileID: 1777210147}
   - {fileID: 737911778}
-  - {fileID: 44073325}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1706454988
@@ -39846,8 +39783,8 @@ Transform:
   m_GameObject: {fileID: 1877069520}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 10.509022, y: 2.3053071, z: -0.36857772}
-  m_LocalScale: {x: 403.26532, y: 328.92776, z: 313.54407}
+  m_LocalPosition: {x: 2.38, y: 2.3053071, z: -0.37}
+  m_LocalScale: {x: 1216.7, y: 328.92776, z: 313.54407}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1488696133}
@@ -42478,6 +42415,56 @@ Transform:
   - {fileID: 242624153}
   m_Father: {fileID: 1050954148}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2002639170
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2002639172}
+  - component: {fileID: 2002639171}
+  m_Layer: 0
+  m_Name: Audio Systems
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2002639171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2002639170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97db668a333df48448d0f4b75bd6d3a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Systems_AudioSettings
+  audioMixer: {fileID: 24100000, guid: 938c2f0c787208b48bca138e039142d2, type: 2}
+  musicVolumeParameter: VolumeMusic
+  sfxVolumeParameter: VolumeEffects
+  defaultMusicVolume: 1
+  defaultSfxVolume: 1
+  persistAcrossScenes: 1
+--- !u!4 &2002639172
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2002639170}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4130.154, y: 0.00001, z: 2835.4407}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2009753997
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44546,7 +44533,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2098226853}
   - component: {fileID: 2098226852}
-  - component: {fileID: 2098226851}
   m_Layer: 0
   m_Name: Menu Audio Manager
   m_TagString: Untagged
@@ -44554,24 +44540,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2098226851
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2098226850}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97db668a333df48448d0f4b75bd6d3a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Systems_AudioSettings
-  audioMixer: {fileID: 24100000, guid: 938c2f0c787208b48bca138e039142d2, type: 2}
-  musicVolumeParameter: VolumeMusic
-  sfxVolumeParameter: VolumeEffects
-  defaultMusicVolume: 1
-  defaultSfxVolume: 1
-  persistAcrossScenes: 1
 --- !u!114 &2098226852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45276,3 +45244,4 @@ SceneRoots:
   - {fileID: 2098226853}
   - {fileID: 1047468030}
   - {fileID: 1693979184}
+  - {fileID: 2002639172}

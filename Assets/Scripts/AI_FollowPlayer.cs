@@ -14,11 +14,34 @@ public class CharacterFollower : MonoBehaviour
     public float followDistance = 2f;
     public float minSpeed = 2f;
     public float maxSpeed = 5f;
+    [Tooltip("When enabled, the agent's speed increases from its starting speed to Increased Max Speed over Speed Increase Duration.")]
+    public bool increaseSpeedOverTime;
+    public float increasedMaxSpeed = 10f;
+    [Tooltip("Seconds for the agent to reach Increased Max Speed after spawning.")]
+    public float speedIncreaseDuration = 5f;
     public bool randomizeSpeedOnStart = true;
     public bool predictTargetMovement = false;
     public float predictionTime = 0.5f;
     [Tooltip("Extra distance beyond Follow Distance before the enemy starts chasing again. Prevents jitter at the edge of the stopping distance.")]
     public float followResumeBuffer = 0.5f;
+
+    [Header("NavMesh Agent")]
+    [Tooltip("How quickly the agent accelerates and brakes.")]
+    public float acceleration = 8f;
+    [Tooltip("Maximum turning speed in degrees per second.")]
+    public float angularSpeed = 120f;
+    [Tooltip("When enabled, the agent slows down as it approaches its destination.")]
+    public bool autoBraking = true;
+
+    [Header("Target Spread")]
+    [Tooltip("When enabled, each follower aims for a stable offset around the player instead of all targeting the same point.")]
+    public bool spreadAroundTarget;
+    [Tooltip("Distance from the player's centre used to spread followers apart. Keep this small for contact-damage enemies.")]
+    public float targetSpreadRadius = 0.4f;
+    [Tooltip("When enabled, each follower receives a random NavMesh avoidance priority when it spawns.")]
+    public bool randomizeAvoidancePriority;
+    [Range(0, 99)] public int minAvoidancePriority = 20;
+    [Range(0, 99)] public int maxAvoidancePriority = 80;
 
     [Header("Orbit")]
     [Tooltip("When enabled, the enemy circles the target instead of stopping immediately once it reaches Follow Distance.")]
@@ -41,6 +64,9 @@ public class CharacterFollower : MonoBehaviour
     private bool hasCompletedOrbit;
     private float orbitStartTime;
     private Vector3 orbitDirection;
+    private float speedIncreaseStartTime;
+    private float startingAgentSpeed;
+    private Vector3 targetSpreadDirection;
 
     void Awake()
     {
@@ -53,8 +79,15 @@ public class CharacterFollower : MonoBehaviour
         }
 
         agent.speed = randomizeSpeedOnStart ? Random.Range(minSpeed, maxSpeed) : minSpeed;
-        agent.stoppingDistance = followDistance;
+        startingAgentSpeed = agent.speed;
+        speedIncreaseStartTime = Time.time;
+        targetSpreadDirection = GetRandomHorizontalDirection();
+
+        if (randomizeAvoidancePriority)
+            agent.avoidancePriority = Random.Range(Mathf.Min(minAvoidancePriority, maxAvoidancePriority), Mathf.Max(minAvoidancePriority, maxAvoidancePriority) + 1);
+
         agent.updateRotation = false;
+        ApplyAgentSettings();
     }
 
     void Start()
@@ -112,6 +145,8 @@ public class CharacterFollower : MonoBehaviour
 
     void Update()
     {
+        UpdateSpeedIncrease();
+
         if (foundFollowTarget == null && !TryFindTarget())
             return;
 
@@ -124,7 +159,7 @@ public class CharacterFollower : MonoBehaviour
             return;
         }
 
-        agent.stoppingDistance = Mathf.Max(0f, followDistance);
+        ApplyAgentSettings();
 
         Vector3 toTarget = foundFollowTarget.position - transform.position;
         toTarget.y = 0f;
@@ -149,11 +184,12 @@ public class CharacterFollower : MonoBehaviour
 
         if (distanceToTarget <= effectiveFollowDistance + effectiveResumeBuffer)
         {
+            StopFollowing();
             lastTargetPosition = foundFollowTarget.position;
             return;
         }
 
-        Vector3 destination = foundFollowTarget.position;
+        Vector3 destination = foundFollowTarget.position + GetTargetSpreadOffset();
 
         if (predictTargetMovement)
         {
@@ -225,6 +261,51 @@ public class CharacterFollower : MonoBehaviour
             agent.ResetPath();
 
         agent.velocity = Vector3.zero;
+    }
+
+    private void UpdateSpeedIncrease()
+    {
+        if (!increaseSpeedOverTime || agent == null)
+            return;
+
+        if (speedIncreaseDuration <= 0f)
+        {
+            agent.speed = increasedMaxSpeed;
+            return;
+        }
+
+        float progress = Mathf.Clamp01((Time.time - speedIncreaseStartTime) / speedIncreaseDuration);
+        agent.speed = Mathf.Lerp(startingAgentSpeed, increasedMaxSpeed, progress);
+    }
+
+    private void ApplyAgentSettings()
+    {
+        if (agent == null)
+            return;
+
+        agent.stoppingDistance = Mathf.Max(0f, followDistance);
+        agent.acceleration = Mathf.Max(0f, acceleration);
+        agent.angularSpeed = Mathf.Max(0f, angularSpeed);
+        agent.autoBraking = autoBraking;
+    }
+
+    private Vector3 GetTargetSpreadOffset()
+    {
+        if (!spreadAroundTarget)
+            return Vector3.zero;
+
+        return targetSpreadDirection * Mathf.Max(0f, targetSpreadRadius);
+    }
+
+    private Vector3 GetRandomHorizontalDirection()
+    {
+        Vector2 direction = Random.insideUnitCircle;
+
+        if (direction.sqrMagnitude <= 0.001f)
+            return Vector3.forward;
+
+        direction.Normalize();
+        return new Vector3(direction.x, 0f, direction.y);
     }
 
     private bool IsPlayerInDialogue()

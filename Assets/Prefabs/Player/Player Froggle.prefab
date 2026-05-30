@@ -559,7 +559,7 @@ Transform:
   m_GameObject: {fileID: 2488880846635981178}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 3.327, z: 1.43}
+  m_LocalPosition: {x: 0, y: 3.327, z: 1.8}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -1065,7 +1065,7 @@ GameObject:
   - component: {fileID: 5276295636321083150}
   m_Layer: 3
   m_Name: Feet Grounding Point
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2041,7 +2041,6 @@ GameObject:
   - component: {fileID: 4260354098332897029}
   - component: {fileID: 2180438392246524469}
   - component: {fileID: 6308612557961594179}
-  - component: {fileID: 8770818217352162704}
   - component: {fileID: 5996781958147496269}
   - component: {fileID: 8413346615566233139}
   m_Layer: 3
@@ -2110,7 +2109,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8359410263486921697}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 68374ef9ebd3b674fb57a41bb722e974, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2371,12 +2370,13 @@ MonoBehaviour:
   airborneGravityMultiplier: 0.75
   fallGravityMultiplier: 0.8
   feetPoint: {fileID: 3431637087839159340}
-  groundCheckDistance: 0.5
-  groundCheckRadius: 2
+  groundCheckDistance: 0.7
+  groundCheckRadius: 0.5
   groundCheckOriginOffset: 0.35
   groundMask:
     serializedVersion: 2
     m_Bits: 1076888687
+  wallNormalMaxUpDot: 0.5
   debugGroundCheck: 1
   debugRayLength: 20
   cameraTransform: {fileID: 0}
@@ -2717,31 +2717,6 @@ MonoBehaviour:
   secondFlashSpeed: 6
   secondTimeBetweenFlashes: 0
   foundFlashingMaterial: {fileID: 0}
---- !u!143 &8770818217352162704
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8359410263486921697}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Height: -3.8000002
-  m_Radius: 38.54406
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5996781958147496269
 MonoBehaviour:
   m_ObjectHideFlags: 0

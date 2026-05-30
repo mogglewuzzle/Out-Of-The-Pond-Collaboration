@@ -1127,6 +1127,7 @@ MonoBehaviour:
   useInteractToSubmitSelectedButton: 1
   useCancelInputToEndDialogue: 1
   cancelDialogueAction: {fileID: -3262024689391425319, guid: 2c0a613ac8df67244af6c707f73b1ad3, type: 3}
+  restartDialogueCooldown: 0.2
   onDialogueStarted:
     m_PersistentCalls:
       m_Calls: []
@@ -3658,7 +3659,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1040895894839135408, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1490266661425230350, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
       propertyPath: m_IsActive
@@ -3670,7 +3671,7 @@ PrefabInstance:
       objectReference: {fileID: 2013081883}
     - target: {fileID: 1664653518425415104, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1936575999718088519, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
       propertyPath: m_Alpha
@@ -3682,7 +3683,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3763665719556544606, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4551493874590600275, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3714,7 +3715,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5724471090708129985, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6664172966257085127, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6984,6 +6985,10 @@ MonoBehaviour:
     firstText: Oh wow!
     secondText: 
     thirdText: 
+  playTongueHitSound: 1
+  tongueTriggerTag: Tongue
+  playObjectHitSound: 1
+  objectHitTriggerTag: GrabPoint
   randomiseCompletedDialogue: 0
   completedFirstText: 
   completedSecondText: 
@@ -8466,6 +8471,83 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.1047332, y: 8.113461, z: 2.8091614}
   m_Center: {x: -0.060781006, y: 3.5567303, z: 0.39337373}
+--- !u!1001 &1435415411
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4781632058954565030, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 89.63187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781632058954565030, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781632058954565030, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -38.63056
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781632058954565030, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781632058954565030, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781632058954565030, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781632058954565030, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781632058954565030, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781632058954565030, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781632058954565030, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5464565044234272630, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
+      propertyPath: loopMusic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5464565044234272630, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
+      propertyPath: musicTrack
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5464565044234272630, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
+      propertyPath: playMusicOnStart
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5464565044234272630, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
+      propertyPath: ambientTracks.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5464565044234272630, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
+      propertyPath: 'ambientTracks.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 3d3f3ff611674fe4bac8a423b5cde3e1, type: 3}
+    - target: {fileID: 8574385411146747673, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
+      propertyPath: m_Name
+      value: Audio Manager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
 --- !u!1 &1439547093 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1443424192436051855, guid: 685f87eda9dbe3c4daffcd5c911db5c2, type: 3}
@@ -9088,6 +9170,63 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6055944295424469342, guid: eb52220b263c70e40a612e2dac63953c, type: 3}
+--- !u!1001 &1556203217
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5680563446051123208, guid: 5061b88340c51774db4ac6bdc7e9f25f, type: 3}
+      propertyPath: m_Name
+      value: Audio Persistent Systems
+      objectReference: {fileID: 0}
+    - target: {fileID: 7912423619840660260, guid: 5061b88340c51774db4ac6bdc7e9f25f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 89.63187
+      objectReference: {fileID: 0}
+    - target: {fileID: 7912423619840660260, guid: 5061b88340c51774db4ac6bdc7e9f25f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7912423619840660260, guid: 5061b88340c51774db4ac6bdc7e9f25f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -38.63056
+      objectReference: {fileID: 0}
+    - target: {fileID: 7912423619840660260, guid: 5061b88340c51774db4ac6bdc7e9f25f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7912423619840660260, guid: 5061b88340c51774db4ac6bdc7e9f25f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7912423619840660260, guid: 5061b88340c51774db4ac6bdc7e9f25f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7912423619840660260, guid: 5061b88340c51774db4ac6bdc7e9f25f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7912423619840660260, guid: 5061b88340c51774db4ac6bdc7e9f25f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7912423619840660260, guid: 5061b88340c51774db4ac6bdc7e9f25f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7912423619840660260, guid: 5061b88340c51774db4ac6bdc7e9f25f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5061b88340c51774db4ac6bdc7e9f25f, type: 3}
 --- !u!1 &1556638109
 GameObject:
   m_ObjectHideFlags: 0
@@ -10268,6 +10407,10 @@ MonoBehaviour:
     firstText: Oh wow!
     secondText: 
     thirdText: 
+  playTongueHitSound: 1
+  tongueTriggerTag: Tongue
+  playObjectHitSound: 1
+  objectHitTriggerTag: GrabPoint
   randomiseCompletedDialogue: 0
   completedFirstText: 
   completedSecondText: 
@@ -12903,6 +13046,10 @@ MonoBehaviour:
     firstText: Oh wow!
     secondText: 
     thirdText: 
+  playTongueHitSound: 1
+  tongueTriggerTag: Tongue
+  playObjectHitSound: 1
+  objectHitTriggerTag: GrabPoint
   randomiseCompletedDialogue: 0
   completedFirstText: I love you my handsome prince!
   completedSecondText: Lets go to the apple hunt!
@@ -14181,6 +14328,8 @@ SceneRoots:
   m_Roots:
   - {fileID: 673461475}
   - {fileID: 1005778118}
+  - {fileID: 1435415411}
+  - {fileID: 1556203217}
   - {fileID: 228303182}
   - {fileID: 2013081882}
   - {fileID: 308475972}

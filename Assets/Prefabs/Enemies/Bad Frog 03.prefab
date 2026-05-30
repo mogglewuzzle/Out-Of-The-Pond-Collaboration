@@ -701,7 +701,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 7
-  m_Acceleration: 8
+  m_Acceleration: 15
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 0
@@ -727,14 +727,25 @@ MonoBehaviour:
   targetTag: Player
   foundFollowTarget: {fileID: 0}
   followDistance: 0.1
-  minSpeed: 10
-  maxSpeed: 40
+  minSpeed: 5
+  maxSpeed: 12
+  increaseSpeedOverTime: 1
+  increasedMaxSpeed: 30
+  speedIncreaseDuration: 15
   randomizeSpeedOnStart: 1
-  predictTargetMovement: 0
-  predictionTime: 0.5
-  followResumeBuffer: 0.5
+  predictTargetMovement: 1
+  predictionTime: 0.1
+  followResumeBuffer: 0
+  acceleration: 80
+  angularSpeed: 720
+  autoBraking: 1
+  spreadAroundTarget: 1
+  targetSpreadRadius: 0.4
+  randomizeAvoidancePriority: 1
+  minAvoidancePriority: 20
+  maxAvoidancePriority: 80
   allowOrbitAtFollowDistance: 0
-  orbitDuration: 10
+  orbitDuration: 2
   orbitSpeed: 90
   smoothRotation: 1
   rotationSpeed: 5

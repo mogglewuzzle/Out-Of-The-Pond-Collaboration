@@ -843,7 +843,7 @@ MonoBehaviour:
   loopAmbient: 1
   randomizeAmbientTrack: 1
   ambientVolume: 1
-  persistAcrossGameScenes: 1
+  persistAcrossGameScenes: 0
   gameSceneNames: []
 --- !u!114 &970201021872133099
 MonoBehaviour:

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -21,6 +22,10 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private float groundCheckRadius = 0.25f;
     [SerializeField] private float groundCheckOriginOffset = 0.35f;
     [SerializeField] private LayerMask groundMask = ~0;
+
+    [Header("Wall Contact")]
+    [Tooltip("Surfaces with an upward-facing normal below this value are treated as walls.")]
+    [SerializeField, Range(0f, 1f)] private float wallNormalMaxUpDot = 0.5f;
 
     [Header("Debug")]
 
@@ -46,6 +51,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private Rigidbody rb;
     private Collider[] playerColliders;
+    private readonly List<Vector3> wallContactNormals = new List<Vector3>();
 
     public float CurrentHorizontalSpeed { get; private set; }
     public bool IsGroundedCached { get; private set; }
@@ -75,6 +81,7 @@ public class PlayerMovementController : MonoBehaviour
         IsGroundedCached = IsGrounded();
 
         Move();
+        wallContactNormals.Clear();
         HandleJump();
         ApplyAirborneGravity();
         ApplyFallGravity();
@@ -108,6 +115,7 @@ public class PlayerMovementController : MonoBehaviour
             targetSpeed *= airborneMovementMultiplier;
 
         Vector3 move = moveInputWorld * targetSpeed;
+        RemoveMovementIntoWalls(ref move);
         Vector3 finalVelocity = move + GetLaunchVelocity() + externalVelocity;
 
         rb.linearVelocity = new Vector3(
@@ -186,11 +194,49 @@ public class PlayerMovementController : MonoBehaviour
         {
             Collider hitCollider = hits[i].collider;
 
-            if (hitCollider != null && !IsPlayerCollider(hitCollider))
+            if (
+                hitCollider != null &&
+                !IsPlayerCollider(hitCollider) &&
+                hits[i].normal.y >= 0.5f
+            )
+            {
                 return true;
+            }
         }
 
         return false;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        CacheWallContactNormals(collision);
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        CacheWallContactNormals(collision);
+    }
+
+    private void CacheWallContactNormals(Collision collision)
+    {
+        for (int i = 0; i < collision.contactCount; i++)
+        {
+            Vector3 normal = collision.GetContact(i).normal;
+
+            if (Mathf.Abs(normal.y) <= wallNormalMaxUpDot)
+                wallContactNormals.Add(normal);
+        }
+    }
+
+    private void RemoveMovementIntoWalls(ref Vector3 move)
+    {
+        for (int i = 0; i < wallContactNormals.Count; i++)
+        {
+            Vector3 wallNormal = wallContactNormals[i];
+
+            if (Vector3.Dot(move, wallNormal) < 0f)
+                move = Vector3.ProjectOnPlane(move, wallNormal);
+        }
     }
 
     private void DrawGroundDebug()

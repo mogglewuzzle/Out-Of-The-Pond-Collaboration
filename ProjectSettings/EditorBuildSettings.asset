@@ -32,6 +32,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level 02 - Meadows.unity
     guid: 06e226b81f771264787aed97d4e1678c
+  - enabled: 1
+    path: Assets/Scenes/Menu 01 - Game Over.unity
+    guid: af74a2d32b563334cb727f8feb6f4739
+  - enabled: 1
+    path: Assets/Scenes/Menu 01 - Happy End.unity
+    guid: 491e0ebb8bc1d094d94e85d511cbeadd
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: b1a1b0516ba21d649ba83eb4d20bc666, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2c0a613ac8df67244af6c707f73b1ad3, type: 3}

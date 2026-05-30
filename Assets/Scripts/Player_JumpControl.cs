@@ -13,8 +13,8 @@ public class PlayerJumpController : MonoBehaviour
     private PlayerInputHandler input;
     private PlayerMovementController movement;
 
-    private float lastGroundedTime;
-    private float lastJumpPressedTime;
+    private float lastGroundedTime = -999f;
+    private float lastJumpPressedTime = -999f;
 
     public bool ShouldJump { get; private set; }
     public float JumpForce => jumpForce;

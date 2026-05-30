@@ -43,8 +43,13 @@ public class Audio_MenuManager : MonoBehaviour
     {
         if (Instance != null && Instance != this)
         {
-            Destroy(gameObject);
-            return;
+            if (Instance.persistAcrossMenuScenes)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            Destroy(Instance.gameObject);
         }
 
         Instance = this;

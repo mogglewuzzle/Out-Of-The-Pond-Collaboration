@@ -3311,7 +3311,6 @@ GameObject:
   - component: {fileID: 2620848302018279132}
   - component: {fileID: 6539261300272889856}
   - component: {fileID: 2402462780480599190}
-  - component: {fileID: 1559423265653521769}
   m_Layer: 0
   m_Name: Game Systems
   m_TagString: Untagged
@@ -3425,24 +3424,6 @@ MonoBehaviour:
   showCursorWhileOpen: 1
   gameplayCursorLockMode: 1
   gameplayCursorVisible: 0
---- !u!114 &1559423265653521769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5723057978284630347}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97db668a333df48448d0f4b75bd6d3a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Systems_AudioSettings
-  audioMixer: {fileID: 24100000, guid: 938c2f0c787208b48bca138e039142d2, type: 2}
-  musicVolumeParameter: VolumeMusic
-  sfxVolumeParameter: VolumeEffects
-  defaultMusicVolume: 1
-  defaultSfxVolume: 1
-  persistAcrossScenes: 1
 --- !u!1 &5725336062018017053
 GameObject:
   m_ObjectHideFlags: 0

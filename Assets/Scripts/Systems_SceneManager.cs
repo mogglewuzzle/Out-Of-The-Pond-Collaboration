@@ -20,6 +20,7 @@ public class Systems_SceneManager : MonoBehaviour
     private Coroutine fadeRoutine;
 
     public bool IsLoadingScene => loadingScene;
+    public string PendingSceneName { get; private set; }
 
     private void Awake()
     {
@@ -56,6 +57,11 @@ public class Systems_SceneManager : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
+        LoadScene(sceneName, fadeOutDuration);
+    }
+
+    public void LoadScene(string sceneName, float fadeOutDurationOverride)
+    {
         if (string.IsNullOrWhiteSpace(sceneName))
         {
             Debug.LogWarning($"{nameof(Systems_SceneManager)} cannot load a scene with an empty name.", this);
@@ -63,10 +69,15 @@ public class Systems_SceneManager : MonoBehaviour
         }
 
         if (!loadingScene)
-            StartCoroutine(LoadSceneRoutine(sceneName));
+            StartCoroutine(LoadSceneRoutine(sceneName, fadeOutDurationOverride));
     }
 
     public void LoadScene(int sceneBuildIndex)
+    {
+        LoadScene(sceneBuildIndex, fadeOutDuration);
+    }
+
+    public void LoadScene(int sceneBuildIndex, float fadeOutDurationOverride)
     {
         if (sceneBuildIndex < 0 || sceneBuildIndex >= SceneManager.sceneCountInBuildSettings)
         {
@@ -75,7 +86,7 @@ public class Systems_SceneManager : MonoBehaviour
         }
 
         if (!loadingScene)
-            StartCoroutine(LoadSceneRoutine(sceneBuildIndex));
+            StartCoroutine(LoadSceneRoutine(sceneBuildIndex, fadeOutDurationOverride));
     }
 
     public void FadeIn()
@@ -88,29 +99,33 @@ public class Systems_SceneManager : MonoBehaviour
         StartFade(1f, fadeOutDuration);
     }
 
-    private IEnumerator LoadSceneRoutine(string sceneName)
+    private IEnumerator LoadSceneRoutine(string sceneName, float transitionFadeOutDuration)
     {
         loadingScene = true;
-        yield return FadeTo(1f, fadeOutDuration);
+        PendingSceneName = sceneName;
+        yield return FadeTo(1f, transitionFadeOutDuration);
 
         AsyncOperation loadOperation = SceneManager.LoadSceneAsync(sceneName);
         while (loadOperation != null && !loadOperation.isDone)
             yield return null;
 
         yield return FadeTo(0f, fadeInDuration);
+        PendingSceneName = null;
         loadingScene = false;
     }
 
-    private IEnumerator LoadSceneRoutine(int sceneBuildIndex)
+    private IEnumerator LoadSceneRoutine(int sceneBuildIndex, float transitionFadeOutDuration)
     {
         loadingScene = true;
-        yield return FadeTo(1f, fadeOutDuration);
+        PendingSceneName = GetSceneNameFromBuildIndex(sceneBuildIndex);
+        yield return FadeTo(1f, transitionFadeOutDuration);
 
         AsyncOperation loadOperation = SceneManager.LoadSceneAsync(sceneBuildIndex);
         while (loadOperation != null && !loadOperation.isDone)
             yield return null;
 
         yield return FadeTo(0f, fadeInDuration);
+        PendingSceneName = null;
         loadingScene = false;
     }
 
@@ -167,6 +182,12 @@ public class Systems_SceneManager : MonoBehaviour
     private float GetDeltaTime()
     {
         return useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
+    }
+
+    private string GetSceneNameFromBuildIndex(int sceneBuildIndex)
+    {
+        string scenePath = SceneUtility.GetScenePathByBuildIndex(sceneBuildIndex);
+        return System.IO.Path.GetFileNameWithoutExtension(scenePath);
     }
 
 }

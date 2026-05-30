@@ -27,6 +27,8 @@ public class System_HealthManager : MonoBehaviour
     [Tooltip("If enabled, Game Over Scene Build Index is used instead of Game Over Scene Name.")]
     [SerializeField] private bool useGameOverSceneBuildIndex;
     [SerializeField] private int gameOverSceneBuildIndex;
+    [Tooltip("Seconds to fade to black before loading the game-over scene.")]
+    [SerializeField] private float gameOverFadeOutDuration = 2f;
 
     [Header("Lives UI")]
     [SerializeField] private TextMeshProUGUI livesText;
@@ -93,6 +95,9 @@ public class System_HealthManager : MonoBehaviour
 
         isRespawning = true;
         LoseLife();
+
+        if (gameOverSceneLoadRequested)
+            yield break;
 
         GameObject oldPlayer = foundPlayer;
         foundPlayer = null;
@@ -264,8 +269,8 @@ public class System_HealthManager : MonoBehaviour
         gameOverSceneLoadRequested = true;
 
         if (useGameOverSceneBuildIndex)
-            sceneManager.LoadScene(gameOverSceneBuildIndex);
+            sceneManager.LoadScene(gameOverSceneBuildIndex, gameOverFadeOutDuration);
         else
-            sceneManager.LoadScene(gameOverSceneName);
+            sceneManager.LoadScene(gameOverSceneName, gameOverFadeOutDuration);
     }
 }

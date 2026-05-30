@@ -22,6 +22,8 @@ public class ObjectAxisMover : MonoBehaviour
     [Tooltip("When Target Mode is Transform, the target uses this Transform's position only on the selected axis.")]
     [SerializeField] private Transform targetTransform;
     [SerializeField] private float speed = 1f;
+    [Tooltip("When disabled, the object stops permanently after reaching its target.")]
+    [SerializeField] private bool returnToStart = true;
 
     [Header("Timing")]
     [Tooltip("Seconds to wait before the first movement starts.")]
@@ -33,6 +35,7 @@ public class ObjectAxisMover : MonoBehaviour
     private Vector3 targetPosition;
     private float waitTimer;
     private bool movingToTarget = true;
+    private bool movementComplete;
 
     private void Awake()
     {
@@ -43,6 +46,9 @@ public class ObjectAxisMover : MonoBehaviour
 
     private void Update()
     {
+        if (movementComplete)
+            return;
+
         if (waitTimer > 0f)
         {
             waitTimer -= Time.deltaTime;
@@ -54,6 +60,12 @@ public class ObjectAxisMover : MonoBehaviour
 
         if (Vector3.Distance(transform.position, destination) > 0.001f)
             return;
+
+        if (movingToTarget && !returnToStart)
+        {
+            movementComplete = true;
+            return;
+        }
 
         movingToTarget = !movingToTarget;
 

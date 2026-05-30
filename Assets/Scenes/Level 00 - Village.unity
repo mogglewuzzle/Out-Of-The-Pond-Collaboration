@@ -12832,50 +12832,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7864916894021929008, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
-      propertyPath: thresholds.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7864916894021929008, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
-      propertyPath: thresholds.Array.data[1].itemTag
-      value: StoryItem
-      objectReference: {fileID: 0}
-    - target: {fileID: 7864916894021929008, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
-      propertyPath: thresholds.Array.data[0].requiredCount
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7864916894021929008, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
-      propertyPath: thresholds.Array.data[1].requiredCount
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7864916894021929008, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
-      propertyPath: thresholds.Array.data[1].onlyTriggerOnce
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7864916894021929008, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
-      propertyPath: thresholds.Array.data[1].objectsToActivate.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7864916894021929008, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
-      propertyPath: thresholds.Array.data[1].objectsToDeactivate.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7864916894021929008, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
-      propertyPath: 'thresholds.Array.data[0].objectsToActivate.Array.data[0]'
-      value: 
-      objectReference: {fileID: 1255090475}
-    - target: {fileID: 7864916894021929008, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
-      propertyPath: 'thresholds.Array.data[1].objectsToActivate.Array.data[0]'
-      value: 
-      objectReference: {fileID: 906160417}
-    - target: {fileID: 7864916894021929008, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
-      propertyPath: 'thresholds.Array.data[0].objectsToDeactivate.Array.data[0]'
-      value: 
-      objectReference: {fileID: 1951674839}
-    - target: {fileID: 7864916894021929008, guid: b39d6ad95927e4c47a5f0ed59bde0d07, type: 3}
-      propertyPath: 'thresholds.Array.data[1].objectsToDeactivate.Array.data[0]'
-      value: 
-      objectReference: {fileID: 1951674839}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -19900,6 +19856,7 @@ MonoBehaviour:
   gameOverSceneName: 
   useGameOverSceneBuildIndex: 0
   gameOverSceneBuildIndex: 0
+  gameOverFadeOutDuration: 2
   livesText: {fileID: 0}
   showLivesLabel: 0
   useSystemsRespawnManager: 1
@@ -36613,9 +36570,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7152283169617031059, guid: 4fdf92531617eb149882326568071636, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 68374ef9ebd3b674fb57a41bb722e974, type: 2}
     - target: {fileID: 8359410263486921697, guid: 4fdf92531617eb149882326568071636, type: 3}
       propertyPath: m_Name
       value: Player Froggle
+      objectReference: {fileID: 0}
+    - target: {fileID: 8658125788914933329, guid: 4fdf92531617eb149882326568071636, type: 3}
+      propertyPath: swingStartupLayer.m_Bits
+      value: 4194304
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -39200,6 +39165,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5464565044234272630, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
+      propertyPath: musicTrack
+      value: 
+      objectReference: {fileID: 8300000, guid: d3e1c29696420bb4895f43e00d74ed34, type: 3}
     - target: {fileID: 8574385411146747673, guid: 4ee1c8712ec699543b51a98c5707cfdb, type: 3}
       propertyPath: m_Name
       value: Audio Manager
@@ -42945,6 +42914,63 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1001 &4623809111696765049
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5680563446051123208, guid: 5061b88340c51774db4ac6bdc7e9f25f, type: 3}
+      propertyPath: m_Name
+      value: Audio Persistent Systems
+      objectReference: {fileID: 0}
+    - target: {fileID: 7912423619840660260, guid: 5061b88340c51774db4ac6bdc7e9f25f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7912423619840660260, guid: 5061b88340c51774db4ac6bdc7e9f25f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7912423619840660260, guid: 5061b88340c51774db4ac6bdc7e9f25f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7912423619840660260, guid: 5061b88340c51774db4ac6bdc7e9f25f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7912423619840660260, guid: 5061b88340c51774db4ac6bdc7e9f25f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7912423619840660260, guid: 5061b88340c51774db4ac6bdc7e9f25f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7912423619840660260, guid: 5061b88340c51774db4ac6bdc7e9f25f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7912423619840660260, guid: 5061b88340c51774db4ac6bdc7e9f25f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7912423619840660260, guid: 5061b88340c51774db4ac6bdc7e9f25f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7912423619840660260, guid: 5061b88340c51774db4ac6bdc7e9f25f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5061b88340c51774db4ac6bdc7e9f25f, type: 3}
 --- !u!1 &4650857223127852876
 GameObject:
   m_ObjectHideFlags: 0
@@ -47988,6 +48014,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 673461475}
   - {fileID: 346225336370135777}
+  - {fileID: 4623809111696765049}
   - {fileID: 3557568509156911713}
   - {fileID: 228303182}
   - {fileID: 2029340823}
